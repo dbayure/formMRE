@@ -18,111 +18,118 @@ public class Persona implements Serializable {
     @NotNull
     @Column(name = "idPersona", nullable = false)
     private Integer idPersona;
-    @Size(max = 45)
-    @Column(name = "direccion", length = 45)
-    private String direccion;
-    @Column(name = "telFijo")
-    private Integer telFijo;
-    @Column(name = "telMovil")
-    private Integer telMovil;
-    @Size(max = 45)
-    @Column(name = "correo", length = 45)
-    private String correo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechaNacimiento", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaNacimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantHijos", nullable = false)
-    private int cantHijos;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "motivoRetorno", nullable = false)
-    private int motivoRetorno;
-    @Size(max = 45)
-    @Column(name = "tituloObtenido", length = 45)
-    private String tituloObtenido;
+    @JoinColumn(name = "idFormulario", referencedColumnName = "idFormulario", nullable = false)
+    @ManyToOne(optional = false)
+    private Formulario formulario;    
+    @JoinColumn(name = "iddocumento", referencedColumnName = "idDocumento", nullable = false)
+    @OneToOne(optional = false)
+    private Documento iddocumento;   
     @Size(max = 45)
     @Column(name = "nombre", length = 45)
     private String nombre;
     @Size(max = 45)
     @Column(name = "apellido", length = 45)
     private String apellido;
-    @Column(name = "estudioFinalizadoUruguay")
-    private Character estudioFinalizadoUruguay;
-    @Column(name = "estudioFinalizadoExterior")
-    private Character estudioFinalizadoExterior;
     @Size(max = 45)
-    @Column(name = "tituloObtenidoExterior", length = 45)
-    private String tituloObtenidoExterior;
-    @OneToMany(mappedBy = "idPersona")
-    private Collection<PaisesVisitados> paisesVisitadosCollection;
-    @JoinColumn(name = "situacionLaboral", referencedColumnName = "idSituacionLaboral", nullable = false)
-    @ManyToOne(optional = false)
-    private SituacionLaboral situacionLaboral;
-    @JoinColumn(name = "sexo", referencedColumnName = "idSexo", nullable = false)
-    @ManyToOne(optional = false)
-    private Sexo sexo;
-    @JoinColumn(name = "coberturaSalud", referencedColumnName = "idCoberturaSalud", nullable = false)
-    @ManyToOne(optional = false)
-    private CoberturaSalud coberturaSalud;
-    @JoinColumn(name = "parentezco", referencedColumnName = "idParentezco", nullable = false)
-    @ManyToOne(optional = false)
-    private Parentezco parentezco;
-    @JoinColumn(name = "otraNacionalidad", referencedColumnName = "idNacionalidad")
-    @ManyToOne
-    private Nacionalidad otraNacionalidad;
-    @JoinColumn(name = "oficioExterior", referencedColumnName = "idOficio")
-    @ManyToOne
-    private Oficio oficioExterior;
-    @JoinColumn(name = "oficioUruguay", referencedColumnName = "idOficio", nullable = false)
-    @ManyToOne(optional = false)
-    private Oficio oficioUruguay;
-    @JoinColumn(name = "ocupacionExterior", referencedColumnName = "idOcupacion", nullable = false)
-    @ManyToOne(optional = false)
-    private Ocupacion ocupacionExterior;
-    @JoinColumn(name = "condResidExterior", referencedColumnName = "idCodicionesResidencia", nullable = false)
-    @ManyToOne(optional = false)
-    private CodicionesResidencia condResidExterior;
-    @JoinColumn(name = "demandaInicial", referencedColumnName = "idDemandaInicial", nullable = false)
-    @ManyToOne(optional = false)
-    private DemandaInicial demandaInicial;
-    @JoinColumn(name = "documento", referencedColumnName = "idDocumento", nullable = false)
-    @OneToOne(optional = false)
-    private Documento documento;
-    @JoinColumn(name = "nivelEducativoUruguay", referencedColumnName = "idNivelEducativo", nullable = false)
-    @ManyToOne(optional = false)
-    private NivelEducativo nivelEducativoUruguay;
-    @JoinColumn(name = "enseresVehiculos", referencedColumnName = "idEnseresVehiculos", nullable = false)
-    @ManyToOne(optional = false)
-    private EnseresVehiculos enseresVehiculos;
+    @Column(name = "direccion", length = 45)
+    private String direccion;
+    @Column(name = "telFijo")
+    private String telFijo;
+    @Column(name = "telMovil")
+    private String telMovil;
+    @Size(max = 45)
+    @Column(name = "correo", length = 45)
+    private String correo;
     @JoinColumn(name = "estadoCivil", referencedColumnName = "idEstadoCivil", nullable = false)
     @ManyToOne(optional = false)
-    private EstadoCivil estadoCivil;
-    @JoinColumn(name = "idFormulario", referencedColumnName = "idFormulario", nullable = false)
+    private EstadoCivil estadoCivil;	    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cantHijos", nullable = false)
+    private int cantHijos;
+    @JoinColumn(name = "parentezco", referencedColumnName = "idParentezco", nullable = false)
     @ManyToOne(optional = false)
-    private Formulario Formulario;
-   	@JoinColumn(name = "formaRetorno", referencedColumnName = "idFormaRetorno", nullable = false)
+    private Parentezco parentezco;    
+    @JoinColumn(name = "sexo", referencedColumnName = "idSexo", nullable = false)
     @ManyToOne(optional = false)
-    private FormaRetorno formaRetorno;
-    @JoinColumn(name = "solucionHabitacional", referencedColumnName = "idSituacionHabitacional", nullable = false)
+    private Sexo sexo;    
+    @JoinColumn(name = "nacionalidad1", referencedColumnName = "idNacionalidad")
+    @ManyToOne
+    private Nacionalidad nacionalidad1;
+    @JoinColumn(name = "nacionalidad2", referencedColumnName = "idNacionalidad")
+    @ManyToOne
+    private Nacionalidad nacionalidad2;    
+    @JoinColumn(name = "nivelEducativoUruguay", referencedColumnName = "idNivelEducativo")
+    @ManyToOne
+    private NivelEducativo nivelEducativoUruguay;
+    @Size(max = 45)
+    @JoinColumn(name = "tituloObtenidoUruguay", referencedColumnName = "idTitulo")
     @ManyToOne(optional = false)
-    private SituacionHabitacional solucionHabitacional;
+    private Titulo tituloObtenidoUruguay;    
+    @JoinColumn(name = "oficioUruguay", referencedColumnName = "idOficio")
+    @ManyToOne(optional = false)
+    private Oficio oficioUruguay; 
+    @JoinColumn(name = "ocupacionUruguay", referencedColumnName = "idOcupacion")
+    @ManyToOne(optional = false)
+    private Ocupacion ocupacionUruguay; 
     @JoinColumn(name = "motivoPartida", referencedColumnName = "idMotivoPartida", nullable = false)
     @ManyToOne(optional = false)
     private MotivoPartida motivoPartida;
-    @JoinColumn(name = "nacionalidad", referencedColumnName = "idNacionalidad", nullable = false)
+    @Size(length = 4)
+    @Column(name = "anioPartida")
+    private int anioPartida;
+    @JoinColumn(name = "paisResidencia1", referencedColumnName = "idPais")
     @ManyToOne(optional = false)
-    private Nacionalidad nacionalidad;
+    private Paises paisResidencia1;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "residenciaRegular1", nullable = false)
+    private boolean residenciaRegular1;
+    @JoinColumn(name = "paisResidencia2", referencedColumnName = "idPais")
+    @ManyToOne(optional = true)
+    private Paises paisResidencia1;
+    @Basic
+    @Column(name = "residenciaRegular2", nullable = true)
+    private boolean residenciaRegular2;   
+    @JoinColumn(optional = false)
+    @ManyToOne(name = "condicionesResidencia", referencedColumnName = "idCondicionesResidencia")
+    private CondicionesResidencia condicionesResidencia;
     @JoinColumn(name = "nivelEducativoExterior", referencedColumnName = "idNivelEducativo")
     @ManyToOne
     private NivelEducativo nivelEducativoExterior;
-    @JoinColumn(name = "ocupacionPrevia", referencedColumnName = "idOcupacion", nullable = false)
+    @Size(max = 45)
+    @JoinColumn(name = "tituloObtenidoExterior", referencedColumnName = "idTitulo")
+    @ManyToOne
+    private Titulo tituloObtenidoExterior;    
+    @JoinColumn(name = "oficioExterior", referencedColumnName = "idOficio")
+    @ManyToOne
+    private Oficio oficioExterior; 
+    @JoinColumn(name = "ocupacionExterior", referencedColumnName = "idOcupacion")
     @ManyToOne(optional = false)
-    private Ocupacion ocupacionPrevia;
-
+    private Ocupacion ocupacionExterior;    
+    @JoinColumn(name = "formaRetorno", referencedColumnName = "idFormaRetorno")
+    @ManyToOne(optional = false)
+    private FormaRetorno formaRetorno;
+    @JoinColumn(name = "motivoRetorno", referencedColumnName = "idMotivoRetorno")
+    @ManyToOne(optional = false)
+    private MotivoRetorno motivoRetorno;    
+    @JoinColumn(name = "situacionHabitacionalActual", referencedColumnName = "idSituacionHabitacional", nullable = false)
+    @ManyToOne(optional = false)
+    private SituacionHabitacional situacionHabitacionalActual;
+    @JoinColumn(name = "coberturaSalud", referencedColumnName = "idCoberturaSalud", nullable = false)
+    @ManyToOne(optional = false)
+    private CoberturaSalud coberturaSalud;    
+    @JoinColumn(name = "situacionLaboral", referencedColumnName = "idSituacionLaboral", nullable = false)
+    @ManyToOne(optional = false)
+    private SituacionLaboral situacionLaboral;
+    @JoinColumn(name = "enseresVehiculos", referencedColumnName = "idEnseresVehiculos", nullable = false)
+    @ManyToOne(optional = false)
+    private EnseresVehiculos enseresVehiculos;    
+    @JoinColumn(name = "demandaInicial", referencedColumnName = "idDemandaInicial", nullable = false)
+    @ManyToOne(optional = false)
+    private DemandaInicial demandaInicial;
+    
+    
     public Persona() {
     }
 
