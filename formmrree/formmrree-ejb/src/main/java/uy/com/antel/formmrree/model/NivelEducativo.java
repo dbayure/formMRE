@@ -2,69 +2,54 @@ package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@XmlRootElement
+@Table(name = "nivel_educativo")
 public class NivelEducativo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6931416655288148069L;
 	
-	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idNivelEducativo", nullable = false)
-    private Integer idNivelEducativo;
-    @Size(max = 100)
-    @Column(name = "descripcion", length = 100)
-    private String descripcion;
-    
-    public NivelEducativo (){
-    	
-    }
+	@Id
+	@GeneratedValue
+	private Long id;
 
-    public NivelEducativo (Integer idNivelEducativo)
-    {
-    	this.idNivelEducativo = idNivelEducativo;
-    }
+	private String nombre;
 
-	public NivelEducativo(Integer idNivelEducativo, String descripcion) {
+	public NivelEducativo() {
 		super();
-		this.idNivelEducativo = idNivelEducativo;
-		this.descripcion = descripcion;
 	}
 
-	public Integer getIdNivelEducativo() {
-		return idNivelEducativo;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdNivelEducativo(Integer idNivelEducativo) {
-		this.idNivelEducativo = idNivelEducativo;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime
-				* result
-				+ ((idNivelEducativo == null) ? 0 : idNivelEducativo.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 	}
 
@@ -77,17 +62,21 @@ public class NivelEducativo implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		NivelEducativo other = (NivelEducativo) obj;
-		if (idNivelEducativo == null) {
-			if (other.idNivelEducativo != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idNivelEducativo.equals(other.idNivelEducativo))
+		} else if (!id.equals(other.id))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "NivelEducativo [idNivelEducativo=" + idNivelEducativo + "]";
+		return "NivelEducativo [id=" + id + ", nombre=" + nombre + "]";
 	}
-    
 }

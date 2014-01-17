@@ -3,68 +3,62 @@ package uy.com.antel.formmrree.model;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@XmlRootElement
+@Table(name = "documento")
 public class Documento implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3090791953880881907L;
 	
-	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idDocumento", nullable = false)
-    private Integer idDocumento;
-    @JoinColumn (name = "tipodocumento", referencedColumnName = "idTipo")
-    @OneToOne(optional = false)
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)    
+    private Long id;
+	
+	@OneToOne @MapsId
     private TipoDocumento tipoDocumento;
-    @JoinColumn(name = "paisEmisor", referencedColumnName = "idPais")
-    @OneToOne(optional = false)
-    private Paises paisEmisor;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechaNacimiento")
+    
+    @OneToOne @MapsId       
+    private Pais paisEmisor;
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name="fecha_nacimiento")
     private Date fechaNacimiento;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechaEmision")
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_emision")
     private Date fechaEmision;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechaExpiracion")
+    
+    @Temporal(TemporalType.DATE)
+    @Column(name = "fecha_expiracion")
     private Date fechaExpiracion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechaNacimiento")
-    private String numeroDoc;
-	
-    public Documento () {
-    	
-    }
     
-    public Documento (Integer idDocumento) {
-    	this.idDocumento = idDocumento;
-    }
-    
-    public Documento(Integer idDocumento, TipoDocumento tipoDocumento,
-			Paises paisEmisor, Date fechaNacimiento, Date fechaEmision,
-			Date fechaExpiracion, String numeroDoc) {
+    private String documento;
+
+	public Documento() {
 		super();
-		this.idDocumento = idDocumento;
-		this.tipoDocumento = tipoDocumento;
-		this.paisEmisor = paisEmisor;
-		this.fechaNacimiento = fechaNacimiento;
-		this.fechaEmision = fechaEmision;
-		this.fechaExpiracion = fechaExpiracion;
-		this.numeroDoc = numeroDoc;
 	}
 
-	public Integer getIdDocumento() {
-		return idDocumento;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdDocumento(Integer idDocumento) {
-		this.idDocumento = idDocumento;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public TipoDocumento getTipoDocumento() {
@@ -75,11 +69,11 @@ public class Documento implements Serializable {
 		this.tipoDocumento = tipoDocumento;
 	}
 
-	public Paises getPaisEmisor() {
+	public Pais getPaisEmisor() {
 		return paisEmisor;
 	}
 
-	public void setPaisEmisor(Paises paisEmisor) {
+	public void setPaisEmisor(Pais paisEmisor) {
 		this.paisEmisor = paisEmisor;
 	}
 
@@ -107,16 +101,12 @@ public class Documento implements Serializable {
 		this.fechaExpiracion = fechaExpiracion;
 	}
 
-	public String getNumeroDoc() {
-		return numeroDoc;
+	public String getDocumento() {
+		return documento;
 	}
 
-	public void setNumeroDoc(String numeroDoc) {
-		this.numeroDoc = numeroDoc;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	@Override
@@ -124,7 +114,10 @@ public class Documento implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((idDocumento == null) ? 0 : idDocumento.hashCode());
+				+ ((documento == null) ? 0 : documento.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((tipoDocumento == null) ? 0 : tipoDocumento.hashCode());
 		return result;
 	}
 
@@ -137,19 +130,30 @@ public class Documento implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Documento other = (Documento) obj;
-		if (idDocumento == null) {
-			if (other.idDocumento != null)
+		if (documento == null) {
+			if (other.documento != null)
 				return false;
-		} else if (!idDocumento.equals(other.idDocumento))
+		} else if (!documento.equals(other.documento))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (tipoDocumento == null) {
+			if (other.tipoDocumento != null)
+				return false;
+		} else if (!tipoDocumento.equals(other.tipoDocumento))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Documento [idDocumento=" + idDocumento + "]";
+		return "Documento [id=" + id + ", tipoDocumento=" + tipoDocumento
+				+ ", paisEmisor=" + paisEmisor + ", fechaNacimiento="
+				+ fechaNacimiento + ", fechaEmision=" + fechaEmision
+				+ ", fechaExpiracion=" + fechaExpiracion + ", documento="
+				+ documento + "]";
 	}
-
-    
-    
 }

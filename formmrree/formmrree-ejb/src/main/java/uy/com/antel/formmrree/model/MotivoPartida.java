@@ -2,67 +2,54 @@ package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@XmlRootElement
+@Table(name = "motivo_partida")
 public class MotivoPartida implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idMotivoPartida", nullable = false)
-    private Integer idMotivoPartida;
-    @Size(max = 100)
-    @Column(name = "descripcion", length = 100)
-    private String descripcion;
-    
-    public MotivoPartida (){
-    	
-    }
-    
-    public MotivoPartida (Integer idMotivoPartida){
-    	this.idMotivoPartida = idMotivoPartida;
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1682041799642870575L;
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 
-	public MotivoPartida(Integer idMotivoPartida, String descripcion) {
+	private String nombre;
+
+	public MotivoPartida() {
 		super();
-		this.idMotivoPartida = idMotivoPartida;
-		this.descripcion = descripcion;
 	}
 
-	public Integer getIdMotivoPartida() {
-		return idMotivoPartida;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdMotivoPartida(Integer idMotivoPartida) {
-		this.idMotivoPartida = idMotivoPartida;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((idMotivoPartida == null) ? 0 : idMotivoPartida.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 	}
 
@@ -75,18 +62,21 @@ public class MotivoPartida implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		MotivoPartida other = (MotivoPartida) obj;
-		if (idMotivoPartida == null) {
-			if (other.idMotivoPartida != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idMotivoPartida.equals(other.idMotivoPartida))
+		} else if (!id.equals(other.id))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "MotivoPartida [idMotivoPartida=" + idMotivoPartida + "]";
+		return "MotivoPartida [id=" + id + ", nombre=" + nombre + "]";
 	}
-    
-    
 }

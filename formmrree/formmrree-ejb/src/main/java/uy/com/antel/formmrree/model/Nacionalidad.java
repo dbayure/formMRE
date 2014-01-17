@@ -1,68 +1,69 @@
 package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@XmlRootElement
+@Table(name = "nacionalidad")
 public class Nacionalidad implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2312824035284371086L;
 	
-	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idNacionalidad", nullable = false)
-    private Integer idNacionalidad;
-    @Size(max = 100)
-    @Column(name = "descripcion", length = 100)
-    private String descripcion;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private String nombre;
+	
+	@ManyToMany(targetEntity = Persona.class)
+	private Set<Persona> persona;
 
-    public Nacionalidad (){
-    	
-    }
-    
-    public Nacionalidad (Integer idNacionalidad){
-    	this.idNacionalidad = idNacionalidad;
-    }
-
-	public Nacionalidad(Integer idNacionalidad, String descripcion) {
+	public Nacionalidad() {
 		super();
-		this.idNacionalidad = idNacionalidad;
-		this.descripcion = descripcion;
 	}
 
-	public Integer getIdNacionalidad() {
-		return idNacionalidad;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdNacionalidad(Integer idNacionalidad) {
-		this.idNacionalidad = idNacionalidad;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Set<Persona> getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Set<Persona> persona) {
+		this.persona = persona;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((idNacionalidad == null) ? 0 : idNacionalidad.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 	}
 
@@ -75,17 +76,22 @@ public class Nacionalidad implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Nacionalidad other = (Nacionalidad) obj;
-		if (idNacionalidad == null) {
-			if (other.idNacionalidad != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!idNacionalidad.equals(other.idNacionalidad))
+		} else if (!id.equals(other.id))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Nacionalidad [idNacionalidad=" + idNacionalidad + "]";
+		return "Nacionalidad [id=" + id + ", nombre=" + nombre + "]";
 	}
-    
+
 }

@@ -1,140 +1,130 @@
 package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@XmlRootElement
+@Table(name = "funcionario")
 public class Funcionario implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1329756096802348478L;
+
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 	
-	 private static final long serialVersionUID = 1L;
-	    @Id
-	    @GeneratedValue(strategy = GenerationType.IDENTITY)
-	    @Basic(optional = false)
-	    @NotNull
-	    @Column(name = "idFuncionario", nullable = false)
-	    private Integer idFuncionario;
-	    @Basic(optional = false)
-	    @NotNull
-	    @Size(min = 1, max = 45)
-	    @Column(name = "nombre", nullable = false, length = 45)
-	    private String nombre;
-	    @Basic(optional = false)
-	    @NotNull
-	    @Size(min = 1, max = 45)
-	    @Column(name = "usuario", nullable = false, length = 45)
-	    private String usuario;
-	    @Basic(optional = false)
-	    @NotNull
-	    @Size(min = 1, max = 45)
-	    @Column(name = "password", nullable = false, length = 45)
-	    private String password;
-	    @Column(name = "telefono")
-	    private Integer telefono;
-	    @Size(max = 45)
-	    @Column(name = "correo", length = 45)
-	    private String correo;
-	    @OneToMany(cascade = CascadeType.ALL, mappedBy = "funcionario")
-	    private Collection<Formulario> formularioCollection;
+	private String nombre;
 
-	    public Funcionario() {
-	    }
+	private String usuario;
 
-	    public Funcionario(Integer idFuncionario) {
-	        this.idFuncionario = idFuncionario;
-	    }
+	private String password;
 
-	    public Funcionario(Integer idFuncionario, String nombre, String usuario, String password) {
-	        this.idFuncionario = idFuncionario;
-	        this.nombre = nombre;
-	        this.usuario = usuario;
-	        this.password = password;
-	    }
+	private Integer telefono;
 
-	    public Integer getIdFuncionario() {
-	        return idFuncionario;
-	    }
+	private String correo;
 
-	    public void setIdFuncionario(Integer idFuncionario) {
-	        this.idFuncionario = idFuncionario;
-	    }
+	public Funcionario() {
+	}
 
-	    public String getNombre() {
-	        return nombre;
-	    }
+	public Long getId() {
+		return id;
+	}
 
-	    public void setNombre(String nombre) {
-	        this.nombre = nombre;
-	    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-	    public String getUsuario() {
-	        return usuario;
-	    }
+	public String getNombre() {
+		return nombre;
+	}
 
-	    public void setUsuario(String usuario) {
-	        this.usuario = usuario;
-	    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-	    public String getPassword() {
-	        return password;
-	    }
+	public String getUsuario() {
+		return usuario;
+	}
 
-	    public void setPassword(String password) {
-	        this.password = password;
-	    }
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
 
-	    public Integer getTelefono() {
-	        return telefono;
-	    }
+	public String getPassword() {
+		return password;
+	}
 
-	    public void setTelefono(Integer telefono) {
-	        this.telefono = telefono;
-	    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-	    public String getCorreo() {
-	        return correo;
-	    }
+	public Integer getTelefono() {
+		return telefono;
+	}
 
-	    public void setCorreo(String correo) {
-	        this.correo = correo;
-	    }
+	public void setTelefono(Integer telefono) {
+		this.telefono = telefono;
+	}
 
-	    @XmlTransient
-	    public Collection<Formulario> getFormularioCollection() {
-	        return formularioCollection;
-	    }
+	public String getCorreo() {
+		return correo;
+	}
 
-	    public void setFormularioCollection(Collection<Formulario> formularioCollection) {
-	        this.formularioCollection = formularioCollection;
-	    }
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
 
-	    @Override
-	    public int hashCode() {
-	        int hash = 0;
-	        hash += (idFuncionario != null ? idFuncionario.hashCode() : 0);
-	        return hash;
-	    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		return result;
+	}
 
-	    @Override
-	    public boolean equals(Object object) {
-	        // TODO: Warning - this method won't work in the case the id fields are not set
-	        if (!(object instanceof Funcionario)) {
-	            return false;
-	        }
-	        Funcionario other = (Funcionario) object;
-	        if ((this.idFuncionario == null && other.idFuncionario != null) || (this.idFuncionario != null && !this.idFuncionario.equals(other.idFuncionario))) {
-	            return false;
-	        }
-	        return true;
-	    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Funcionario other = (Funcionario) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
+		return true;
+	}
 
-	    @Override
-	    public String toString() {
-	        return "jpa.entities.Funcionario[ idFuncionario=" + idFuncionario + " ]";
-	    }
-	    
-
+	@Override
+	public String toString() {
+		return "Funcionario [id=" + id + ", nombre=" + nombre + ", usuario="
+				+ usuario + ", password=" + password + ", telefono=" + telefono
+				+ ", correo=" + correo + "]";
+	}
 }
