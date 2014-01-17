@@ -1,0 +1,318 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>PrimeFaces AJAX Enabled SelectOneMenu</title>
+        <h:outputStylesheet name="css/jsfcrud.css"/>
+    </h:head>
+    <h:body>
+    
+        <title>PrimeFaces AJAX Enabled SelectOneMenu</title>
+         <h:outputStylesheet name="/resources/css/jsfcrud.css"/>      
+    
+    
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="20" resizable="false" collapsible="false" closable="false" style="border: none">
+
+            </p:layoutUnit>
+            <p:layoutUnit position="south" size="20" resizable="false" collapsible="false" closable="false" style="border: none">
+
+            </p:layoutUnit>
+            <p:layoutUnit position="east" size="150" resizable="false" collapsible="false" closable="false" style="border: none">
+
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="150" resizable="false" collapsible="false" closable="false" style="border: none">
+
+            </p:layoutUnit>
+            <p:layoutUnit position="center" size="100" resizable="false" collapsible="false" closable="false" style="border: none" styleClass="/resources/css/jsfcrud.css">        
+                <h:form>
+                    <p:panel header="Datos Personales" id="personales" style="border: none">
+                        <h:panelGrid columns="2" style="border: none">
+
+                            <h:panelGrid columns="2" style="margin-left: 15%" styleClass="/resources/css/jsfcrud.css"  columnClasses="coldp1, coldp2">
+
+                                <p:outputLabel for="nombre" value="Nombre:"/>
+                                <p:inputText id="nombre" value="" label="nombre"  required="true"/>
+
+                                <p:outputLabel for="apellido"  value="Apellido:"/>
+                                <p:inputText id="apellido" value="" label="apellido" required="true"/>
+
+                                <p:outputLabel for="dir" value="Dirección:"/>
+                                <p:inputText id="dir" value="" label="dir"/>
+
+                                <p:outputLabel for="tell" value="Telefono Linea:"/>
+                                <p:inputMask id="tell" value="" label="tell" mask="9-999-9999" style="width: 65px"/>
+
+                                <p:outputLabel for="telm" value="Telefono Movil:" />
+                                <p:inputMask id="telm" value="" label="telm" mask="999-999999" style="width: 65px"/>
+
+                            </h:panelGrid>   
+                            <h:panelGrid columns="2" style="margin-left: 15%" styleClass="/resources/css/jsfcrud.css"  columnClasses="coldp3, coldp4">
+
+                                <p:outputLabel for="tipodoc" value="Tipo de documento:"/>
+                                <p:selectOneMenu id="tipodoc" value="" disabled="true">
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="doc" value="Numero Documento:"/>
+                                <p:inputMask id="doc" value="" label="doc" mask="9.999.999-9" style="width: 70px;"/>     
+
+                                <p:outputLabel for="fechan" value="Fecha de Nacimiento:" />
+                                <p:inputMask id="fechan" value="" label="fechan" mask="" style="width: 65px"/>
+                                <!-- <p:calendar value=""  pattern="dd/MM/yyyy" id="fechan" mode="popup" size="6" navigator="true"/> -->  
+                                
+                                <p:outputLabel value="Pais Emisor:" for="paises"/>
+                                <p:selectOneMenu id="paises" value="" style="width: 150px;" disabled="true">
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel value="Ciudad: " for="ciudades"/>
+                                <p:selectOneMenu id="ciudades" value="" style="width: 150px;">
+                                    <f:selectItem itemLabel="Seleccionar ciudad" itemValue=""/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+
+                            </h:panelGrid>
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:panel header="Datos Secundarios" id="secundarios" style="border: none">
+                        <h:panelGrid columns="2">
+
+                            <h:panelGrid columns="2" style="margin-left: 5%"  styleClass="/resources/css/jsfcrud.css" columnClasses="colds1,colds2">    
+
+                                <p:outputLabel for="hijos" value="Cantidad de hijos"/>
+                                <p:inputMask id="hijos" value="" label="hijos" mask="99" style="width: 20px;"/>
+
+                                <p:outputLabel for="estadocivil" value="Estado civil:"/>
+                                <p:selectOneMenu id="estadocivil" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar estado civil"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="parentezco" value="Parentezco:"/>
+                                <p:selectOneMenu id="parentezco" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar parentezco"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="nacionalidad1" value="Nacionalidad:"/>
+                                <p:selectOneMenu id="nacionalidad1" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar nacionalidad 1"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="nacionalidad2" value="Otra Nacionalidad:"/>
+                                <p:selectOneMenu id="nacionalidad2" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar nacionalidad 2"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+
+                                <p:outputLabel for="sexo" value="Sexo:"/>          
+                                <p:selectOneMenu id="sexo" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar sexo"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu> 
+
+                            </h:panelGrid>
+
+                            <h:panelGrid columns="1" style="margin-left: 10%" styleClass="/resources/css/jsfcrud.css" columnClasses="colds3,colds4" >
+                                <h:panelGrid columns="2" >
+                                    <f:facet name="header">  
+                                            Estudios en Uruguay
+                                    </f:facet>  
+                                    
+                                <p:outputLabel for="niveleducativoU" value="Nivel educativo:"/>
+                                <p:selectOneMenu id="niveleducativoU" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar nivel educativo"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                
+                               <h:outputText value="Finalizado: " />  
+                               <p:selectBooleanCheckbox value="" /> 
+                               
+                               <h:outputText value="Titulo obtenido" />
+                               <p:inputText value="" id="tituloObtenidoU"/>
+
+                                <p:outputLabel for="oficioU" value="Oficio en Uruguay:"/>
+                                <p:selectOneMenu id="oficioU" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar oficio"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel for="ocupacionpreviaU" value="Ocupacion en Uruguay:"/>
+                                <p:selectOneMenu id="ocupacionpreviaU" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar ocupacion"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                </h:panelGrid>
+                                
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                    </p:panel>
+                    
+                    <p:panel header="Estadía en el exterior" id="exterior" style="border: none">
+                        <h:panelGrid columns="2">
+                            <h:panelGrid columns="2" style="margin-left: 5%" styleClass="/resources/css/jsfcrud.css" columnClasses="colee1,colee2">
+
+                                <p:outputLabel value="Pais de residencia:" for="paisRes1"/>
+                                <p:selectOneMenu id="paisRes1" value="" style="width: 250px;">
+                                    <f:selectItem itemLabel="Seleccionar pais"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>                                
+                                <h:outputText id="res1" value="Poseía residencia regular: "/>  
+                                <p:selectOneRadio id="opc1" value="" plain="true">  
+                                    <f:selectItem itemLabel="Si" itemValue="1" />  
+                                    <f:selectItem itemLabel="No" itemValue="2" />  
+                                </p:selectOneRadio>  
+                                                                
+                                <p:outputLabel value="Pais de residencia anterior:" for="paisRes2"/>
+                                <p:selectOneMenu id="paisRes2" value="" style="width: 250px;">
+                                    <f:selectItem itemLabel="Seleccionar pais"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>                                
+                                <h:outputText id="res2" value="Poseía residencia regular: " />  
+                                <p:selectOneRadio id="opc2" value="" plain="true">  
+                                    <f:selectItem itemLabel="Si" itemValue="1" />  
+                                    <f:selectItem itemLabel="No" itemValue="2" />  
+                                </p:selectOneRadio>                
+                                
+                                <p:outputLabel for="condResidencia" value="Condiciones de residencia :"/>
+                                <p:selectOneMenu id="condResidencia" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar condicion"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel for="fecham2" value="Fecha de Partida:" />  
+                                <!-- <p:calendar value=""  pattern="dd/MM/yyyy" id="fechan" mode="popup" size="6" navigator="true"/> -->
+                                <p:inputMask id="fecham2" value="" label="fecham2" mask="" style="width: 65px"/>  
+                                
+                                
+                            </h:panelGrid>
+                            
+                            <h:panelGrid columns="2" style="margin-left: 5%" styleClass="/resources/css/jsfcrud.css" columnClasses="colee3,colee4">
+                                                          
+                                <h:panelGrid columns="2" >
+                                    <f:facet name="header">  
+                                            Estudios en el Exterior
+                                    </f:facet>  
+                                    
+                                <p:outputLabel for="niveleducativoE" value="Nivel educativo:"/>
+                                <p:selectOneMenu id="niveleducativoE" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar nivel educativo"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                
+                               <h:outputText value="Finalizado: " />  
+                               <p:selectBooleanCheckbox value="" /> 
+                               
+                               <h:outputText value="Titulo obtenido" />
+                               <p:inputText value="" id="tituloObtenidoE"/>                               
+
+                                <p:outputLabel for="oficioE" value="Oficio en Uruguay:"/>
+                                <p:selectOneMenu id="oficioE" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar oficio"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                
+                                <p:outputLabel for="ocupacionpreviaE" value="Ocupacion en Uruguay:"/>
+                                <p:selectOneMenu id="ocupacionpreviaE" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar ocupacion"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                                </h:panelGrid>
+                                
+                            </h:panelGrid>
+                    
+                               
+                            </h:panelGrid>     
+                        
+                        <h:panelGrid columns="2" styleClass="/resources/css/jsfcrud.css" columnClasses="colm1,colm2">
+                                                                                                            
+                                <h:outputText value="Motivo de la partida:" /> 
+                                <p:selectOneRadio id="motivoPartida" value="" layout="grid" plain="true" onchange="motpart.hide()">  
+                                    <f:selectItems value=""/>
+                                    <f:selectItems value="otro" itemLabel="otro"/>
+                                </p:selectOneRadio>
+                                
+                                <h:outputText value="Otros motivos:" /> 
+                                <p:selectOneRadio id="otromotivo" onchange="motpart.show()" plain="true">
+                                    <f:selectItem itemLabel="Motivo" itemValue="1"/>
+                                </p:selectOneRadio>
+                                
+                                <h:outputLabel value="Indicar motivo:" for="motpart"/>
+                                <p:inputText  id="motpart" value="" style="width: 250px"/>
+                                                                                         
+                                <h:outputText value="Forma de retorno: " /> 
+                                <p:selectOneRadio id="grid" value="" layout="grid" plain="true">  
+                                    <f:selectItems value=""/>  
+                                </p:selectOneRadio> 
+                                
+                                <h:outputLabel value="Motivo retorno:" for="motivr"/>
+                                <p:selectManyCheckbox id="motivr" value="" layout="pageDirection">  
+                                    <f:selectItems value=""/>  
+                                </p:selectManyCheckbox>  
+
+                                <h:outputLabel value="Descripción:" for="motivoretorno"/>
+                                <p:inputText id="motivoretorno" value="" style="width: 250px"/>
+                                
+                        </h:panelGrid>
+
+                    </p:panel>
+
+                    <p:panel header="Arribo al Pais" id="arribo" style="border: none">
+                       <h:panelGrid columns="2" >
+                            <h:panelGrid columns="2" style="margin-right: 2em" styleClass="/resources/css/jsfcrud.css" columnClasses="colap,colap2">
+                                <p:outputLabel for="solhabitacional" value="Situacion habitacional:"/>
+                                <p:selectOneMenu id="solhabitacional" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar solucion habitacional"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>   
+
+                                <p:outputLabel for="salud" value="Cobertura de salud:"/>
+                                <p:selectOneMenu id="salud" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar cobertura salud"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>
+                            </h:panelGrid>
+                            <h:panelGrid columns="2" style="margin-right: 2em" styleClass="/resources/css/jsfcrud.css" columnClasses="colap3,colap4">
+                                
+                                 <p:outputLabel for="sitlaboral" value="Situacion laboral:"/>
+                                <p:selectOneMenu id="sitlaboral" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Selecciocionar situacion laboral"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>       
+
+                                <p:outputLabel for="enseres" value="Enseres y Vehiculos:"/>
+                                <p:selectOneMenu id="enseres" value="" style="width: 250px">
+                                    <f:selectItem itemLabel="Seleccionar enseres"/>
+                                    <f:selectItems value=""/>
+                                </p:selectOneMenu>   
+                            </h:panelGrid>
+                            </h:panelGrid>
+                        
+                        <h:panelGrid columns="2" >
+       
+                            <h:outputText value="Demanda inicial" /> 
+                            <p:selectOneRadio id="demanad" value="" layout="grid" plain="true">  
+                                    <f:selectItems value="  
+                                                   "/>  
+                                </p:selectOneRadio>  
+                            
+                            <h:outputLabel value="Motivo demanda" for="motdem"/>
+                            <p:inputText id="motdem" value="" style="width: 250px"/>
+                            
+                        </h:panelGrid>
+                    </p:panel>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+
