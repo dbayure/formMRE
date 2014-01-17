@@ -56,8 +56,7 @@ public class Persona implements Serializable {
     @Column(name = "cantidad_hijos")
     private int cantidadHijos;
     
-    @JoinColumn(name = "parentezco", referencedColumnName = "idParentezco", nullable = false)
-    @ManyToOne(optional = false)
+    @OneToOne @MapsId
     private Parentezco parentezco;
     
     @OneToOne @MapsId
