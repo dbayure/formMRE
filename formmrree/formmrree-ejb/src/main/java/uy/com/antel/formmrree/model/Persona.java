@@ -50,7 +50,7 @@ public class Persona implements Serializable {
     private String correo;
 
     @OneToOne @MapsId
-    @Column(name="estado_civil")
+    @JoinColumn(name="estado_civil")
     private EstadoCivil estadoCivil;
     
     @Column(name = "cantidad_hijos")
@@ -66,70 +66,72 @@ public class Persona implements Serializable {
     private Set<Nacionalidad> nacionalidades;
     
     @OneToOne @MapsId
-    @Column(name="nivel_educativo_uruguay")
+    @JoinColumn(name="nivel_educativo_uruguay")
     private NivelEducativo nivelEducativoUruguay;
     
     @ManyToMany
-    @Column(name="titulo_obtenido_uruguay")
+    @JoinColumn(name="titulo_obtenido_uruguay")
     private Set<Titulo> tituloObtenidoUruguay;
     
     @OneToOne @MapsId
-    @Column(name="oficio_uruguay")
+    @JoinColumn(name="oficio_uruguay")
     private Oficio oficioUruguay;
     
     @OneToOne @MapsId
-    @Column(name="ocupacion_uruguay")
+    @JoinColumn(name="ocupacion_uruguay")
     private Ocupacion ocupacionUruguay;
     
     @OneToOne @MapsId
+    @JoinColumn(name="motivo_partida")
     private MotivoPartida motivoPartida;
     
     @Column(name = "anio_partida")
     private Integer anioPartida;
     
-    @OneToMany( mappedBy = "persona", orphanRemoval = true )
+    @OneToMany( mappedBy = "persona", orphanRemoval = true )    
     private Set<PaisResidencia> paisesResidencia;
 
     @OneToOne @MapsId
-    @Column(name="nivel_educativo_exterior")
+    @JoinColumn(name="nivel_educativo_exterior")
     private NivelEducativo nivelEducativoExterior;
     
     @ManyToMany
-    @Column(name="titulo_obtenido_exterior")
     private Set<Titulo> tituloObtenidoExterior;    
     
     @OneToOne @MapsId
-    @Column(name="oficio_exterior")
+    @JoinColumn(name="oficio_exterior")
     private Oficio oficioExterior; 
     
     @OneToOne @MapsId
-    @Column(name="ocupacion_exterior")
+    @JoinColumn(name="ocupacion_exterior")
     private Ocupacion ocupacionExterior; 
     
     @OneToOne @MapsId
+    @JoinColumn(name="forma_retorno")
     private FormaRetorno formaRetorno;
     
     @OneToOne @MapsId
+    @JoinColumn(name="motivo_retorno")
     private MotivoRetorno motivoRetorno;    
     
     @OneToOne @MapsId
-    @Column(name="situacion_habitacional_actual")
+    @JoinColumn(name="situacion_habitacional_actual")
     private SituacionHabitacional situacionHabitacionalActual;
     
     @OneToOne @MapsId
-    @Column(name="cobertura_salud")
+    @JoinColumn(name="cobertura_salud")
     private CoberturaSalud coberturaSalud;    
     
     @OneToOne @MapsId
-    @Column(name="situacion_laboral")
+    @JoinColumn(name="situacion_laboral")
     private SituacionLaboral situacionLaboral;
     
     @OneToOne @MapsId
-    @Column(name="enseres_vehiculos")
+    @JoinColumn(name="enseres_vehiculos")
     private EnseresVehiculos enseresVehiculos;   
     
     @OneToOne @MapsId
-    @Column(name="demanda_inicial")
+    @JoinColumn(name="demanda_inicial")
     private DemandaInicial demandaInicial;
     
     
