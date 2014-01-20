@@ -1,31 +1,35 @@
 package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@Table(name = "nivel_educativo")
-public class NivelEducativo implements Serializable {
+@Table(name = "pais")
+public class Pais implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6931416655288148069L;
-	
+	private static final long serialVersionUID = 1694917175389424451L;
+
 	@Id
 	@GeneratedValue
 	private Long id;
-
+	
 	private String nombre;
-	private Boolean finalizado;
+	
+	@ManyToMany(targetEntity = Persona.class)
+	private Set<Persona> personas;
 
-	public NivelEducativo() {
+	public Pais() {
 		super();
 	}
 
@@ -44,14 +48,13 @@ public class NivelEducativo implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
 
-	public Boolean getFinalizado() {
-		return finalizado;
+	public Set<Persona> getPersonas() {
+		return personas;
 	}
 
-	public void setFinalizado(Boolean finalizado) {
-		this.finalizado = finalizado;
+	public void setPersonas(Set<Persona> personas) {
+		this.personas = personas;
 	}
 
 	@Override
@@ -71,7 +74,7 @@ public class NivelEducativo implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		NivelEducativo other = (NivelEducativo) obj;
+		Pais other = (Pais) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -87,7 +90,6 @@ public class NivelEducativo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "NivelEducativo [id=" + id + ", nombre=" + nombre
-				+ ", finalizado=" + finalizado + "]";
+		return "Pais [id=" + id + ", nombre=" + nombre + "]";
 	}
 }

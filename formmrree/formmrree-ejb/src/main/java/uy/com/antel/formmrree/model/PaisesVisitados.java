@@ -4,28 +4,31 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
 @XmlRootElement
-@Table(name = "nivel_educativo")
-public class NivelEducativo implements Serializable {
+@Table(name = "pais_visitados")
+public class PaisesVisitados implements Serializable {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6931416655288148069L;
+	private static final long serialVersionUID = -5435383916556827945L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	@OneToOne @MapsId
+	private Pais pais;
 
-	private String nombre;
-	private Boolean finalizado;
-
-	public NivelEducativo() {
+	public PaisesVisitados() {
 		super();
 	}
 
@@ -37,21 +40,12 @@ public class NivelEducativo implements Serializable {
 		this.id = id;
 	}
 
-	public String getNombre() {
-		return nombre;
+	public Pais getPais() {
+		return pais;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	
-
-	public Boolean getFinalizado() {
-		return finalizado;
-	}
-
-	public void setFinalizado(Boolean finalizado) {
-		this.finalizado = finalizado;
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 
 	@Override
@@ -59,7 +53,7 @@ public class NivelEducativo implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
+		result = prime * result + ((pais == null) ? 0 : pais.hashCode());
 		return result;
 	}
 
@@ -71,23 +65,22 @@ public class NivelEducativo implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		NivelEducativo other = (NivelEducativo) obj;
+		PaisesVisitados other = (PaisesVisitados) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (nombre == null) {
-			if (other.nombre != null)
+		if (pais == null) {
+			if (other.pais != null)
 				return false;
-		} else if (!nombre.equals(other.nombre))
+		} else if (!pais.equals(other.pais))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "NivelEducativo [id=" + id + ", nombre=" + nombre
-				+ ", finalizado=" + finalizado + "]";
+		return "PaisesVisitados [id=" + id + ", pais=" + pais + "]";
 	}
 }
