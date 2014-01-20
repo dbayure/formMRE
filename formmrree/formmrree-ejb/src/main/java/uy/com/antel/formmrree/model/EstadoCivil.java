@@ -2,67 +2,55 @@ package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@XmlRootElement
+@Table(name = "estado_civil")
 public class EstadoCivil implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6677434594789407891L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 	
-	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idEstadoCivil", nullable = false)
-    private Integer idEstadoCivil;
-    @Size(max = 100)
-    @Column(name = "descripcion", length = 100)
-    private String descripcion;
-    
-    public EstadoCivil (){
-    	
-    }
+	private String estado;
 
-    public EstadoCivil (Integer idEstadoCivil){
-    	this.idEstadoCivil = idEstadoCivil;
-    }
-
-	public EstadoCivil(Integer idEstadoCivil, String descripcion) {
+	public EstadoCivil() {
 		super();
-		this.idEstadoCivil = idEstadoCivil;
-		this.descripcion = descripcion;
 	}
 
-	public Integer getIdEstadoCivil() {
-		return idEstadoCivil;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdEstadoCivil(Integer idEstadoCivil) {
-		this.idEstadoCivil = idEstadoCivil;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((idEstadoCivil == null) ? 0 : idEstadoCivil.hashCode());
+		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -75,18 +63,21 @@ public class EstadoCivil implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		EstadoCivil other = (EstadoCivil) obj;
-		if (idEstadoCivil == null) {
-			if (other.idEstadoCivil != null)
+		if (estado == null) {
+			if (other.estado != null)
 				return false;
-		} else if (!idEstadoCivil.equals(other.idEstadoCivil))
+		} else if (!estado.equals(other.estado))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "EstadoCivil [idEstadoCivil=" + idEstadoCivil + "]";
+		return "EstadoCivil [id=" + id + ", estado=" + estado + "]";
 	}
-    
-    
 }

@@ -1,431 +1,477 @@
 package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@XmlRootElement
+@Table(name = "persona")
 public class Persona implements Serializable {
+
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 5495749414331061120L;
 	
-	private static final long serialVersionUID = 1L;
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idPersona", nullable = false)
-    private Integer idPersona;
-    @JoinColumn(name = "idFormulario", referencedColumnName = "idFormulario", nullable = false)
-    @ManyToOne(optional = false)
-    private Formulario formulario;    
-    @JoinColumn(name = "iddocumento", referencedColumnName = "idDocumento", nullable = false)
-    @OneToOne(optional = false)
-    private Documento iddocumento;   
-    @Size(max = 45)
-    @Column(name = "nombre", length = 45)
+    private Long id;
+	
+	@ManyToOne
+	@JoinColumn ( name = "formulario_id", nullable = false )
+    private Formulario formulario;
+    
+    @OneToOne @MapsId
+    private Documento documento;
+    
     private String nombre;
-    @Size(max = 45)
-    @Column(name = "apellido", length = 45)
     private String apellido;
-    @Size(max = 45)
-    @Column(name = "direccion", length = 45)
     private String direccion;
-    @Column(name = "telFijo")
-    private String telFijo;
-    @Column(name = "telMovil")
-    private String telMovil;
-    @Size(max = 45)
-    @Column(name = "correo", length = 45)
+    
+    @Column(name="telefono_fijo")
+    private String telefonoFijo;
+    
+    @Column(name="telefono_movil")
+    private String tellefonoMovil;
     private String correo;
-    @JoinColumn(name = "estadoCivil", referencedColumnName = "idEstadoCivil", nullable = false)
-    @OneToOne(optional = false)
-    private EstadoCivil estadoCivil;	    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantHijos", nullable = false)
-    private int cantHijos;
-    @JoinColumn(name = "parentezco", referencedColumnName = "idParentezco", nullable = false)
-    @OneToOne(optional = false)
-    private Parentezco parentezco;    
-    @JoinColumn(name = "sexo", referencedColumnName = "idSexo", nullable = false)
-    @OneToOne(optional = false)
+
+    @OneToOne @MapsId
+    @Column(name="estado_civil")
+    private EstadoCivil estadoCivil;
+    
+    @Column(name = "cantidad_hijos")
+    private int cantidadHijos;
+    
+    @OneToOne @MapsId
+    private Parentezco parentezco;
+    
+    @OneToOne @MapsId
     private Sexo sexo;    
-    @JoinColumn(name = "nacionalidad1", referencedColumnName = "idNacionalidad")
-    @OneToOne
-    private Nacionalidad nacionalidad1;
-    @JoinColumn(name = "nacionalidad2", referencedColumnName = "idNacionalidad")
-    @OneToOne
-    private Nacionalidad nacionalidad2;    
-    @JoinColumn(name = "nivelEducativoUruguay", referencedColumnName = "idNivelEducativo")
-    @OneToOne
+    
+    @ManyToMany
+    private Set<Nacionalidad> nacionalidades;
+    
+    @OneToOne @MapsId
+    @Column(name="nivel_educativo_uruguay")
     private NivelEducativo nivelEducativoUruguay;
-    @Size(max = 45)
-    @JoinColumn(name = "tituloObtenidoUruguay", referencedColumnName = "idTitulo")
-    @OneToOne(optional = false)
-    private Titulo tituloObtenidoUruguay;    
-    @JoinColumn(name = "oficioUruguay", referencedColumnName = "idOficio")
-    @OneToOne(optional = false)
-    private Oficio oficioUruguay; 
-    @JoinColumn(name = "ocupacionUruguay", referencedColumnName = "idOcupacion")
-    @OneToOne(optional = false)
-    private Ocupacion ocupacionUruguay; 
-    @JoinColumn(name = "motivoPartida", referencedColumnName = "idMotivoPartida", nullable = false)
-    @OneToOne(optional = false)
+    
+    @ManyToMany
+    @Column(name="titulo_obtenido_uruguay")
+    private Set<Titulo> tituloObtenidoUruguay;
+    
+    @OneToOne @MapsId
+    @Column(name="oficio_uruguay")
+    private Oficio oficioUruguay;
+    
+    @OneToOne @MapsId
+    @Column(name="ocupacion_uruguay")
+    private Ocupacion ocupacionUruguay;
+    
+    @OneToOne @MapsId
     private MotivoPartida motivoPartida;
-    @Size(max = 4)
-    @Column(name = "anioPartida")
-    private int anioPartida;
-    @JoinColumn(name = "paisResidencia1", referencedColumnName = "idPais")
-    @OneToOne(optional = false)
-    private Paises paisResidencia1;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "residenciaRegular1", nullable = false)
-    private boolean residenciaRegular1;
-    @JoinColumn(name = "paisResidencia2", referencedColumnName = "idPais")
-    @OneToOne(optional = true)
-    private Paises paisResidencia2;
-    @Basic
-    @Column(name = "residenciaRegular2", nullable = true)
-    private boolean residenciaRegular2;   
-    @JoinColumn(name = "condicionesResidencia", referencedColumnName = "idCondicionesResidencia")
-    @OneToOne(optional = false)
-    private CondicionesResidencia condicionesResidencia;
-    @JoinColumn(name = "nivelEducativoExterior", referencedColumnName = "idNivelEducativo")
-    @OneToOne
+    
+    @Column(name = "anio_partida")
+    private Integer anioPartida;
+    
+    @OneToMany( mappedBy = "persona", orphanRemoval = true )
+    private Set<PaisResidencia> paisesResidencia;
+
+    @OneToOne @MapsId
+    @Column(name="nivel_educativo_exterior")
     private NivelEducativo nivelEducativoExterior;
-    @Size(max = 45)
-    @JoinColumn(name = "tituloObtenidoExterior", referencedColumnName = "idTitulo")
-    @OneToOne
-    private Titulo tituloObtenidoExterior;    
-    @JoinColumn(name = "oficioExterior", referencedColumnName = "idOficio")
-    @OneToOne
+    
+    @ManyToMany
+    @Column(name="titulo_obtenido_exterior")
+    private Set<Titulo> tituloObtenidoExterior;    
+    
+    @OneToOne @MapsId
+    @Column(name="oficio_exterior")
     private Oficio oficioExterior; 
-    @JoinColumn(name = "ocupacionExterior", referencedColumnName = "idOcupacion")
-    @OneToOne(optional = false)
-    private Ocupacion ocupacionExterior;    
-    @JoinColumn(name = "formaRetorno", referencedColumnName = "idFormaRetorno")
-    @OneToOne(optional = false)
+    
+    @OneToOne @MapsId
+    @Column(name="ocupacion_exterior")
+    private Ocupacion ocupacionExterior; 
+    
+    @OneToOne @MapsId
     private FormaRetorno formaRetorno;
-    @JoinColumn(name = "motivoRetorno", referencedColumnName = "idMotivoRetorno")
-    @OneToOne(optional = false)
+    
+    @OneToOne @MapsId
     private MotivoRetorno motivoRetorno;    
-    @JoinColumn(name = "situacionHabitacionalActual", referencedColumnName = "idSituacionHabitacional", nullable = false)
-    @OneToOne(optional = false)
+    
+    @OneToOne @MapsId
+    @Column(name="situacion_habitacional_actual")
     private SituacionHabitacional situacionHabitacionalActual;
-    @JoinColumn(name = "coberturaSalud", referencedColumnName = "idCoberturaSalud", nullable = false)
-    @OneToOne(optional = false)
+    
+    @OneToOne @MapsId
+    @Column(name="cobertura_salud")
     private CoberturaSalud coberturaSalud;    
-    @JoinColumn(name = "situacionLaboral", referencedColumnName = "idSituacionLaboral", nullable = false)
-    @OneToOne(optional = false)
+    
+    @OneToOne @MapsId
+    @Column(name="situacion_laboral")
     private SituacionLaboral situacionLaboral;
-    @JoinColumn(name = "enseresVehiculos", referencedColumnName = "idEnseresVehiculos", nullable = false)
-    @OneToOne(optional = false)
-    private EnseresVehiculos enseresVehiculos;    
-    @JoinColumn(name = "demandaInicial", referencedColumnName = "idDemandaInicial", nullable = false)
-    @OneToOne(optional = false)
+    
+    @OneToOne @MapsId
+    @Column(name="enseres_vehiculos")
+    private EnseresVehiculos enseresVehiculos;   
+    
+    @OneToOne @MapsId
+    @Column(name="demanda_inicial")
     private DemandaInicial demandaInicial;
     
     
-    public Persona () {
-    	
+    public Persona() {
+    	super();
     }
-        
-    public Persona (Integer idPersona){
-    	this.idPersona = idPersona;
-    }
-	public Persona(Integer idPersona, Formulario formulario,
-			Documento iddocumento, String nombre, String apellido,
-			String direccion, String telFijo, String telMovil, String correo,
-			EstadoCivil estadoCivil, int cantHijos, Parentezco parentezco,
-			Sexo sexo, Nacionalidad nacionalidad1, Nacionalidad nacionalidad2,
-			NivelEducativo nivelEducativoUruguay, Titulo tituloObtenidoUruguay,
-			Oficio oficioUruguay, Ocupacion ocupacionUruguay,
-			MotivoPartida motivoPartida, int anioPartida,
-			Paises paisResidencia1, boolean residenciaRegular1,
-			Paises paisResidencia2, boolean residenciaRegular2,
-			CondicionesResidencia condicionesResidencia,
-			NivelEducativo nivelEducativoExterior,
-			Titulo tituloObtenidoExterior, Oficio oficioExterior,
-			Ocupacion ocupacionExterior, FormaRetorno formaRetorno,
-			MotivoRetorno motivoRetorno,
-			SituacionHabitacional situacionHabitacionalActual,
-			CoberturaSalud coberturaSalud, SituacionLaboral situacionLaboral,
-			EnseresVehiculos enseresVehiculos, DemandaInicial demandaInicial) {
-		super();
-		this.idPersona = idPersona;
-		this.formulario = formulario;
-		this.iddocumento = iddocumento;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.direccion = direccion;
-		this.telFijo = telFijo;
-		this.telMovil = telMovil;
-		this.correo = correo;
-		this.estadoCivil = estadoCivil;
-		this.cantHijos = cantHijos;
-		this.parentezco = parentezco;
-		this.sexo = sexo;
-		this.nacionalidad1 = nacionalidad1;
-		this.nacionalidad2 = nacionalidad2;
-		this.nivelEducativoUruguay = nivelEducativoUruguay;
-		this.tituloObtenidoUruguay = tituloObtenidoUruguay;
-		this.oficioUruguay = oficioUruguay;
-		this.ocupacionUruguay = ocupacionUruguay;
-		this.motivoPartida = motivoPartida;
-		this.anioPartida = anioPartida;
-		this.paisResidencia1 = paisResidencia1;
-		this.residenciaRegular1 = residenciaRegular1;
-		this.paisResidencia2 = paisResidencia2;
-		this.residenciaRegular2 = residenciaRegular2;
-		this.condicionesResidencia = condicionesResidencia;
-		this.nivelEducativoExterior = nivelEducativoExterior;
-		this.tituloObtenidoExterior = tituloObtenidoExterior;
-		this.oficioExterior = oficioExterior;
-		this.ocupacionExterior = ocupacionExterior;
-		this.formaRetorno = formaRetorno;
-		this.motivoRetorno = motivoRetorno;
-		this.situacionHabitacionalActual = situacionHabitacionalActual;
-		this.coberturaSalud = coberturaSalud;
-		this.situacionLaboral = situacionLaboral;
-		this.enseresVehiculos = enseresVehiculos;
-		this.demandaInicial = demandaInicial;
+
+
+	public Long getId() {
+		return id;
 	}
-	public Integer getIdPersona() {
-		return idPersona;
+
+
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public void setIdPersona(Integer idPersona) {
-		this.idPersona = idPersona;
-	}
+
+
 	public Formulario getFormulario() {
 		return formulario;
 	}
+
+
 	public void setFormulario(Formulario formulario) {
 		this.formulario = formulario;
 	}
-	public Documento getIddocumento() {
-		return iddocumento;
+
+
+	public Documento getDocumento() {
+		return documento;
 	}
-	public void setIddocumento(Documento iddocumento) {
-		this.iddocumento = iddocumento;
+
+
+	public void setDocumento(Documento documento) {
+		this.documento = documento;
 	}
+
+
 	public String getNombre() {
 		return nombre;
 	}
+
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+
 	public String getApellido() {
 		return apellido;
 	}
+
+
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
+
+
 	public String getDireccion() {
 		return direccion;
 	}
+
+
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	public String getTelFijo() {
-		return telFijo;
+
+
+	public String getTelefonoFijo() {
+		return telefonoFijo;
 	}
-	public void setTelFijo(String telFijo) {
-		this.telFijo = telFijo;
+
+
+	public void setTelefonoFijo(String telefonoFijo) {
+		this.telefonoFijo = telefonoFijo;
 	}
-	public String getTelMovil() {
-		return telMovil;
+
+
+	public String getTellefonoMovil() {
+		return tellefonoMovil;
 	}
-	public void setTelMovil(String telMovil) {
-		this.telMovil = telMovil;
+
+
+	public void setTellefonoMovil(String tellefonoMovil) {
+		this.tellefonoMovil = tellefonoMovil;
 	}
+
+
 	public String getCorreo() {
 		return correo;
 	}
+
+
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
+
+
 	public EstadoCivil getEstadoCivil() {
 		return estadoCivil;
 	}
+
+
 	public void setEstadoCivil(EstadoCivil estadoCivil) {
 		this.estadoCivil = estadoCivil;
 	}
-	public int getCantHijos() {
-		return cantHijos;
+
+
+	public int getCantidadHijos() {
+		return cantidadHijos;
 	}
-	public void setCantHijos(int cantHijos) {
-		this.cantHijos = cantHijos;
+
+
+	public void setCantidadHijos(int cantidadHijos) {
+		this.cantidadHijos = cantidadHijos;
 	}
+
+
 	public Parentezco getParentezco() {
 		return parentezco;
 	}
+
+
 	public void setParentezco(Parentezco parentezco) {
 		this.parentezco = parentezco;
 	}
+
+
 	public Sexo getSexo() {
 		return sexo;
 	}
+
+
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
 	}
-	public Nacionalidad getNacionalidad1() {
-		return nacionalidad1;
+
+
+	public Set<Nacionalidad> getNacionalidades() {
+		return nacionalidades;
 	}
-	public void setNacionalidad1(Nacionalidad nacionalidad1) {
-		this.nacionalidad1 = nacionalidad1;
+
+
+	public void setNacionalidades(Set<Nacionalidad> nacionalidades) {
+		this.nacionalidades = nacionalidades;
 	}
-	public Nacionalidad getNacionalidad2() {
-		return nacionalidad2;
-	}
-	public void setNacionalidad2(Nacionalidad nacionalidad2) {
-		this.nacionalidad2 = nacionalidad2;
-	}
+
+
 	public NivelEducativo getNivelEducativoUruguay() {
 		return nivelEducativoUruguay;
 	}
+
+
 	public void setNivelEducativoUruguay(NivelEducativo nivelEducativoUruguay) {
 		this.nivelEducativoUruguay = nivelEducativoUruguay;
 	}
-	public Titulo getTituloObtenidoUruguay() {
+
+
+	public Set<Titulo> getTituloObtenidoUruguay() {
 		return tituloObtenidoUruguay;
 	}
-	public void setTituloObtenidoUruguay(Titulo tituloObtenidoUruguay) {
+
+
+	public void setTituloObtenidoUruguay(Set<Titulo> tituloObtenidoUruguay) {
 		this.tituloObtenidoUruguay = tituloObtenidoUruguay;
 	}
+
+
 	public Oficio getOficioUruguay() {
 		return oficioUruguay;
 	}
+
+
 	public void setOficioUruguay(Oficio oficioUruguay) {
 		this.oficioUruguay = oficioUruguay;
 	}
+
+
 	public Ocupacion getOcupacionUruguay() {
 		return ocupacionUruguay;
 	}
+
+
 	public void setOcupacionUruguay(Ocupacion ocupacionUruguay) {
 		this.ocupacionUruguay = ocupacionUruguay;
 	}
+
+
 	public MotivoPartida getMotivoPartida() {
 		return motivoPartida;
 	}
+
+
 	public void setMotivoPartida(MotivoPartida motivoPartida) {
 		this.motivoPartida = motivoPartida;
 	}
-	public int getAnioPartida() {
+
+
+	public Integer getAnioPartida() {
 		return anioPartida;
 	}
-	public void setAnioPartida(int anioPartida) {
+
+
+	public void setAnioPartida(Integer anioPartida) {
 		this.anioPartida = anioPartida;
 	}
-	public Paises getPaisResidencia1() {
-		return paisResidencia1;
+
+
+	public Set<PaisResidencia> getPaisesResidencia() {
+		return paisesResidencia;
 	}
-	public void setPaisResidencia1(Paises paisResidencia1) {
-		this.paisResidencia1 = paisResidencia1;
+
+
+	public void setPaisesResidencia(Set<PaisResidencia> paisesResidencia) {
+		this.paisesResidencia = paisesResidencia;
 	}
-	public boolean isResidenciaRegular1() {
-		return residenciaRegular1;
-	}
-	public void setResidenciaRegular1(boolean residenciaRegular1) {
-		this.residenciaRegular1 = residenciaRegular1;
-	}
-	public Paises getPaisResidencia2() {
-		return paisResidencia2;
-	}
-	public void setPaisResidencia2(Paises paisResidencia2) {
-		this.paisResidencia2 = paisResidencia2;
-	}
-	public boolean isResidenciaRegular2() {
-		return residenciaRegular2;
-	}
-	public void setResidenciaRegular2(boolean residenciaRegular2) {
-		this.residenciaRegular2 = residenciaRegular2;
-	}
-	public CondicionesResidencia getCondicionesResidencia() {
-		return condicionesResidencia;
-	}
-	public void setCondicionesResidencia(CondicionesResidencia condicionesResidencia) {
-		this.condicionesResidencia = condicionesResidencia;
-	}
+
+
 	public NivelEducativo getNivelEducativoExterior() {
 		return nivelEducativoExterior;
 	}
+
+
 	public void setNivelEducativoExterior(NivelEducativo nivelEducativoExterior) {
 		this.nivelEducativoExterior = nivelEducativoExterior;
 	}
-	public Titulo getTituloObtenidoExterior() {
+
+
+	public Set<Titulo> getTituloObtenidoExterior() {
 		return tituloObtenidoExterior;
 	}
-	public void setTituloObtenidoExterior(Titulo tituloObtenidoExterior) {
+
+
+	public void setTituloObtenidoExterior(Set<Titulo> tituloObtenidoExterior) {
 		this.tituloObtenidoExterior = tituloObtenidoExterior;
 	}
+
+
 	public Oficio getOficioExterior() {
 		return oficioExterior;
 	}
+
+
 	public void setOficioExterior(Oficio oficioExterior) {
 		this.oficioExterior = oficioExterior;
 	}
+
+
 	public Ocupacion getOcupacionExterior() {
 		return ocupacionExterior;
 	}
+
+
 	public void setOcupacionExterior(Ocupacion ocupacionExterior) {
 		this.ocupacionExterior = ocupacionExterior;
 	}
+
+
 	public FormaRetorno getFormaRetorno() {
 		return formaRetorno;
 	}
+
+
 	public void setFormaRetorno(FormaRetorno formaRetorno) {
 		this.formaRetorno = formaRetorno;
 	}
+
+
 	public MotivoRetorno getMotivoRetorno() {
 		return motivoRetorno;
 	}
+
+
 	public void setMotivoRetorno(MotivoRetorno motivoRetorno) {
 		this.motivoRetorno = motivoRetorno;
 	}
+
+
 	public SituacionHabitacional getSituacionHabitacionalActual() {
 		return situacionHabitacionalActual;
 	}
+
+
 	public void setSituacionHabitacionalActual(
 			SituacionHabitacional situacionHabitacionalActual) {
 		this.situacionHabitacionalActual = situacionHabitacionalActual;
 	}
+
+
 	public CoberturaSalud getCoberturaSalud() {
 		return coberturaSalud;
 	}
+
+
 	public void setCoberturaSalud(CoberturaSalud coberturaSalud) {
 		this.coberturaSalud = coberturaSalud;
 	}
+
+
 	public SituacionLaboral getSituacionLaboral() {
 		return situacionLaboral;
 	}
+
+
 	public void setSituacionLaboral(SituacionLaboral situacionLaboral) {
 		this.situacionLaboral = situacionLaboral;
 	}
+
+
 	public EnseresVehiculos getEnseresVehiculos() {
 		return enseresVehiculos;
 	}
+
+
 	public void setEnseresVehiculos(EnseresVehiculos enseresVehiculos) {
 		this.enseresVehiculos = enseresVehiculos;
 	}
+
+
 	public DemandaInicial getDemandaInicial() {
 		return demandaInicial;
 	}
+
+
 	public void setDemandaInicial(DemandaInicial demandaInicial) {
 		this.demandaInicial = demandaInicial;
 	}
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((idPersona == null) ? 0 : idPersona.hashCode());
+				+ ((apellido == null) ? 0 : apellido.hashCode());
+		result = prime * result
+				+ ((documento == null) ? 0 : documento.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((nombre == null) ? 0 : nombre.hashCode());
 		return result;
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -436,18 +482,54 @@ public class Persona implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Persona other = (Persona) obj;
-		if (idPersona == null) {
-			if (other.idPersona != null)
+		if (apellido == null) {
+			if (other.apellido != null)
 				return false;
-		} else if (!idPersona.equals(other.idPersona))
+		} else if (!apellido.equals(other.apellido))
+			return false;
+		if (documento == null) {
+			if (other.documento != null)
+				return false;
+		} else if (!documento.equals(other.documento))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (nombre == null) {
+			if (other.nombre != null)
+				return false;
+		} else if (!nombre.equals(other.nombre))
 			return false;
 		return true;
 	}
 
+
 	@Override
 	public String toString() {
-		return "Persona [idPersona=" + idPersona + "]";
+		return "Persona [id=" + id + ", formulario=" + formulario
+				+ ", documento=" + documento + ", nombre=" + nombre
+				+ ", apellido=" + apellido + ", direccion=" + direccion
+				+ ", telefonoFijo=" + telefonoFijo + ", tellefonoMovil="
+				+ tellefonoMovil + ", correo=" + correo + ", estadoCivil="
+				+ estadoCivil + ", cantidadHijos=" + cantidadHijos
+				+ ", parentezco=" + parentezco + ", sexo=" + sexo
+				+ ", nacionalidades=" + nacionalidades
+				+ ", nivelEducativoUruguay=" + nivelEducativoUruguay
+				+ ", tituloObtenidoUruguay=" + tituloObtenidoUruguay
+				+ ", oficioUruguay=" + oficioUruguay + ", ocupacionUruguay="
+				+ ocupacionUruguay + ", motivoPartida=" + motivoPartida
+				+ ", anioPartida=" + anioPartida + ", paisesResidencia="
+				+ paisesResidencia + ", nivelEducativoExterior="
+				+ nivelEducativoExterior + ", tituloObtenidoExterior="
+				+ tituloObtenidoExterior + ", oficioExterior=" + oficioExterior
+				+ ", ocupacionExterior=" + ocupacionExterior
+				+ ", formaRetorno=" + formaRetorno + ", motivoRetorno="
+				+ motivoRetorno + ", situacionHabitacionalActual="
+				+ situacionHabitacionalActual + ", coberturaSalud="
+				+ coberturaSalud + ", situacionLaboral=" + situacionLaboral
+				+ ", enseresVehiculos=" + enseresVehiculos
+				+ ", demandaInicial=" + demandaInicial + "]";
 	}
-	
-
 }

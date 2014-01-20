@@ -1,137 +1,188 @@
 package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+
+@Entity
+@XmlRootElement
+@Table(name = "formulario")
 public class Formulario implements Serializable {
-	private static final long serialVersionUID = 1L;
-    @Id
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -703972235105949141L;
+	
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idFormulario", nullable = false)
-    private Integer idFormulario;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fechaEntrevista", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaEntrevista;
-    @Size(max = 500)
-    @Column(name = "observaciones", length = 500)
+    private Long id;
+	
+	@Lob
+	@Column(length = 500)
     private String observaciones;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "estado", nullable = false)
+    
     private char estado;
-    @Column(name = "fechaModificacion")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaModificacion;
-    @JoinColumn(name = "funcionario", referencedColumnName = "idFuncionario", nullable = false)
-    @ManyToOne(optional = false)
+    
+    @OneToOne @MapsId
     private Funcionario funcionario;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idformulario")
-    private Collection<Persona> personas;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_entrevista")    
+    private Date fechaEntrevista;
+        
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_modificacion")
+    private Date fechaModificacion;
+    
+    @OneToMany( mappedBy = "formulario", orphanRemoval = true )
+    private Set<Persona> personas;
 
     public Formulario() {
+    	super();
     }
 
-    public Formulario(Integer idFormulario) {
-        this.idFormulario = idFormulario;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public Formulario(Integer idFormulario, Date fechaEntrevista, char estado) {
-        this.idFormulario = idFormulario;
-        this.fechaEntrevista = fechaEntrevista;
-        this.estado = estado;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public Integer getIdFormulario() {
-        return idFormulario;
-    }
+	public Date getFechaEntrevista() {
+		return fechaEntrevista;
+	}
 
-    public void setIdFormulario(Integer idFormulario) {
-        this.idFormulario = idFormulario;
-    }
+	public void setFechaEntrevista(Date fechaEntrevista) {
+		this.fechaEntrevista = fechaEntrevista;
+	}
 
-    public Date getFechaEntrevista() {
-        return fechaEntrevista;
-    }
+	public String getObservaciones() {
+		return observaciones;
+	}
 
-    public void setFechaEntrevista(Date fechaEntrevista) {
-        this.fechaEntrevista = fechaEntrevista;
-    }
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
 
-    public String getObservaciones() {
-        return observaciones;
-    }
+	public char getEstado() {
+		return estado;
+	}
 
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
+	public void setEstado(char estado) {
+		this.estado = estado;
+	}
 
-    public char getEstado() {
-        return estado;
-    }
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
 
-    public void setEstado(char estado) {
-        this.estado = estado;
-    }
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 
-    public Date getFechaModificacion() {
-        return fechaModificacion;
-    }
+	public Date getFechaModificacion() {
+		return fechaModificacion;
+	}
 
-    public void setFechaModificacion(Date fechaModificacion) {
-        this.fechaModificacion = fechaModificacion;
-    }
+	public void setFechaModificacion(Date fechaModificacion) {
+		this.fechaModificacion = fechaModificacion;
+	}
 
-    public Funcionario getFuncionario() {
-        return funcionario;
-    }
-
-    public void setFuncionario(Funcionario funcionario) {
-        this.funcionario = funcionario;
-    }
-
-    @XmlTransient
-    public Collection<Persona> getPersonas() {
+	public Set<Persona> getPersonas() {
 		return personas;
 	}
 
-	public void setPersonas(Collection<Persona> personas) {
+	public void setPersonas(Set<Persona> personas) {
 		this.personas = personas;
 	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (idFormulario != null ? idFormulario.hashCode() : 0);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + estado;
+		result = prime * result
+				+ ((fechaEntrevista == null) ? 0 : fechaEntrevista.hashCode());
+		result = prime
+				* result
+				+ ((fechaModificacion == null) ? 0 : fechaModificacion
+						.hashCode());
+		result = prime * result
+				+ ((funcionario == null) ? 0 : funcionario.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((observaciones == null) ? 0 : observaciones.hashCode());
+		result = prime * result
+				+ ((personas == null) ? 0 : personas.hashCode());
+		return result;
+	}
 
 	@Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Formulario)) {
-            return false;
-        }
-        Formulario other = (Formulario) object;
-        if ((this.idFormulario == null && other.idFormulario != null) || (this.idFormulario != null && !this.idFormulario.equals(other.idFormulario))) {
-            return false;
-        }
-        return true;
-    }
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Formulario other = (Formulario) obj;
+		if (estado != other.estado)
+			return false;
+		if (fechaEntrevista == null) {
+			if (other.fechaEntrevista != null)
+				return false;
+		} else if (!fechaEntrevista.equals(other.fechaEntrevista))
+			return false;
+		if (fechaModificacion == null) {
+			if (other.fechaModificacion != null)
+				return false;
+		} else if (!fechaModificacion.equals(other.fechaModificacion))
+			return false;
+		if (funcionario == null) {
+			if (other.funcionario != null)
+				return false;
+		} else if (!funcionario.equals(other.funcionario))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (observaciones == null) {
+			if (other.observaciones != null)
+				return false;
+		} else if (!observaciones.equals(other.observaciones))
+			return false;
+		if (personas == null) {
+			if (other.personas != null)
+				return false;
+		} else if (!personas.equals(other.personas))
+			return false;
+		return true;
+	}
 
-    @Override
-    public String toString() {
-        return "jpa.entities.Formulario[ idFormulario=" + idFormulario + " ]";
-    }
-    
-
+	@Override
+	public String toString() {
+		return "Formulario [id=" + id + ", fechaEntrevista=" + fechaEntrevista
+				+ ", observaciones=" + observaciones + ", estado=" + estado
+				+ ", funcionario=" + funcionario + ", fechaModificacion="
+				+ fechaModificacion + ", personas=" + personas + "]";
+	}
 }

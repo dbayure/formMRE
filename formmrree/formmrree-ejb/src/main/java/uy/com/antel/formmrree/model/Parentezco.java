@@ -2,47 +2,39 @@ package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@Entity
+@XmlRootElement
+@Table(name = "parentezco")
 public class Parentezco implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6252075885273128623L;
 	
-	private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idParentezco", nullable = false)
-    private Integer idParentezco;
-    @Size(max = 100)
-    @Column(name = "descripcion", length = 100)
-    private String descripcion;
-    
-    public Parentezco (){
-    	
-    }
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	private String descripcion;
 
-    public Parentezco (Integer idParentezco){
-    	this.idParentezco = idParentezco;
-    }
-
-	public Parentezco(Integer idParentezco, String descripcion) {
+	public Parentezco() {
 		super();
-		this.idParentezco = idParentezco;
-		this.descripcion = descripcion;
 	}
 
-	public Integer getIdParentezco() {
-		return idParentezco;
+	public Long getId() {
+		return id;
 	}
 
-	public void setIdParentezco(Integer idParentezco) {
-		this.idParentezco = idParentezco;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getDescripcion() {
@@ -53,16 +45,13 @@ public class Parentezco implements Serializable {
 		this.descripcion = descripcion;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((idParentezco == null) ? 0 : idParentezco.hashCode());
+				+ ((descripcion == null) ? 0 : descripcion.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -75,17 +64,21 @@ public class Parentezco implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Parentezco other = (Parentezco) obj;
-		if (idParentezco == null) {
-			if (other.idParentezco != null)
+		if (descripcion == null) {
+			if (other.descripcion != null)
 				return false;
-		} else if (!idParentezco.equals(other.idParentezco))
+		} else if (!descripcion.equals(other.descripcion))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Parentezco [idParentezco=" + idParentezco + "]";
+		return "Parentezco [id=" + id + ", descripcion=" + descripcion + "]";
 	}
-    
 }
