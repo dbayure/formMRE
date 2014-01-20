@@ -1,6 +1,7 @@
 package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -15,6 +16,8 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
@@ -85,8 +88,9 @@ public class Persona implements Serializable {
     @JoinColumn(name="motivo_partida")
     private MotivoPartida motivoPartida;
     
-    @Column(name = "anio_partida")
-    private Integer anioPartida;
+    @Column(name = "fecha_partida")
+    @Temporal(TemporalType.DATE)
+    private Date fechaPartida;
     
     @OneToMany( mappedBy = "persona", orphanRemoval = true )    
     private Set<PaisResidencia> paisesResidencia;
@@ -330,13 +334,13 @@ public class Persona implements Serializable {
 	}
 
 
-	public Integer getAnioPartida() {
-		return anioPartida;
+	public Date getFechaPartida() {
+		return fechaPartida;
 	}
 
 
-	public void setAnioPartida(Integer anioPartida) {
-		this.anioPartida = anioPartida;
+	public void setFechaPartida(Date fechaPartida) {
+		this.fechaPartida = fechaPartida;
 	}
 
 
@@ -522,7 +526,7 @@ public class Persona implements Serializable {
 				+ ", tituloObtenidoUruguay=" + tituloObtenidoUruguay
 				+ ", oficioUruguay=" + oficioUruguay + ", ocupacionUruguay="
 				+ ocupacionUruguay + ", motivoPartida=" + motivoPartida
-				+ ", anioPartida=" + anioPartida + ", paisesResidencia="
+				+ ", fechaPartida=" + fechaPartida + ", paisesResidencia="
 				+ paisesResidencia + ", nivelEducativoExterior="
 				+ nivelEducativoExterior + ", tituloObtenidoExterior="
 				+ tituloObtenidoExterior + ", oficioExterior=" + oficioExterior

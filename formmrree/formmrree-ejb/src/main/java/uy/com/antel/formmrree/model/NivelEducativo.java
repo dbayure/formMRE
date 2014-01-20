@@ -23,6 +23,7 @@ public class NivelEducativo implements Serializable {
 	private Long id;
 
 	private String nombre;
+	private Boolean finalizado;
 
 	public NivelEducativo() {
 		super();
@@ -42,6 +43,15 @@ public class NivelEducativo implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	
+
+	public Boolean getFinalizado() {
+		return finalizado;
+	}
+
+	public void setFinalizado(Boolean finalizado) {
+		this.finalizado = finalizado;
 	}
 
 	@Override
@@ -77,6 +87,7 @@ public class NivelEducativo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "NivelEducativo [id=" + id + ", nombre=" + nombre + "]";
+		return "NivelEducativo [id=" + id + ", nombre=" + nombre
+				+ ", finalizado=" + finalizado + "]";
 	}
 }
