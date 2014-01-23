@@ -75,4 +75,12 @@ public class Member implements Serializable {
    public void setPhoneNumber(String phoneNumber) {
       this.phoneNumber = phoneNumber;
    }
+
+	@Override	
+	public String toString() {
+		return "Member [id=" + id + ", name=" + name + ", email=" + email
+				+ ", phoneNumber=" + phoneNumber + "]";
+	}
+   
+   
 }

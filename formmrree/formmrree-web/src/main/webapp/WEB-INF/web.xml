@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+ 
+	<context-param>
+	    <param-name>javax.faces.FACELETS_SKIP_COMMENTS</param-name>
+	    <param-value>true</param-value>
+	</context-param>
+	
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+	
+	<security-constraint>
+		<display-name>Autenticacion Formulario MRREE</display-name>
+		<web-resource-collection>
+			<web-resource-name>Area Segura</web-resource-name>
+			<url-pattern>/formulario/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+            <description/>
+            <role-name>MRREE_FORMADMIN</role-name>
+        </auth-constraint>  
+        <user-data-constraint>
+        	<transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+	</security-constraint>
+	
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<form-login-config>
+			<form-login-page>/login/login.jsf</form-login-page>
+			<form-error-page>/login/error.jsf</form-error-page>
+		</form-login-config>
+	</login-config>
+	
+	<security-role>
+		<role-name>MRREE_FORMADMIN</role-name>
+	</security-role>
+	
+ </web-app>

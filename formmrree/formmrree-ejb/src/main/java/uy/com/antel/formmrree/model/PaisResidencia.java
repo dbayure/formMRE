@@ -2,12 +2,14 @@ package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,10 +25,11 @@ public class PaisResidencia implements Serializable {
 	private static final long serialVersionUID = 1694917175389424451L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne @MapsId
+	@OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pais_id", unique = false)
 	private Pais pais;
 	
 	private Boolean residencia;
@@ -34,7 +37,7 @@ public class PaisResidencia implements Serializable {
 	private String condiciones;
 	
 	@ManyToOne
-	@JoinColumn ( name = "persona_id", nullable = false )
+	@JoinColumn ( name = "persona_id")
 	private Persona persona;
 
 	public PaisResidencia() {

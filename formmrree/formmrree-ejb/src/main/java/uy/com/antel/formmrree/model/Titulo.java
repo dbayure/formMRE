@@ -5,14 +5,18 @@ import java.util.Set;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @XmlRootElement
 @Table(name = "titulo")
+@JsonIgnoreProperties({"personas"})
 public class Titulo implements Serializable {
 
 	/**
@@ -21,13 +25,13 @@ public class Titulo implements Serializable {
 	private static final long serialVersionUID = 4296342220113418940L;
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String nombre;
 	
 	@ManyToMany(targetEntity = Persona.class)
-	private Set<Persona> persona;
+	private Set<Persona> personas;
 
 	public Titulo() {
 		super();
@@ -49,12 +53,12 @@ public class Titulo implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public Set<Persona> getPersona() {
-		return persona;
+	public Set<Persona> getPersonas() {
+		return personas;
 	}
 
-	public void setPersona(Set<Persona> persona) {
-		this.persona = persona;
+	public void setPersona(Set<Persona> personas) {
+		this.personas = personas;
 	}
 
 	@Override

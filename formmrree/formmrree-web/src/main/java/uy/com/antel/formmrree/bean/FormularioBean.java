@@ -1,41 +1,29 @@
 package uy.com.antel.formmrree.bean;
 
-import java.util.logging.Logger;
-
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import uy.com.antel.formmrree.controller.RegistroFormulario;
-import uy.com.antel.formmrree.model.Persona;
 
 
 @ManagedBean(name="formularioBean")
-@RequestScoped
+@ViewScoped
 public class FormularioBean {
-	
-	@Inject
-	private Logger log;
 	
 	@Inject
 	private RegistroFormulario registroFormulario;
 	
-	private Persona persona;
-
-	public Persona getPersona() 
-	{
-		return persona;
-	}
-
-	public void setPersona(Persona persona) 
-	{
-		this.persona = persona;
-	}
-	
-	public void init()
-	{
-		log.info("init Persona");
-		persona = new Persona();
+	public void registro() {
+		try {
+			registroFormulario.registro();
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Registro", "El formulario se registro con éxito!"));  			
+		}
+		catch(Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Registro", "Ocurrió un error al intentar el registro."));  
+		}
 	}
 
 }

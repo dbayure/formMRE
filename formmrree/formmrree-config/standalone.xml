@@ -1,0 +1,22 @@
+<!-- file based -->
+<security-domain name="SDFORMMRREEDEMO" cache-type="default">
+    <authentication>
+        <login-module code="UsersRoles" flag="required">
+            <module-option name="usersProperties" value="${jboss.server.config.dir}/formmrree-users.properties"/>
+            <module-option name="rolesProperties" value="${jboss.server.config.dir}/formmrree-roles.properties"/>
+            <module-option name="realm" value="ApplicationRealm"/>
+            <module-option name="password-stacking" value="useFirstPass"/>
+        </login-module>
+    </authentication>
+</security-domain>
+
+<!-- bd based -->
+<security-domain name="SDFORMMRREEDEMO" cache-type="default">
+    <authentication>
+        <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required">
+            <module-option name="dsJndiName" value="java:jboss/datasources/CrudDSS"/>
+            <module-option name="principalsQuery" value="select password from users where email=?"/>
+            <module-option name="rolesQuery" value="select role, 'Roles' from users u where u.email=?"/>
+        </login-module>
+    </authentication>
+</security-domain>

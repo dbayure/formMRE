@@ -11,9 +11,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @XmlRootElement
 @Table(name = "nacionalidad")
+@JsonIgnoreProperties({"persona"})
 public class Nacionalidad implements Serializable {
 
 	/**
