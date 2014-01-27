@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateful;
 import javax.enterprise.inject.Model;
 import javax.enterprise.inject.Produces;
@@ -18,6 +19,7 @@ import uy.com.antel.formmrree.model.Persona;
 
 @Stateful
 @Model
+@RolesAllowed({"MRREE_FORMADMIN"})
 public class RegistroFormulario {
 
 	@Inject

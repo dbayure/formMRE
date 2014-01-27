@@ -17,9 +17,8 @@ public class JacksonTest {
 	@Test
 	public void test() throws JsonParseException, JsonMappingException, MalformedURLException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-//		Member mem = mapper.readValue(new URL("http://localhost:8080/formmrree/rest/members/1"), Member.class);
-		Member
-		mem = mapper.readValue(new URL("https://190.0.159.93:8443/formmrree/rest/nacionalidades/1"), Member.class);
+		Member mem = mapper.readValue(new URL("https://localhost/formmrree/rest/members/1"), Member.class);
+//		Member mem = mapper.readValue(new URL("https://190.0.159.93:8443/formmrree/rest/nacionalidades/1"), Member.class);
 		System.out.println(mem.toString());
 		Assert.assertNotNull(mem);
 	}

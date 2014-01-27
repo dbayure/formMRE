@@ -16,6 +16,7 @@
 		<web-resource-collection>
 			<web-resource-name>Area Segura</web-resource-name>
 			<url-pattern>/formulario/*</url-pattern>
+			<url-pattern>/coberturaSalud/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
             <description/>
