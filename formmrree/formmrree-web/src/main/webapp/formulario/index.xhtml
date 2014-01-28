@@ -6,296 +6,72 @@
    xmlns:p="http://primefaces.org/ui"
    template="/WEB-INF/templates/default.xhtml">
 	<ui:define name="content">
-		<f:event listener="#{applicationScopeBean.preRenderView}" type="javax.faces.event.PreRenderViewEvent" />
+		
 		<h:form prependId="false" id="form">
-			<h1 style="text-align: center;">Registro de retornantes al país</h1>
+			<h1 style="text-align: center;">Listado de retornantes al país</h1>
 			
-			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />  
+			 <p:toolbar>  
+			    <p:toolbarGroup align="left">  
+			        <p:commandButton  ajax="false" value="Nuevo" icon="ui-icon-document" action="#{formulariosBean.add}" />
+			    </p:toolbarGroup>  
+			  </p:toolbar>  
+			
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			
+			<div style="clear: both;"></div>
+			<br />
+			
+			<p:dataTable id="formularios" var="_formulario" value="#{formularios}" rowKey="#{_formulario.id}" paginator="true" rows="10"
+				selection="#{formulariosBean.selectedFormulario}" selectionMode="single" filteredValue="#{formulariosBean.formulariosFiltrados}"
+				resizableColumns="true" liveResize="true" >
+			
+				<p:column headerText="Id" sortBy="id" filterBy="id" id="id">  
+		            #{_formulario.id}  
+		        </p:column>
+		        
+		        <p:column headerText="Fecha Entrevista" sortBy="fechaEntrevista" filterBy="fechaEntrevista" id="fechaEntrevista">  
+		            #{_formulario.fechaEntrevista}  
+		        </p:column>
+		        
+		        <p:column headerText="Funcionario" sortBy="funcionario" filterBy="funcionario" id="funcionario">  
+		            #{_formulario.funcionario}  
+		        </p:column>
+		        
+		        <p:column headerText="Observaciones" sortBy="observaciones" filterBy="observaciones" id="observaciones">  
+		            #{_formulario.observaciones}  
+		        </p:column>
+		        
+			</p:dataTable>
+			
+			 <h:panelGroup rendered="#{empty formulariosBean.selectedFormulario.personas}">
+		         <em>No hay personas registradas.</em>
+		     </h:panelGroup>
+			
+			<p:dataTable var="_persona" value="#{formulariosBean.selectedFormulario.personas}" 
+				resizableColumns="true" liveResize="true" id="personas" rendered="#{!empty formulariosBean.selectedFormulario.personas}">  
+  
+		  
+		        <f:facet name="header">  
+		            Personas Registradas  
+		        </f:facet>  
+		  
+		        <p:column headerText="Nombre">  
+		            <h:outputText value="#{_persona.nombre}" />  
+		        </p:column>
+		        
+		        <p:column headerText="Apellido">  
+		            <h:outputText value="#{_persona.apellido}" />  
+		        </p:column>    
+		  
+		        <p:column headerText="Tipo Documento">  
+		            <h:outputText value="#{_persona.documento.tipoDocumento.nombre}" />  
+		        </p:column>
+		        
+		        <p:column headerText="Documento">  
+		            <h:outputText value="#{_persona.documento.documento}" />  
+		        </p:column>
+		    </p:dataTable>  
  			
- 			<p:focus context="form"/>  
- 			
-			<p:panel header="Datos Personales" id="personales" style="border: none">
-				<h:panelGrid columns="2" style="border: none">
-					<h:panelGrid columns="2" style="margin-left: 15%" columnClasses="coldp1, coldp2">
-
-						<p:outputLabel for="nombre" value="Nombre:" />
-						<p:inputText id="nombre" value="#{registroFormulario.persona.nombre}" label="nombre" required="true" />
-
-						<p:outputLabel for="apellido" value="Apellido:" />
-						<p:inputText id="apellido" value="#{registroFormulario.persona.apellido}" label="apellido" required="true" />
-
-						<p:outputLabel for="direccion" value="Dirección:" />
-						<p:inputText id="direccion" value="#{registroFormulario.persona.direccion}" label="direccion" />
-
-						<p:outputLabel for="telefonoLinea" value="Telefono Linea:" />
-						<p:inputMask id="telefonoLinea" value="#{registroFormulario.persona.telefonoFijo}" label="telefonoLinea" mask="9-999-9999" />
-
-						<p:outputLabel for="telefonoMovil" value="Telefono Movil:" />
-						<p:inputMask id="telefonoMovil" value="#{registroFormulario.persona.tellefonoMovil}" label="telefonoMovil" mask="999-999999" />
-
-					</h:panelGrid>
-					<h:panelGrid columns="2" style="margin-left: 15%" columnClasses="coldp3, coldp4">
-
-						<p:outputLabel for="tipoDocumento" value="Tipo de documento:" />
-						<p:selectOneMenu id="tipoDocumento" value="#{registroFormulario.persona.documento.tipoDocumento}" required="true">
-							<f:converter converterId="tipoDocumentoConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{tiposDocumento}" var="tipoDocumento" itemLabel="#{tipoDocumento.nombre}" itemValue="#{tipoDocumento}"  />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="documento" value="Numero Documento:" />
-						<p:inputMask id="documento" value="#{registroFormulario.persona.documento.documento}" label="documento" required="true" />
-
-						<p:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
-						<p:calendar
-							value="#{registroFormulario.persona.documento.fechaNacimiento}"
-							pattern="dd/MM/yyyy" id="fechaNacimiento" mode="popup"
-							navigator="true" />
-
-						<p:outputLabel value="Pais Emisor:" for="paisEmisor" />
-						<p:selectOneMenu id="paisEmisor" value="#{registroFormulario.persona.documento.paisEmisor}" required="true">
-							<f:converter converterId="paisConverter" />
-							<f:selectItem itemLabel="Seleccione" itemValue="" />
-							<f:selectItems value="#{paises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel value="Ciudad: " for="ciudad" />
-						<p:selectOneMenu id="ciudad" value="#{registroFormulario.persona.documento.ciudad}" required="true">
-							<f:converter converterId="ciudadConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
-						</p:selectOneMenu>
-					</h:panelGrid>
-				</h:panelGrid>
-			</p:panel>	
-						 		
-			<p:panel header="Datos Secundarios" id="secundarios" style="border: none">
-				<h:panelGrid columns="2">
-					<h:panelGrid columns="2" style="margin-left: 5%" columnClasses="colds1,colds2">
-
-						<p:outputLabel for="hijos" value="Cantidad de hijos" />
-						<p:inputMask id="hijos" value="#{registroFormulario.persona.cantidadHijos}" label="hijos" required="true" />
-
-						<p:outputLabel for="estadoCivil" value="Estado civil:" />
-						<p:selectOneMenu id="estadoCivil" value="#{registroFormulario.persona.estadoCivil}" required="true">
-							<f:converter converterId="estadoCivilConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{estadosCiviles}" var="estadoCivil" itemLabel="#{estadoCivil.estado}" itemValue="#{estadoCivil}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="parentezco" value="Parentezco:" />
-						<p:selectOneMenu id="parentezco" value="#{registroFormulario.persona.parentezco}">
-							<f:converter converterId="parentezcoConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{parentezcos}" var="parentezco" itemLabel="#{parentezco.descripcion}" itemValue="#{parentezco}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="nacionalidades" value="Nacionalidades:" />
-						<p:selectManyMenu id="nacionalidades" value="#{registroFormulario.persona.nacionalidades}" required="true">
-							<f:converter converterId="nacionalidadConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{nacionalidades}" var="nacionalidad" itemLabel="#{nacionalidad.nombre}" itemValue="#{nacionalidad}" />
-						</p:selectManyMenu>
-
-						<p:outputLabel for="sexo" value="Sexo:" />
-						<p:selectOneMenu id="sexo" value="#{registroFormulario.persona.sexo}" required="true">
-							<f:converter converterId="sexoConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{sexos}" var="sexo" itemLabel="#{sexo.sexo}" itemValue="#{sexo}" />
-						</p:selectOneMenu>
-					</h:panelGrid>
-
-					<h:panelGrid columns="1" style="margin-left: 10%" columnClasses="colds3,colds4">
-						<h:panelGrid columns="2">
-							<f:facet name="header">  
-                                    Estudios en Uruguay
-                            </f:facet>
-
-							<p:outputLabel for="nivelEducativoUruguay" value="Nivel educativo:" />
-							<p:selectOneMenu id="nivelEducativoUruguay" value="#{registroFormulario.persona.nivelEducativoUruguay.nivelEducativo}" required="true">
-								<f:converter converterId="nivelEducativoConverter" />
-								<f:selectItem itemLabel="Seleccione..." itemValue="" />
-								<f:selectItems value="#{nivelesEducativos}" var="nivelEducativo" itemLabel="#{nivelEducativo.nombre}" itemValue="#{nivelEducativo}" />
-							</p:selectOneMenu>
-
-							<h:outputText value="Finalizado: " />
-							<p:selectBooleanCheckbox value="#{registroFormulario.persona.nivelEducativoUruguay.finalizado}" />							
-
-							<h:outputText value="Titulo obtenido" for="tituloObtenidoUruguay" />
-							<p:selectManyMenu id="tituloObtenidoUruguay" value="#{registroFormulario.persona.tituloObtenidoUruguay}" required="true">
-								<f:converter converterId="tituloConverter" />
-								<f:selectItem itemLabel="Seleccione..." itemValue="" />
-								<f:selectItems value="#{titulos}" var="titulo" itemLabel="#{titulo.nombre}" itemValue="#{titulo}" />
-							</p:selectManyMenu>
-
-							<p:outputLabel for="oficioUruguay" value="Oficio en Uruguay:" />
-							<p:selectOneMenu id="oficioUruguay" value="#{registroFormulario.persona.oficioUruguay}" required="true">
-								<f:converter converterId="oficioConverter" />
-								<f:selectItem itemLabel="Seleccione..." itemValue="" />
-								<f:selectItems value="#{oficios}" var="oficio" itemLabel="#{oficio.nombre}" itemValue="#{oficio}" />
-							</p:selectOneMenu>
-
-							<p:outputLabel for="ocupacionPreviaUruguay" value="Ocupacion en Uruguay:" />
-							<p:selectOneMenu id="ocupacionPreviaUruguay" value="#{registroFormulario.persona.ocupacionUruguay}" required="true">
-								<f:converter converterId="ocupacionConverter" />
-								<f:selectItem itemLabel="Seleccione..."  itemValue=""/>
-								<f:selectItems value="#{ocupaciones}" var="ocupacion" itemLabel="#{ocupacion.nombre}" itemValue="#{ocupacion}" />
-							</p:selectOneMenu>
-						</h:panelGrid>
-					</h:panelGrid>
-				</h:panelGrid>
-			</p:panel>
-			
-			<p:panel header="Estadía en el exterior" id="exterior" style="border: none">
-				<h:panelGrid columns="2">
-					<h:panelGrid columns="2" style="margin-left: 5%" columnClasses="colee1,colee2">
-
-						<p:outputLabel value="Pais de residencia:" for="paisResidenciaExterior" />
-						<p:selectOneMenu id="paisResidenciaExterior" value="#{registroFormulario.persona.paisesResidencia[0].pais}" required="true">
-							<f:converter converterId="paisConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{paises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais}" />
-						</p:selectOneMenu>
-						
-						<h:outputText for="poseiaResidencia" value="Poseía residencia regular: " />
-						<p:selectOneRadio id="poseiaResidencia" value="#{registroFormulario.persona.paisesResidencia[0].residencia}">
-							<f:selectItem itemLabel="Si" itemValue="true" />
-							<f:selectItem itemLabel="No" itemValue="false" />
-						</p:selectOneRadio>
-						<!-- 
-						<p:outputLabel value="Pais de residencia anterior:" for="paisRes2" />
-						<p:selectOneMenu id="paisRes2" value="#">
-							<f:selectItem itemLabel="Seleccione..." />
-							<f:selectItems value="" var="" itemLabel="" itemValue="" />
-						</p:selectOneMenu>
-						
-						<h:outputText for="res2" value="Poseía residencia regular: " />
-						<p:selectOneRadio id="res2" value="">
-							<f:selectItem itemLabel="Si" itemValue="true" />
-							<f:selectItem itemLabel="No" itemValue="false" />
-						</p:selectOneRadio>
-						-->
-						<p:outputLabel for="condResidencia" value="Condiciones de residencia :" />
-						<p:selectOneMenu id="condResidencia" value="#{registroFormulario.persona.paisesResidencia[0].condiciones}">
-							<f:converter converterId="condicionResidenciaConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{condicionesResidencia}" var="condicionResidencia" itemLabel="#{condicionResidencia.nombre}" itemValue="#{condicionResidencia}" />
-						</p:selectOneMenu>
- 						
-						<p:outputLabel for="fechaPartida" value="Fecha de Partida:" />
-						<p:calendar value="#{registroFormulario.persona.fechaPartida}"
-							pattern="dd/MM/yyyy" id="fechaPartida" mode="popup"
-							navigator="true" />
-
-						<h:outputText value="Motivo de la partida:" />
-						<p:selectOneMenu id="motivoPartida" value="#{registroFormulario.persona.motivoPartida}" required="true">
-							<f:converter converterId="motivoPartidaConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{motivosPartida}" var="motivoPartida" itemLabel="#{motivoPartida.nombre}" itemValue="#{motivoPartida}" />
-						</p:selectOneMenu>
-
-						<h:outputText value="Forma de retorno: " />
-						<p:selectOneMenu id="formaRetorno" value="#{registroFormulario.persona.formaRetorno}" required="true">
-							<f:converter converterId="formaRetornoConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{formasRetorno}" var="formaRetorno" itemLabel="#{formaRetorno.nombre}" itemValue="#{formaRetorno}" />
-						</p:selectOneMenu>
-
-						<h:outputLabel value="Motivo retorno:" for="motivoRetorno" />
-						<p:selectOneMenu id="motivoRetorno" value="#{registroFormulario.persona.motivoRetorno}" required="true">
-							<f:converter converterId="motivoRetornoConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{motivosRetorno}" var="motivoRetorno" itemLabel="#{motivoRetorno.nombre}" itemValue="#{motivoRetorno}" />
-						</p:selectOneMenu>
-
-					</h:panelGrid>
-
-					<h:panelGrid columns="2" style="margin-left: 5%" columnClasses="colee3,colee4">
-						<h:panelGrid columns="2">
-							<f:facet name="header">  
-                                    Estudios en el Exterior
-                            </f:facet>
-
-							<p:outputLabel for="nivelEducativoExterior" value="Nivel educativo:" />
-							<p:selectOneMenu id="nivelEducativoExterior" value="#{registroFormulario.persona.nivelEducativoExterior.nivelEducativo}" required="true">
-								<f:converter converterId="nivelEducativoConverter" />
-								<f:selectItem itemLabel="Seleccione..." itemValue="" />
-								<f:selectItems value="#{nivelesEducativos}" var="nivelEducativo" itemLabel="#{nivelEducativo.nombre}" itemValue="#{nivelEducativo}" />
-							</p:selectOneMenu>
-
-							<h:outputText value="Finalizado: " />
-							<p:selectBooleanCheckbox value="#{registroFormulario.persona.nivelEducativoExterior.finalizado}" />
-
-							<h:outputText value="Titulo obtenido" for="tituloObtenidoExterior" />
-							<p:selectManyMenu id="tituloObtenidoExterior" value="#{registroFormulario.persona.tituloObtenidoExterior}" required="true">
-								<f:converter converterId="tituloConverter" />
-								<f:selectItem itemLabel="Seleccione..." itemValue="" />
-								<f:selectItems value="#{titulos}" var="titulo" itemLabel="#{titulo.nombre}" itemValue="#{titulo}" />
-							</p:selectManyMenu>
-
-							<p:outputLabel for="oficioExterior" value="Oficio en Uruguay:" />
-							<p:selectOneMenu id="oficioExterior" value="#{registroFormulario.persona.oficioExterior}" required="true">
-								<f:converter converterId="oficioConverter" />
-								<f:selectItem itemLabel="Seleccione..." itemValue="" />
-								<f:selectItems value="#{oficios}" var="oficio" itemLabel="#{oficio.nombre}" itemValue="#{oficio}" />
-							</p:selectOneMenu>
-
-							<p:outputLabel for="ocupacionPreviaExterior" value="Ocupacion en Exterior:" />
-							<p:selectOneMenu id="ocupacionPreviaExterior" value="#{registroFormulario.persona.ocupacionExterior}" required="true">
-								<f:converter converterId="ocupacionConverter" />
-								<f:selectItem itemLabel="Seleccione..." itemValue=""/>
-								<f:selectItems value="#{ocupaciones}" var="ocupacion" itemLabel="#{ocupacion.nombre}" itemValue="#{ocupacion}" />
-							</p:selectOneMenu>
-						</h:panelGrid>
-					</h:panelGrid>
-				</h:panelGrid>
-			</p:panel>
-			
-			<p:panel header="Arribo al Pais" id="arribo" style="border: none">
-				<h:panelGrid columns="2">
-					<h:panelGrid columns="2" style="margin-right: 2em" columnClasses="colap,colap2">
-						<p:outputLabel for="situacionHabitacional" value="Situacion habitacional:" />
-						<p:selectOneMenu id="situacionHabitacional" value="#{registroFormulario.persona.situacionHabitacionalActual}" required="true">
-							<f:converter converterId="situacionHabitacionalConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{sitaucionesHabitacionales}" var="situacionesHabitacionales" 
-									itemLabel="#{situacionesHabitacionales.nombre}" itemValue="#{situacionesHabitacionales}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="coberturaSalud" value="Cobertura de salud:" />
-						<p:selectOneMenu id="coberturaSalud" value="#{registroFormulario.persona.coberturaSalud}" required="true">
-							<f:converter converterId="coberturaSaludConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{coberturasSalud}" var="coberturaSalud" itemLabel="#{coberturaSalud.nombre}" itemValue="#{coberturaSalud}" />
-						</p:selectOneMenu>
-
-						<h:outputText for="demandaInicial" value="Demanda inicial" />
-						<p:selectOneMenu id="demandaInicial" value="#{registroFormulario.persona.demandaInicial}" required="true">
-							<f:converter converterId="demandaInicialConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{demandasIniciales}" var="demandaInicial" itemLabel="#{demandaInicial.nombre}" itemValue="#{demandaInicial}" />
-						</p:selectOneMenu>
-					</h:panelGrid>
-
-					<h:panelGrid columns="2" style="margin-right: 2em" columnClasses="colap3,colap4">
-						<p:outputLabel for="situacionLaboral" value="Situacion laboral:" />
-						<p:selectOneMenu id="situacionLaboral" value="#{registroFormulario.persona.situacionLaboral}" required="true">
-							<f:converter converterId="situacionLaboralConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{situacionesLaborales}" var="situacionLaboral" itemLabel="#{situacionLaboral.nombre}" itemValue="#{situacionLaboral}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel for="enseres" value="Enseres y Vehiculos:" />
-						<p:selectOneMenu id="enseres" value="#{registroFormulario.persona.enseresVehiculos}" required="true">
-							<f:converter converterId="enseresVehiculosConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{enseresVehiculos}" var="ensereVehiculo" itemLabel="#{ensereVehiculo.descripcion}" itemValue="#{ensereVehiculo}" />
-						</p:selectOneMenu>
-					</h:panelGrid>
-				</h:panelGrid>
-			</p:panel>
-			<!-- -->
-			<p:commandButton id="register" action="#{formularioBean.registro}" value="Registrar" style="margin-left: 400px;" update="form" />
 		</h:form>
 	</ui:define>
 </ui:composition>
