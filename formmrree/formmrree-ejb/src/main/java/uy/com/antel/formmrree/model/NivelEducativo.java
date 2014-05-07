@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -19,11 +20,10 @@ public class NivelEducativo implements Serializable {
 	private static final long serialVersionUID = -6931416655288148069L;
 	
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	private String nombre;
-	private Boolean finalizado;
 
 	public NivelEducativo() {
 		super();
@@ -45,14 +45,6 @@ public class NivelEducativo implements Serializable {
 		this.nombre = nombre;
 	}
 	
-
-	public Boolean getFinalizado() {
-		return finalizado;
-	}
-
-	public void setFinalizado(Boolean finalizado) {
-		this.finalizado = finalizado;
-	}
 
 	@Override
 	public int hashCode() {
@@ -87,7 +79,6 @@ public class NivelEducativo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "NivelEducativo [id=" + id + ", nombre=" + nombre
-				+ ", finalizado=" + finalizado + "]";
+		return "NivelEducativo [id=" + id + ", nombre=" + nombre + "]";
 	}
 }

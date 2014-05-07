@@ -25,6 +25,14 @@
          <artifactId>jboss-ejb-api_3.1_spec</artifactId>
          <scope>provided</scope>
       </dependency>
+      
+      <dependency>
+        <!-- Annotations for role management -->
+        <groupId>javax.annotation</groupId>
+        <artifactId>jsr250-api</artifactId>
+        <version>1.0</version>
+        <scope>provided</scope>
+    </dependency>
 
       <!-- Import the CDI API, we use provided scope as the API is included 
          in JBoss AS 7 -->
@@ -50,7 +58,14 @@
          <artifactId>hibernate-validator</artifactId>
          <scope>provided</scope>
       </dependency>
-
+	
+	  <dependency>
+      	<groupId>org.codehaus.jackson</groupId>
+      	<artifactId>jackson-jaxrs</artifactId>
+      	<version>1.8.0</version>
+      	<scope>provided</scope>
+      </dependency>
+      
 
       <!-- Test scope dependencies -->
       <dependency>

@@ -24,7 +24,7 @@ public class MemberResourceRESTService {
    private EntityManager em;
 
    @GET
-   @Produces("text/xml")
+   @Produces("application/json")
    public List<Member> listAllMembers() {
       // Use @SupressWarnings to force IDE to ignore warnings about "genericizing" the results of
       // this query
@@ -39,7 +39,7 @@ public class MemberResourceRESTService {
 
    @GET
    @Path("/{id:[0-9][0-9]*}")
-   @Produces("text/xml")
+   @Produces("application/json")
    public Member lookupMemberById(@PathParam("id") long id) {
       return em.find(Member.class, id);
    }

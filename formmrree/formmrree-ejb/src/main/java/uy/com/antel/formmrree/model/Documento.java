@@ -3,12 +3,14 @@ package uy.com.antel.formmrree.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapsId;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -29,11 +31,17 @@ public class Documento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
     private Long id;
 	
-	@OneToOne @MapsId
+	@OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "tipo_documento_id" , unique = false)
     private TipoDocumento tipoDocumento;
     
-    @OneToOne @MapsId       
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "pais_emisor_id",  unique = false)       
     private Pais paisEmisor;
+    
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ciudad_id", unique = false)
+    private Ciudad ciudad;
     
     @Temporal(TemporalType.DATE)
     @Column(name="fecha_nacimiento")
@@ -108,6 +116,14 @@ public class Documento implements Serializable {
 	public void setDocumento(String documento) {
 		this.documento = documento;
 	}
+	
+	public Ciudad getCiudad() {
+		return ciudad;
+	}
+
+	public void setCiudad(Ciudad ciudad) {
+		this.ciudad = ciudad;
+	}
 
 	@Override
 	public int hashCode() {
@@ -151,9 +167,9 @@ public class Documento implements Serializable {
 	@Override
 	public String toString() {
 		return "Documento [id=" + id + ", tipoDocumento=" + tipoDocumento
-				+ ", paisEmisor=" + paisEmisor + ", fechaNacimiento="
-				+ fechaNacimiento + ", fechaEmision=" + fechaEmision
-				+ ", fechaExpiracion=" + fechaExpiracion + ", documento="
-				+ documento + "]";
+				+ ", paisEmisor=" + paisEmisor + ", ciudad=" + ciudad
+				+ ", fechaNacimiento=" + fechaNacimiento + ", fechaEmision="
+				+ fechaEmision + ", fechaExpiracion=" + fechaExpiracion
+				+ ", documento=" + documento + "]";
 	}
 }

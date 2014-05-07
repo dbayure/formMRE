@@ -1,18 +1,24 @@
 package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -34,11 +40,12 @@ public class Persona implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 	
-	@ManyToOne
-	@JoinColumn ( name = "formulario_id", nullable = false )
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn ( name = "formulario_id", referencedColumnName = "id" )
     private Formulario formulario;
     
-    @OneToOne @MapsId
+    @OneToOne(optional = false, cascade = CascadeType.ALL,  orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "documento_id")
     private Documento documento;
     
     private String nombre;
@@ -52,95 +59,122 @@ public class Persona implements Serializable {
     private String tellefonoMovil;
     private String correo;
 
-    @OneToOne @MapsId
-    @JoinColumn(name="estado_civil")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="estado_civil_id", unique = false)
     private EstadoCivil estadoCivil;
     
     @Column(name = "cantidad_hijos")
     private int cantidadHijos;
     
-    @OneToOne @MapsId
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "parentezco_id", unique = false)
     private Parentezco parentezco;
     
-    @OneToOne @MapsId
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "sexo_id", unique = false)
     private Sexo sexo;    
     
-    @ManyToMany
+    @ManyToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "persona_nacionalidad", 
+    		joinColumns = {@JoinColumn(name = "persona_id", referencedColumnName = "id")},
+    		inverseJoinColumns = {@JoinColumn(name = "nacionalidades_id", referencedColumnName = "id")})
     private Set<Nacionalidad> nacionalidades;
     
-    @OneToOne @MapsId
-    @JoinColumn(name="nivel_educativo_uruguay")
-    private NivelEducativo nivelEducativoUruguay;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinTable(name = "nivel_educativo_uruguay",
+    		joinColumns = @JoinColumn(name="persona_id", referencedColumnName="id"),
+    		inverseJoinColumns = @JoinColumn(name="nivel_educativo_persona_id", referencedColumnName="id"))
+    private NivelEducativoPersona nivelEducativoUruguay;
     
-    @ManyToMany
-    @JoinColumn(name="titulo_obtenido_uruguay")
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "persona_titulo_uruguay",
+    		joinColumns = {@JoinColumn(name="persona_id", referencedColumnName="id")},
+    		inverseJoinColumns = {@JoinColumn(name="titulo_obtenido_uruguay_id", referencedColumnName="id")})
     private Set<Titulo> tituloObtenidoUruguay;
     
-    @OneToOne @MapsId
-    @JoinColumn(name="oficio_uruguay")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinTable(name = "oficio_uruguay",
+		joinColumns = @JoinColumn(name="persona_id", referencedColumnName="id"),
+		inverseJoinColumns = @JoinColumn(name="oficio_uruguay_id", referencedColumnName="id"))
     private Oficio oficioUruguay;
     
-    @OneToOne @MapsId
-    @JoinColumn(name="ocupacion_uruguay")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinTable(name = "ocupacion_uruguay",
+		joinColumns = @JoinColumn(name="persona_id", referencedColumnName="id"),
+		inverseJoinColumns = @JoinColumn(name="ocupacion_uruguay_id", referencedColumnName="id"))
     private Ocupacion ocupacionUruguay;
     
-    @OneToOne @MapsId
-    @JoinColumn(name="motivo_partida")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="motivo_partida_id")
     private MotivoPartida motivoPartida;
     
     @Column(name = "fecha_partida")
     @Temporal(TemporalType.DATE)
     private Date fechaPartida;
     
-    @OneToMany( mappedBy = "persona", orphanRemoval = true )    
+    @OneToMany( mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)    
     private Set<PaisResidencia> paisesResidencia;
-
-    @OneToOne @MapsId
-    @JoinColumn(name="nivel_educativo_exterior")
-    private NivelEducativo nivelEducativoExterior;
     
-    @ManyToMany
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinTable(name = "nivel_educativo_exterior",
+		joinColumns = @JoinColumn(name="persona_id", referencedColumnName="id"),
+		inverseJoinColumns = @JoinColumn(name="nivel_educativo_persona_id", referencedColumnName="id"))
+    private NivelEducativoPersona nivelEducativoExterior;
+    
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "persona_titulo_exterior",
+			joinColumns = {@JoinColumn(name="persona_id", referencedColumnName="id")},
+			inverseJoinColumns = {@JoinColumn(name="titulo_obtenido_exterior_id", referencedColumnName="id")})
     private Set<Titulo> tituloObtenidoExterior;    
     
-    @OneToOne @MapsId
-    @JoinColumn(name="oficio_exterior")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinTable(name = "oficio_exterior",
+		joinColumns = @JoinColumn(name="persona_id", referencedColumnName="id"),
+		inverseJoinColumns = @JoinColumn(name="oficio_exterior_id", referencedColumnName="id"))
     private Oficio oficioExterior; 
     
-    @OneToOne @MapsId
-    @JoinColumn(name="ocupacion_exterior")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinTable(name = "ocupacion_exterior",
+		joinColumns = @JoinColumn(name="persona_id", referencedColumnName="id"),
+		inverseJoinColumns = @JoinColumn(name="ocupacion_exterior_id", referencedColumnName="id"))
     private Ocupacion ocupacionExterior; 
     
-    @OneToOne @MapsId
-    @JoinColumn(name="forma_retorno")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="forma_retorno_id")
     private FormaRetorno formaRetorno;
     
-    @OneToOne @MapsId
-    @JoinColumn(name="motivo_retorno")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="motivo_retorno_id")
     private MotivoRetorno motivoRetorno;    
     
-    @OneToOne @MapsId
-    @JoinColumn(name="situacion_habitacional_actual")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="situacion_habitacional_actual_id", unique = false)
     private SituacionHabitacional situacionHabitacionalActual;
     
-    @OneToOne @MapsId
-    @JoinColumn(name="cobertura_salud")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="cobertura_salud_id", unique = false)
     private CoberturaSalud coberturaSalud;    
     
-    @OneToOne @MapsId
-    @JoinColumn(name="situacion_laboral")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="situacion_laboral_id", unique = false)
     private SituacionLaboral situacionLaboral;
     
-    @OneToOne @MapsId
-    @JoinColumn(name="enseres_vehiculos")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="enseres_vehiculos_id", unique = false)
     private EnseresVehiculos enseresVehiculos;   
     
-    @OneToOne @MapsId
-    @JoinColumn(name="demanda_inicial")
+    @OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="demanda_inicial_id", unique = false)
     private DemandaInicial demandaInicial;
     
     
     public Persona() {
     	super();
+    	documento = new Documento();
+    	paisesResidencia = new HashSet<PaisResidencia>();
+    	paisesResidencia.add(new PaisResidencia());
+    	nivelEducativoUruguay = new NivelEducativoPersona();
+    	nivelEducativoExterior = new NivelEducativoPersona();
     }
 
 
@@ -284,12 +318,12 @@ public class Persona implements Serializable {
 	}
 
 
-	public NivelEducativo getNivelEducativoUruguay() {
+	public NivelEducativoPersona getNivelEducativoUruguay() {
 		return nivelEducativoUruguay;
 	}
 
 
-	public void setNivelEducativoUruguay(NivelEducativo nivelEducativoUruguay) {
+	public void setNivelEducativoUruguay(NivelEducativoPersona nivelEducativoUruguay) {
 		this.nivelEducativoUruguay = nivelEducativoUruguay;
 	}
 
@@ -353,13 +387,23 @@ public class Persona implements Serializable {
 		this.paisesResidencia = paisesResidencia;
 	}
 
+	public List<PaisResidencia> getListPaisesResidencia(){
+		List<PaisResidencia> pr = new ArrayList<PaisResidencia>(paisesResidencia);
+		return pr;
+	}
+	
+	public void setListPaisesResidencia (List<PaisResidencia> pr){
+		Set <PaisResidencia> p = new HashSet<PaisResidencia>(pr);
+		this.setPaisesResidencia(p);
+	}
+	
 
-	public NivelEducativo getNivelEducativoExterior() {
+	public NivelEducativoPersona getNivelEducativoExterior() {
 		return nivelEducativoExterior;
 	}
 
 
-	public void setNivelEducativoExterior(NivelEducativo nivelEducativoExterior) {
+	public void setNivelEducativoExterior(NivelEducativoPersona nivelEducativoExterior) {
 		this.nivelEducativoExterior = nivelEducativoExterior;
 	}
 
