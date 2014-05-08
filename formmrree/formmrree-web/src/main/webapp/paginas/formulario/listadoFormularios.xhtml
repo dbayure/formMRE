@@ -227,9 +227,9 @@
 								</p:selectOneRadio>
 			
 								<p:outputLabel for="condResidencia" value="Condiciones de residencia :" />
-								<p:selectOneMenu id="condResidencia" value="#{p.listPaisesResidencia[0].condiciones}">
+								<p:selectOneMenu id="condResidencia" value="#{p.listPaisesResidencia[0].condiciones}" var="condSelec">
 									<f:converter converterId="condicionResidenciaConverter" />
-									<f:selectItem itemLabel="Seleccione..." itemValue="" />
+									<f:selectItem itemLabel="Seleccione..." itemValue="#{condSelec.nombre}" />
 									<f:selectItems value="#{condicionResidencia}" var="condResidencia" itemLabel="#{condResidencia.nombre}" itemValue="#{condResidencia}" />
 								</p:selectOneMenu>
 		 						

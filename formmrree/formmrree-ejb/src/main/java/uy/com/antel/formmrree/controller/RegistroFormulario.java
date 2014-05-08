@@ -14,7 +14,9 @@ import javax.persistence.EntityManager;
 import uy.com.antel.formmrree.enums.Estado;
 import uy.com.antel.formmrree.model.Formulario;
 import uy.com.antel.formmrree.model.Funcionario;
+import uy.com.antel.formmrree.model.PaisResidencia;
 import uy.com.antel.formmrree.model.Persona;
+
 import javax.enterprise.event.Event;
 
 
@@ -46,6 +48,7 @@ public class RegistroFormulario {
 		return _persona;
 	}
 
+	
 	public void registro() throws Exception {		
 		log.info("Registro formulario ");// + _formulario);
 		em.persist(_formulario);

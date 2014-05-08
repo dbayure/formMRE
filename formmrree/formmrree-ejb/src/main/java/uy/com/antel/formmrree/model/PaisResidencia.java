@@ -38,8 +38,8 @@ public class PaisResidencia implements Serializable {
 	@JoinColumn(name = "condiciones_residencia_id", unique = false)
 	private CondicionResidencia condiciones;
 	
-	@ManyToOne (targetEntity = Persona.class, fetch = FetchType.EAGER)
-	@JoinColumn ( name = "persona_id")
+	@ManyToOne (targetEntity = Persona.class, cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
+	@JoinColumn ( name = "persona_id", referencedColumnName = "id")
 	private Persona persona;
 
 	public PaisResidencia() {

@@ -112,7 +112,7 @@ public class Persona implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaPartida;
     
-    @OneToMany( mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)    
+    @OneToMany( mappedBy = "persona", cascade = CascadeType.ALL, targetEntity = PaisResidencia.class, fetch = FetchType.EAGER)
     private Set<PaisResidencia> paisesResidencia;
     
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
@@ -384,17 +384,18 @@ public class Persona implements Serializable {
 
 
 	public void setPaisesResidencia(Set<PaisResidencia> paisesResidencia) {
-		this.paisesResidencia = paisesResidencia;
+		//this.paisesResidencia = paisesResidencia;
+		setPaisesResidencia(paisesResidencia);
 	}
 
 	public List<PaisResidencia> getListPaisesResidencia(){
+		paisesResidencia = getPaisesResidencia();
 		List<PaisResidencia> pr = new ArrayList<PaisResidencia>(paisesResidencia);
 		return pr;
 	}
 	
 	public void setListPaisesResidencia (List<PaisResidencia> pr){
-		Set <PaisResidencia> p = new HashSet<PaisResidencia>(pr);
-		this.setPaisesResidencia(p);
+		this.paisesResidencia = new HashSet<PaisResidencia>(pr);
 	}
 	
 
