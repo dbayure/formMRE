@@ -1,7 +1,6 @@
 package uy.com.antel.formmrree.converter;
 
 import java.net.URL;
-import java.util.ArrayList;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -13,37 +12,36 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import uy.com.antel.formmrree.model.Pais;
-import uy.com.antel.formmrree.model.PaisResidencia;
+import uy.com.antel.formmrree.model.Rol;
 
-@FacesConverter(forClass = PaisResidencia.class, value = "paisResidenciaConverter")
-public class PaisResidenciaConverter implements Converter {
+@FacesConverter(forClass = Rol.class, value = "rolConverter")
+public class RolConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value.trim().equals("")) {
 			value = ((HttpServletRequest) context.getExternalContext().getRequest()).getParameter(component.getClientId()+"_input");
+//			return null;
 		}
-		PaisResidencia paisResidencia = null;
+		Rol rol = null;
 		try {
 			ObjectMapper mapper = new ObjectMapper();	
-			Pais pais = mapper.readValue(new URL( context.getExternalContext().getRequestScheme() + "://" + context.getExternalContext().getRequestServerName()
+			rol = mapper.readValue(new URL( context.getExternalContext().getRequestScheme() + "://" + context.getExternalContext().getRequestServerName()
 					+ ":"  + context.getExternalContext().getRequestServerPort() + context.getExternalContext().getRequestContextPath() 
-					+ "/rest/paises/" + value), Pais.class);
-
-			paisResidencia = new PaisResidencia();
-			paisResidencia.setPais(pais);
+					+ "/rest/roles/" + value), Rol.class);
 		}
 		catch(Exception e) {
-			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Conversion", "Pais Residencia no válido"));
+			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Conversion", "Rol no válido"));
 		}
-		return paisResidencia;
+		return rol;
 	}
 
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
-		if (value == null || value.equals("") || value instanceof ArrayList<?>) {
+		if (value == null || value.equals("")) {
             return "";
         } else {
-        	return String.valueOf( ((Pais)value).getId()  );
+        	return String.valueOf( ((Rol)value).getId()  );
         }
 	}
+
+	
 }

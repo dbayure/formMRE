@@ -91,7 +91,7 @@
 				<p:column>
 					<p:panel header="Datos Personales" id="personales" style="border: none" >
 					<p:panelGrid columns="2" styleClass="noBorders" >
-					<p:panelGrid columns="2" style="margin-left: 15%" columnClasses="coldp1, coldp2" styleClass="noBorders">
+					<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
 
 						<p:outputLabel for="nombre" value="Nombre:" />
 						<p:inputText id="nombre" value="#{p.nombre}" required="true" />
@@ -108,9 +108,15 @@
 						<p:outputLabel for="telefonoMovil" value="Telefono Movil:" />
 						<p:inputMask id="telefonoMovil" value="#{p.tellefonoMovil}" label="telefonoMovil" mask="999-999999" />
 
+						<p:outputLabel for="correo" value="Correo Electronico:" />
+						<p:inputMask id="correo" value="#{p.correo}" label="correo" />
+						
 					</p:panelGrid>
-					<p:panelGrid columns="2" style="margin-left: 15%" columnClasses="coldp3, coldp4" styleClass="noBorders">
-
+					<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
+						<f:facet name="header">  
+		                    Documento De Identidad
+		                </f:facet>
+		                
 						<p:outputLabel for="tipoDocumento" value="Tipo de documento:" />
 						<p:selectOneMenu id="tipoDocumento" value="#{p.documento.tipoDocumento}" required="true">
 							<f:converter converterId="tipoDocumentoConverter" />
@@ -146,7 +152,7 @@
 						 		
 					<p:panel header="Datos Secundarios" id="secundarios" >
 						<p:panelGrid columns="2" styleClass="noBorders">
-							<p:panelGrid columns="2" style="margin-left: 5%" columnClasses="colds1,colds2" styleClass="noBorders">
+							<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
 		
 								<p:outputLabel for="hijos" value="Cantidad de hijos" />
 								<p:inputMask id="hijos" value="#{p.cantidadHijos}" label="hijos" required="true" />
@@ -175,7 +181,7 @@
 								</p:selectOneMenu>
 							</p:panelGrid>
 		
-							<p:panelGrid columns="1" style="margin-left: 10%" columnClasses="colds3,colds4" styleClass="noBorders">
+							<p:panelGrid columns="1" style="margin-left: 15%"  styleClass="noBorders">
 								<p:panelGrid columns="2" styleClass="noBorders">
 									<f:facet name="header">  
 		                                    Estudios en Uruguay
@@ -211,7 +217,7 @@
 			
 					<p:panel header="Estadía en el exterior" id="exterior" >
 						<p:panelGrid columns="2" styleClass="noBorders">
-							<p:panelGrid columns="2" style="margin-left: 5%" columnClasses="colee1,colee2" styleClass="noBorders">
+							<p:panelGrid columns="2" style="margin-left: 15%" styleClass="noBorders">
 		
 								<p:outputLabel value="Pais de residencia:" for="paisResidenciaExterior" />
 								<p:selectOneMenu id="paisResidenciaExterior" value="#{p.listPaisesResidencia[0].pais}" var="paisSelec" required="true">
@@ -233,9 +239,9 @@
 									<f:selectItems value="#{condicionResidencia}" var="condResidencia" itemLabel="#{condResidencia.nombre}" itemValue="#{condResidencia}" />
 								</p:selectOneMenu>
 		 						
-								<p:outputLabel for="fechaPartida" value="Fecha de Partida:" />
+								<p:outputLabel for="fechaPartida" value="Año de Partida:" />
 								<p:calendar value="#{p.fechaPartida}" label="#{p.fechaPartida}"
-									pattern="dd/MM/yyyy" id="fechaPartida" mode="popup"
+									pattern="yyyy" id="fechaPartida" mode="popup"
 									navigator="true" />
 		
 								<h:outputText value="Motivo de la partida:" />
@@ -261,7 +267,7 @@
 		
 							</p:panelGrid>
 		
-							<p:panelGrid columns="2" style="margin-left: 5%" columnClasses="colee3,colee4" styleClass="noBorders">
+							<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
 								<p:panelGrid columns="2" styleClass="noBorders">
 									<f:facet name="header">  
 		                                    Estudios en el Exterior
@@ -299,7 +305,7 @@
 					
 					<p:panel header="Arribo al Pais" id="arribo" style="border: none" styleClass="noBorders">
 						<p:panelGrid columns="2" styleClass="noBorders">
-							<p:panelGrid columns="2" style="margin-right: 2em" columnClasses="colap,colap2" styleClass="noBorders">
+							<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
 								<p:outputLabel for="situacionHabitacional" value="Situacion habitacional:" />
 								<p:selectOneMenu id="situacionHabitacional" value="#{p.situacionHabitacionalActual}" var="sitSelec" required="true">
 									<f:converter converterId="situacionHabitacionalConverter" />
@@ -322,7 +328,7 @@
 								</p:selectOneMenu>
 							</p:panelGrid>
 		
-							<p:panelGrid columns="2" style="margin-right: 2em" columnClasses="colap3,colap4" styleClass="noBorders">
+							<p:panelGrid columns="2" style="margin-left: 15%" styleClass="noBorders">
 								<p:outputLabel for="situacionLaboral" value="Situacion laboral:" />
 								<p:selectOneMenu id="situacionLaboral" value="#{p.situacionLaboral}" var="sitSelec" required="true">
 									<f:converter converterId="situacionLaboralConverter" />

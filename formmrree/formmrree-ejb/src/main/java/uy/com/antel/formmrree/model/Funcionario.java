@@ -3,9 +3,12 @@ package uy.com.antel.formmrree.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -32,6 +35,18 @@ public class Funcionario implements Serializable {
 	private Integer telefono;
 
 	private String correo;
+	
+    @OneToOne(orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name = "rol_id", unique = false)
+    private Rol rol;
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
+	}
 
 	public Funcionario() {
 	}
@@ -125,6 +140,6 @@ public class Funcionario implements Serializable {
 	public String toString() {
 		return "Funcionario [id=" + id + ", nombre=" + nombre + ", usuario="
 				+ usuario + ", password=" + password + ", telefono=" + telefono
-				+ ", correo=" + correo + "]";
+				+ ", correo=" + correo + ", rol=" + rol + "]";
 	}
 }

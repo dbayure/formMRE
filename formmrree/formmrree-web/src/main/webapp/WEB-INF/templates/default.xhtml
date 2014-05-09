@@ -23,6 +23,7 @@
         </p:submenu>
   
         <p:submenu label="Administración Sistema" icon="ui-icon-gear">
+        	<p:menuitem value="Beneficio" url="/paginas/beneficio/" />
         	<p:menuitem value="Ciudad" url="#" />  
             <p:menuitem value="Cobertura Salud" url="/paginas/coberturaSalud/" />
             <p:menuitem value="Condiciones Residencia" url="/paginas/condicionesResidencia/" />
@@ -44,12 +45,15 @@
             <p:menuitem value="Situación Laboral" url="/paginas/situacionLaboral/" />
             <p:menuitem value="Tipo Documento" url="/paginas/tipoDocumento/" />
             <p:menuitem value="Título" url="/paginas/titulo/" />
+            <p:menuitem value="Vulnerabilidades" url="/paginas/vulnerabilidad/" />
         </p:submenu>  
   
         <f:facet name="options">
         	<h:outputText value="Usuario: #{request.remoteUser}" style="margin-right: 10px;" />
-            <p:commandButton ajax="false" value="Logout" icon="ui-icon-extlink" action="#{sessionBean.logout}" />  
-        </f:facet>  
+            <p:commandButton ajax="false" value="Logout" icon="ui-icon-extlink" action="#{sessionBean.logout}" />
+            <p:commandButton ajax="false" value="Usuarios" icon="ui-icon-gear" action="#{formulariosBean.usuarios}" />    
+        </f:facet> 
+
     </p:menubar> 
     </h:form> 	  
 	  </div>

@@ -16,7 +16,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -63,7 +65,35 @@ public class Formulario implements Serializable {
     @OneToMany( mappedBy = "formulario", cascade = CascadeType.ALL , orphanRemoval = true, fetch = FetchType.EAGER )
     private List<Persona> personas;
 
-    public Formulario() {
+    @ManyToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "situacion_vulnerabilidad", 
+    		joinColumns = {@JoinColumn(name = "formulario_id", referencedColumnName = "id")},
+    		inverseJoinColumns = {@JoinColumn(name = "vulnerabilidad_id", referencedColumnName = "id")})
+    private Set<Vulnerabilidad> vulnerabilidades;
+    
+    @ManyToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "beneficios", 
+    		joinColumns = {@JoinColumn(name = "formulario_id", referencedColumnName = "id")},
+    		inverseJoinColumns = {@JoinColumn(name = "beneficio_id", referencedColumnName = "id")})
+    private Set<Beneficio> beneficio;
+    
+    public Set<Beneficio> getBeneficio() {
+		return beneficio;
+	}
+
+	public void setBeneficio(Set<Beneficio> beneficio) {
+		this.beneficio = beneficio;
+	}
+
+	public Set<Vulnerabilidad> getVulnerabilidades() {
+		return vulnerabilidades;
+	}
+
+	public void setVulnerabilidades(Set<Vulnerabilidad> vulnerabilidades) {
+		this.vulnerabilidades = vulnerabilidades;
+	}
+
+	public Formulario() {
     	super();
     	personas = new ArrayList<Persona>();
     }
