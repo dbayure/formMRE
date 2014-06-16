@@ -295,19 +295,19 @@
 			            <p:outputLabel value="Regitro: "/>
 			            <p:inputTextarea id="observaciones" value="#{formularioBean.registroFormulario.formulario.observaciones}" rows="5" cols="100"/>
 			       		
-			       		<p:outputLabel for="vulnerabilidad" value="Vulnerabilidades : " />
-						<p:selectOneMenu id="vulnerabilidad" value="#{formularioBean.registroFormulario.formulario.vulnerabilidades}" required="true">
-							<f:converter converterId="vulnerabilidadConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{vulnerabilidades}" var="vul" itemLabel="#{vul.vulnerabilidad}" itemValue="#{vul}" />
-						</p:selectOneMenu>
+<!-- 			       		<p:outputLabel for="vulnerabilidad" value="Vulnerabilidades : " /> -->
+<!-- 						<p:selectOneMenu id="vulnerabilidad" value="#{formularioBean.registroFormulario.formulario.vulnerabilidades}" required="true"> -->
+<!-- 							<f:converter converterId="vulnerabilidadConverter" /> -->
+<!-- 							<f:selectItem itemLabel="Seleccione..." itemValue="" /> -->
+<!-- 							<f:selectItems value="#{vulnerabilidades}" var="vul" itemLabel="#{vul.vulnerabilidad}" itemValue="#{vul}" /> -->
+<!-- 						</p:selectOneMenu> -->
 						
-			       		<p:outputLabel for="beneficio" value="Beneficios : " />
-						<p:selectOneMenu id="beneficio" value="#{formularioBean.registroFormulario.formulario.beneficio}" required="true">
-							<f:converter converterId="beneficioConverter" />
-							<f:selectItem itemLabel="Seleccione..." itemValue="" />
-							<f:selectItems value="#{beneficio}" var="ben" itemLabel="#{ben.beneficio}" itemValue="#{ben}" />
-						</p:selectOneMenu>        
+<!-- 			       		<p:outputLabel for="beneficio" value="Beneficios : " /> -->
+<!-- 						<p:selectOneMenu id="beneficio" value="#{formularioBean.registroFormulario.formulario.beneficio}" required="true"> -->
+<!-- 							<f:converter converterId="beneficioConverter" /> -->
+<!-- 							<f:selectItem itemLabel="Seleccione..." itemValue="" /> -->
+<!-- 							<f:selectItems value="#{beneficio}" var="ben" itemLabel="#{ben.beneficio}" itemValue="#{ben}" /> -->
+<!-- 						</p:selectOneMenu>         -->
 			        </h:panelGrid>  
 			        <p:commandButton id="submitButton" value="Confirmar" action="#{formulariosBean.home}" actionListener="#{formularioBean.registrar}" oncomplete="PF('dlg').hide();"/>  
 			    </h:form>  
