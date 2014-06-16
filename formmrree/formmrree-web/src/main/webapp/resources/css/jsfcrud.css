@@ -20,14 +20,14 @@ table {
 form.jsfcrud_list_form th, td th {
     font-size: x-small;
     color: #4e6a71;
-    border-top-style: solid;
-    border-bottom-style: solid;
-    border-left-style: solid;
-    border-right-style: solid;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
+    border-top-style: none;
+    border-bottom-style: none;
+    border-left-style: none;
+    border-right-style: none;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
     border-top-color: #b2d5d6;
     border-bottom-color: #b2d5d6;
     border-left-color: #90b4bd;
@@ -52,10 +52,10 @@ form.jsfcrud_list_form td, td td {
     border-bottom-style: none;
     border-left-style: none;
     border-right-style: none;
-    border-top-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
+    border-top-width: 0px;
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
     border-top-color: #b2d5d6;
     border-bottom-color: #b2d5d6;
     border-left-color: #b2d5d6;

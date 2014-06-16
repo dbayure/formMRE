@@ -8,8 +8,8 @@
    <ui:define name="content">
       <h1 style="text-align: center;">Administración Oficio</h1>
 	
-
-      <h:form id="form" prependId="false">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <h:form id="form" prependId="false" acceptcharset="UTF-8" >
          <h2>Registro</h2>
          
          <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
@@ -37,7 +37,7 @@
         	<p:ajax event="rowEdit" listener="#{oficioBean.onEdit}" update=":form:messages" />  
         	<p:ajax event="rowEditCancel" listener="#{oficioBean.onCancel}" update=":form:messages" />  
         	 
-        	 <p:column headerText="Id" style="width:5%">
+        	 <p:column headerText="Id" style="width:5%" sortBy="#{_oficio.id}" >
         	 	<h:outputText value="#{_oficio.id}" />
         	 </p:column>
         	 

@@ -1,13 +1,10 @@
 package uy.com.antel.formmrree.model;
 
 import java.io.Serializable;
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,17 +23,7 @@ public class Vulnerabilidad implements Serializable {
 	private Long id;
 	
 	private String vulnerabilidad;
-	
-	@ManyToMany(targetEntity = Persona.class)
-	private Set<Formulario> formulario;
 
-	public Set<Formulario> getFormulario() {
-		return formulario;
-	}
-
-	public void setFormulario(Set<Formulario> formulario) {
-		this.formulario = formulario;
-	}
 
 	public Vulnerabilidad() {
 		super();
@@ -57,6 +44,7 @@ public class Vulnerabilidad implements Serializable {
 	public void setVulnerabilidad(String vulnerabilidad) {
 		this.vulnerabilidad = vulnerabilidad;
 	}
+	
 
 	@Override
 	public int hashCode() {
@@ -92,6 +80,6 @@ public class Vulnerabilidad implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Vulnerabilidad [id=" + id + ", vulnerabilidad=" + vulnerabilidad + ", formulario=" + formulario + "]";
+		return "Vulnerabilidad [id=" + id + ", vulnerabilidad=" + vulnerabilidad + "]";
 	}
 }

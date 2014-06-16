@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -29,7 +28,7 @@ public class PaisResidencia implements Serializable {
 	private Long id;
 	
 	@OneToOne(cascade = CascadeType.MERGE, orphanRemoval = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "pais_id", unique = false)
+    @JoinColumn(name = "pais_id", unique = false, updatable = true)
 	private Pais pais;
 	
 	private Boolean residencia;
@@ -38,8 +37,8 @@ public class PaisResidencia implements Serializable {
 	@JoinColumn(name = "condiciones_residencia_id", unique = false)
 	private CondicionResidencia condiciones;
 	
-	@ManyToOne (targetEntity = Persona.class, cascade = CascadeType.ALL ,fetch = FetchType.EAGER)
-	@JoinColumn ( name = "persona_id", referencedColumnName = "id")
+	@OneToOne (targetEntity = Persona.class, fetch = FetchType.EAGER, orphanRemoval = true)
+	@JoinColumn ( name = "persona_id")
 	private Persona persona;
 
 	public PaisResidencia() {

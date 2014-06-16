@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,8 +32,8 @@ public class Ciudad implements Serializable {
 	
 	private String nombre;
 	
-	@ManyToOne(cascade = CascadeType.MERGE)
-	@JoinColumn ( name = "pais_id", nullable = false )
+	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinColumn ( name = "pais_id", nullable = true )
 	private Pais pais;
 
 	public Ciudad() {

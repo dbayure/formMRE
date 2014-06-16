@@ -14,7 +14,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import uy.com.antel.formmrree.model.Nacionalidad;
 import uy.com.antel.formmrree.model.Vulnerabilidad;
 
 @RequestScoped

@@ -20,7 +20,7 @@ public class VulnerabilidadConverter implements Converter {
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value.trim().equals("")) {
 			value = ((HttpServletRequest) context.getExternalContext().getRequest()).getParameter(component.getClientId()+"_input");
-//			return null;
+			
 		}
 		Vulnerabilidad vulnerabildad = null;
 		try {
@@ -30,6 +30,7 @@ public class VulnerabilidadConverter implements Converter {
 					+ "/rest/vulnerabilidades/" + value), Vulnerabilidad.class);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Conversion", "Vulnerabilidad no válida"));
 		}
 		return vulnerabildad;

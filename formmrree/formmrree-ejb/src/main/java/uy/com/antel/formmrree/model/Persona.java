@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +18,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -112,8 +110,8 @@ public class Persona implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaPartida;
     
-    @OneToMany( mappedBy = "persona", cascade = CascadeType.ALL, targetEntity = PaisResidencia.class, fetch = FetchType.EAGER)
-    private Set<PaisResidencia> paisesResidencia;
+    @OneToOne( mappedBy = "persona", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)    
+    private PaisResidencia paisResidencia;
     
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.EAGER)
     @JoinTable(name = "nivel_educativo_exterior",
@@ -171,10 +169,12 @@ public class Persona implements Serializable {
     public Persona() {
     	super();
     	documento = new Documento();
-    	paisesResidencia = new HashSet<PaisResidencia>();
-    	paisesResidencia.add(new PaisResidencia());
+    	paisResidencia = new PaisResidencia();
     	nivelEducativoUruguay = new NivelEducativoPersona();
     	nivelEducativoExterior = new NivelEducativoPersona();
+    	nacionalidades =  new HashSet<Nacionalidad>();
+    	tituloObtenidoUruguay = new HashSet<Titulo>();
+    	tituloObtenidoExterior = new HashSet<Titulo>();
     }
 
 
@@ -317,7 +317,15 @@ public class Persona implements Serializable {
 		this.nacionalidades = nacionalidades;
 	}
 
+	
+	public List<Nacionalidad> getListNacionalidades (){
+		return (new ArrayList<Nacionalidad>(nacionalidades));
+	}
 
+	public void setListNacionalidades(List<Nacionalidad> nac){
+		this.nacionalidades = new HashSet<Nacionalidad>(nac);
+	}
+	
 	public NivelEducativoPersona getNivelEducativoUruguay() {
 		return nivelEducativoUruguay;
 	}
@@ -326,18 +334,7 @@ public class Persona implements Serializable {
 	public void setNivelEducativoUruguay(NivelEducativoPersona nivelEducativoUruguay) {
 		this.nivelEducativoUruguay = nivelEducativoUruguay;
 	}
-
-
-	public Set<Titulo> getTituloObtenidoUruguay() {
-		return tituloObtenidoUruguay;
-	}
-
-
-	public void setTituloObtenidoUruguay(Set<Titulo> tituloObtenidoUruguay) {
-		this.tituloObtenidoUruguay = tituloObtenidoUruguay;
-	}
-
-
+	
 	public Oficio getOficioUruguay() {
 		return oficioUruguay;
 	}
@@ -378,26 +375,14 @@ public class Persona implements Serializable {
 	}
 
 
-	public Set<PaisResidencia> getPaisesResidencia() {
-		return paisesResidencia;
+	public PaisResidencia getPaisResidencia() {
+		return paisResidencia;
 	}
 
 
-	public void setPaisesResidencia(Set<PaisResidencia> paisesResidencia) {
-		//this.paisesResidencia = paisesResidencia;
-		setPaisesResidencia(paisesResidencia);
+	public void setPaisResidencia(PaisResidencia paisResidencia) {
+		this.paisResidencia = paisResidencia;
 	}
-
-	public List<PaisResidencia> getListPaisesResidencia(){
-		paisesResidencia = getPaisesResidencia();
-		List<PaisResidencia> pr = new ArrayList<PaisResidencia>(paisesResidencia);
-		return pr;
-	}
-	
-	public void setListPaisesResidencia (List<PaisResidencia> pr){
-		this.paisesResidencia = new HashSet<PaisResidencia>(pr);
-	}
-	
 
 	public NivelEducativoPersona getNivelEducativoExterior() {
 		return nivelEducativoExterior;
@@ -408,17 +393,43 @@ public class Persona implements Serializable {
 		this.nivelEducativoExterior = nivelEducativoExterior;
 	}
 
+	public Set<Titulo> getTituloObtenidoUruguay() {
+		return tituloObtenidoUruguay;
+	}
 
 	public Set<Titulo> getTituloObtenidoExterior() {
 		return tituloObtenidoExterior;
 	}
-
+	
+	public void setTituloObtenidoUruguay(Set<Titulo> tituloObtenidoUruguay) {
+		this.tituloObtenidoUruguay = tituloObtenidoUruguay;
+	}
 
 	public void setTituloObtenidoExterior(Set<Titulo> tituloObtenidoExterior) {
 		this.tituloObtenidoExterior = tituloObtenidoExterior;
 	}
+	
+	
+	
+	
+	public List<Titulo> getListTituloObtenidoUruguay(){
+		return (new ArrayList<Titulo>(this.tituloObtenidoUruguay));
+	}
+	
+	public List<Titulo> getListTituloObtenidoExterior (){
+		return (new ArrayList<Titulo>(this.tituloObtenidoExterior));
+	}
+	
+	public void setListTituloObtenidoUruguay(List<Titulo> titulo){
+		this.tituloObtenidoUruguay =  new HashSet<Titulo>(titulo);
+	}
+	
+	public void setListTituloObtenidoExterior (List<Titulo> titulo){
+		this.tituloObtenidoExterior = new HashSet<Titulo>(titulo);
+	}
 
-
+	
+	
 	public Oficio getOficioExterior() {
 		return oficioExterior;
 	}
@@ -571,8 +582,8 @@ public class Persona implements Serializable {
 				+ ", tituloObtenidoUruguay=" + tituloObtenidoUruguay
 				+ ", oficioUruguay=" + oficioUruguay + ", ocupacionUruguay="
 				+ ocupacionUruguay + ", motivoPartida=" + motivoPartida
-				+ ", fechaPartida=" + fechaPartida + ", paisesResidencia="
-				+ paisesResidencia + ", nivelEducativoExterior="
+				+ ", fechaPartida=" + fechaPartida + ", paisResidencia="
+				+ paisResidencia + ", nivelEducativoExterior="
 				+ nivelEducativoExterior + ", tituloObtenidoExterior="
 				+ tituloObtenidoExterior + ", oficioExterior=" + oficioExterior
 				+ ", ocupacionExterior=" + ocupacionExterior

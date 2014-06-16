@@ -43,4 +43,13 @@
 	<security-role>
 		<role-name>MRREE_FORMADMIN</role-name>
 	</security-role>
+	
+	<filter>
+		<filter-name>FiltroCodificacion</filter-name>
+		<filter-class>com.uy.antel.formmrree.filtros.Codificacion</filter-class>
+	</filter>
+	<filter-mapping>
+		 <filter-name>FiltroCodificacion</filter-name>
+		 <url-pattern>/paginas/*</url-pattern>
+	</filter-mapping>
  </web-app>

@@ -1,22 +1,24 @@
 <!-- file based -->
-<security-domain name="SDFORMMRREEDEMO" cache-type="default">
-    <authentication>
-        <login-module code="UsersRoles" flag="required">
-            <module-option name="usersProperties" value="${jboss.server.config.dir}/formmrree-users.properties"/>
-            <module-option name="rolesProperties" value="${jboss.server.config.dir}/formmrree-roles.properties"/>
-            <module-option name="realm" value="ApplicationRealm"/>
-            <module-option name="password-stacking" value="useFirstPass"/>
-        </login-module>
-    </authentication>
-</security-domain>
+<!-- <security-domain name="SDFORMMRREEDEMO" cache-type="default"> -->
+<!--     <authentication> -->
+<!--         <login-module code="UsersRoles" flag="required"> -->
+<!--             <module-option name="usersProperties" value="${jboss.server.config.dir}/formmrree-users.properties"/> -->
+<!--             <module-option name="rolesProperties" value="${jboss.server.config.dir}/formmrree-roles.properties"/> -->
+<!--             <module-option name="realm" value="ApplicationRealm"/> -->
+<!--             <module-option name="password-stacking" value="useFirstPass"/> -->
+<!--         </login-module> -->
+<!--     </authentication> -->
+<!-- </security-domain> -->
 
 <!-- bd based -->
 <security-domain name="SDFORMMRREEDEMO" cache-type="default">
-    <authentication>
-        <login-module code="org.jboss.security.auth.spi.DatabaseServerLoginModule" flag="required">
-            <module-option name="dsJndiName" value="java:jboss/datasources/CrudDSS"/>
-            <module-option name="principalsQuery" value="select password from users where email=?"/>
-            <module-option name="rolesQuery" value="select role, 'Roles' from users u where u.email=?"/>
-        </login-module>
-    </authentication>
+  <authentication>
+    <login-module code="Database" flag="required">
+     <module-option name="dsJndiName" value="java:jboss/datasources/formmrreeDS"/>
+<!--      <module-option name="hashAlgorithm">MD5</module-option>  -->
+<!-- 	 <module-option name="hashEncoding">base64</module-option> -->
+     <module-option name="principalsQuery" value="select password from funcionario where usuario = ?"/>
+     <module-option name="rolesQuery" value="select rol, usuario from rol, funcionario where rol.id = funcionario.rol_id and funcionario.usuario = ?"/>
+    </login-module>
+  </authentication>
 </security-domain>

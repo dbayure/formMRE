@@ -22,7 +22,7 @@
 			
 			<p:dataTable id="formularios" var="_formulario" value="#{formularios}" rowKey="#{_formulario.id}" paginator="true" rows="10"
 				selection="#{formulariosBean.selectedFormulario}" selectionMode="single" filteredValue="#{formulariosBean.formulariosFiltrados}"
-				resizableColumns="true" liveResize="true" >
+				resizableColumns="true" liveResize="true" emptyMessage="No hay formulario seleccionado" style="border-width:0px">
 			
 				<p:column headerText="Id" sortBy="id" filterBy="id" id="id">  
 		            #{_formulario.id}  
@@ -33,7 +33,7 @@
 		        </p:column>
 		        
 		        <p:column headerText="Funcionario" sortBy="funcionario" filterBy="funcionario" id="funcionario">  
-		            #{_formulario.funcionario}  
+		            #{_formulario.funcionario.nombre}  
 		        </p:column>
 		        
 		        <p:column headerText="Observaciones" sortBy="observaciones" filterBy="observaciones" id="observaciones">  
@@ -50,7 +50,7 @@
 			
 			<p:dataTable id="personas" var="_persona" value="#{formulariosBean.selectedFormulario.personas}" rowKey="#{_persona.id}" widgetVar="tabPersonas"
 				paginator="false" rows="10" selection="#{personasBean.selectedPersonas}" selectionMode="single" filteredValue="#{personasBean.personasFiltradas}" 
-				resizableColumns="true" liveResize="true">
+				resizableColumns="true" liveResize="true" emptyMessage="No hay formulario seleccionado" style="border-width:0px">
 			
 				<p:column headerText="Nombre" id="nombre">  
 		            #{_persona.nombre}  
@@ -87,11 +87,11 @@
 	        	
 			</p:dataTable>
 	
-			<p:dataTable id="unapersona" widgetVar="una" var="p" value="#{personasBean.selectedPersonas}">
-				<p:column>
+			<p:dataTable id="unapersona" widgetVar="una" var="p" value="#{personasBean.selectedPersonas}" style="border-width:0px" emptyMessage="No hay persona seleccionada">
+				<p:column style="border-width:0px">
 					<p:panel header="Datos Personales" id="personales" style="border: none" >
-					<p:panelGrid columns="2" styleClass="noBorders" >
-					<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
+					<h:panelGrid columns="2" styleClass="noBorders" >
+					<h:panelGrid columns="2" style="margin-left: 15%" columnClasses="coldp1, coldp2" styleClass="noBorders">
 
 						<p:outputLabel for="nombre" value="Nombre:" />
 						<p:inputText id="nombre" value="#{p.nombre}" required="true" />
@@ -107,16 +107,13 @@
 
 						<p:outputLabel for="telefonoMovil" value="Telefono Movil:" />
 						<p:inputMask id="telefonoMovil" value="#{p.tellefonoMovil}" label="telefonoMovil" mask="999-999999" />
-
+						
 						<p:outputLabel for="correo" value="Correo Electronico:" />
 						<p:inputMask id="correo" value="#{p.correo}" label="correo" />
-						
-					</p:panelGrid>
-					<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
-						<f:facet name="header">  
-		                    Documento De Identidad
-		                </f:facet>
-		                
+
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="margin-left: 15%" columnClasses="coldp3, coldp4" styleClass="noBorders">
+
 						<p:outputLabel for="tipoDocumento" value="Tipo de documento:" />
 						<p:selectOneMenu id="tipoDocumento" value="#{p.documento.tipoDocumento}" required="true">
 							<f:converter converterId="tipoDocumentoConverter" />
@@ -146,16 +143,16 @@
 							<f:selectItem itemLabel="Seleccione..." itemValue="#{p.documento.ciudad}" />
 							<f:selectItems value="#{ciudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad}" />
 						</p:selectOneMenu>
-					</p:panelGrid>
-					</p:panelGrid>
+					</h:panelGrid>
+					</h:panelGrid>
 					</p:panel>	
 						 		
 					<p:panel header="Datos Secundarios" id="secundarios" >
-						<p:panelGrid columns="2" styleClass="noBorders">
-							<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
+						<h:panelGrid columns="2" styleClass="noBorders">
+							<h:panelGrid columns="2" style="margin-left: 5%" columnClasses="colds1,colds2" styleClass="noBorders">
 		
-								<p:outputLabel for="hijos" value="Cantidad de hijos" />
-								<p:inputMask id="hijos" value="#{p.cantidadHijos}" label="hijos" required="true" />
+								<p:outputLabel for="hijos" value="Cantidad de hijos"/>
+								<p:inputMask id="hijos" value="#{p.cantidadHijos}" label="hijos" required="true" immediate="true"/>
 		
 								<p:outputLabel for="estadoCivil" value="Estado civil:" />
 								<p:selectOneMenu id="estadoCivil" value="#{p.estadoCivil}" required="true">
@@ -170,8 +167,15 @@
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{p.parentezco}" />
 									<f:selectItems value="#{parentezcos}" var="parentezco" itemLabel="#{parentezco.descripcion}" itemValue="#{parentezco}" />
 								</p:selectOneMenu>
-		
-
+				
+								<p:outputLabel for="nacionalidades" value="Nacionalidades:" />
+								<p:selectManyMenu id="nacionalidades" value="#{p.listNacionalidades}" showCheckbox="true" required="true" style="height:100px" >
+									<f:converter converterId="nacionalidadConverter" />
+									<f:selectItems value="#{nacionalidades}" var="nacionalidad" itemLabel="#{nacionalidad.nombre}" itemValue="#{nacionalidad}" />
+									<p:column>
+										<p:outputLabel value="#{selecCiudad.nombre}" />
+									</p:column>
+								</p:selectManyMenu>
 		
 								<p:outputLabel for="sexo" value="Sexo:" />
 								<p:selectOneMenu id="sexo" value="#{p.sexo}" required="true">
@@ -179,10 +183,10 @@
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{p.sexo}" />
 									<f:selectItems value="#{sexos}" var="sexo" itemLabel="#{sexo.sexo}" itemValue="#{sexo}" />
 								</p:selectOneMenu>
-							</p:panelGrid>
+							</h:panelGrid>
 		
-							<p:panelGrid columns="1" style="margin-left: 15%"  styleClass="noBorders">
-								<p:panelGrid columns="2" styleClass="noBorders">
+							<h:panelGrid columns="1" style="margin-left: 10%" columnClasses="colds3,colds4" styleClass="noBorders">
+								<h:panelGrid columns="2" styleClass="noBorders">
 									<f:facet name="header">  
 		                                    Estudios en Uruguay
 		                            </f:facet>
@@ -194,8 +198,17 @@
 										<f:selectItems value="#{nivelesEducativos}" var="nivelEducativo" itemLabel="#{nivelEducativo.nombre}" itemValue="#{nivelEducativo}" />
 									</p:selectOneMenu>
 		
-									<h:outputText value="Finalizado: " />
-									<p:selectBooleanCheckbox value="#{p.nivelEducativoUruguay.finalizado}" />							
+									<p:outputLabel value="Finalizado: " />
+									<p:selectBooleanCheckbox value="#{p.nivelEducativoUruguay.finalizado}" />	
+									
+<!-- 									<p:outputLabel value="Carrera" for="tituloObtenidoUruguay" /> -->
+<!-- 									<p:selectManyMenu id="tituloObtenidoUruguay" value="#{p.tituloObtenidoUruguay}" var="titSelecUru" showCheckbox="true" required="true" style="height:100px"> -->
+<!-- 										<f:converter converterId="tituloConverter" /> -->
+<!-- 										<f:selectItems value="#{titulos}" var="titulo" itemLabel="#{titulo.nombre}" itemValue="#{titulo}" /> -->
+<!-- 										<p:column> -->
+<!-- 											<p:outputLabel value="#{titSelecUru.nombre}" /> -->
+<!-- 										</p:column> -->
+<!-- 									</p:selectManyMenu>															 -->
 		
 									<p:outputLabel for="oficioUruguay" value="Oficio en Uruguay:" />
 									<p:selectOneMenu id="oficioUruguay" value="#{p.oficioUruguay}" var="ofiSelec" required="true">
@@ -210,65 +223,65 @@
 										<f:selectItem itemLabel="Seleccione..."  itemValue="#{p.ocupacionUruguay}"/>
 										<f:selectItems value="#{ocupaciones}" var="ocupacion" itemLabel="#{ocupacion.nombre}" itemValue="#{ocupacion}" />
 									</p:selectOneMenu>
-								</p:panelGrid>
-							</p:panelGrid>
-						</p:panelGrid>
+								</h:panelGrid>
+							</h:panelGrid>
+						</h:panelGrid>
 					</p:panel>
 			
 					<p:panel header="Estadía en el exterior" id="exterior" >
-						<p:panelGrid columns="2" styleClass="noBorders">
-							<p:panelGrid columns="2" style="margin-left: 15%" styleClass="noBorders">
+						<h:panelGrid columns="2" styleClass="noBorders">
+							<h:panelGrid columns="2" style="margin-left: 5%" columnClasses="colee1,colee2" styleClass="noBorders">
 		
 								<p:outputLabel value="Pais de residencia:" for="paisResidenciaExterior" />
-								<p:selectOneMenu id="paisResidenciaExterior" value="#{p.listPaisesResidencia[0].pais}" var="paisSelec" required="true">
+								<p:selectOneMenu id="paisResidenciaExterior" value="#{p.paisResidencia.pais}" var="paisSelec" required="true">
 									<f:converter converterId="paisConverter" />
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{paisSelec.nombre}" />
 									<f:selectItems value="#{paises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais}" />
 								</p:selectOneMenu>
 								
-								<h:outputText for="poseiaResidencia" value="Poseía residencia regular: " />
-								<p:selectOneRadio id="poseiaResidencia" value="#{p.listPaisesResidencia[0].residencia}" >
+								<p:outputLabel for="poseiaResidencia" value="Poseía residencia regular: " />
+								<p:selectOneRadio id="poseiaResidencia" value="#{p.paisResidencia.residencia}" >
 									<f:selectItem itemLabel="Si" itemValue="true" />
 									<f:selectItem itemLabel="No" itemValue="false" />
 								</p:selectOneRadio>
 			
 								<p:outputLabel for="condResidencia" value="Condiciones de residencia :" />
-								<p:selectOneMenu id="condResidencia" value="#{p.listPaisesResidencia[0].condiciones}" var="condSelec">
+								<p:selectOneMenu id="condResidencia" value="#{p.paisResidencia.condiciones}" var="condSelec">
 									<f:converter converterId="condicionResidenciaConverter" />
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{condSelec.nombre}" />
 									<f:selectItems value="#{condicionResidencia}" var="condResidencia" itemLabel="#{condResidencia.nombre}" itemValue="#{condResidencia}" />
 								</p:selectOneMenu>
 		 						
-								<p:outputLabel for="fechaPartida" value="Año de Partida:" />
+								<p:outputLabel for="fechaPartida" value="Fecha de Partida:" />
 								<p:calendar value="#{p.fechaPartida}" label="#{p.fechaPartida}"
-									pattern="yyyy" id="fechaPartida" mode="popup"
+									pattern="dd/MM/yyyy" id="fechaPartida" mode="popup"
 									navigator="true" />
 		
-								<h:outputText value="Motivo de la partida:" />
+								<p:outputLabel value="Motivo de la partida:" />
 								<p:selectOneMenu id="motivoPartida" value="#{p.motivoPartida}" var="motSelec" required="true">
 									<f:converter converterId="motivoPartidaConverter" />
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{motSelec.nombre}" />
 									<f:selectItems value="#{motivosPartida}" var="motivoPartida" itemLabel="#{motivoPartida.nombre}" itemValue="#{motivoPartida}" />
 								</p:selectOneMenu>
 		
-								<h:outputText value="Forma de retorno: " />
+								<p:outputLabel value="Forma de retorno: " />
 								<p:selectOneMenu id="formaRetorno" value="#{p.formaRetorno}" var="formSelec" required="true">
 									<f:converter converterId="formaRetornoConverter" />
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{formSelec.nombre}" />
 									<f:selectItems value="#{formasRetorno}" var="formaRetorno" itemLabel="#{formaRetorno.nombre}" itemValue="#{formaRetorno}" />
 								</p:selectOneMenu>
 		
-								<h:outputLabel value="Motivo retorno:" for="motivoRetorno" />
+								<p:outputLabel value="Motivo retorno:" for="motivoRetorno" />
 								<p:selectOneMenu id="motivoRetorno" value="#{p.motivoRetorno}" var="motSelec" required="true">
 									<f:converter converterId="motivoRetornoConverter" />
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{motSelec.nombre}" />
 									<f:selectItems value="#{motivosRetorno}" var="motivoRetorno" itemLabel="#{motivoRetorno.nombre}" itemValue="#{motivoRetorno}" />
 								</p:selectOneMenu>
 		
-							</p:panelGrid>
+							</h:panelGrid>
 		
-							<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
-								<p:panelGrid columns="2" styleClass="noBorders">
+							<h:panelGrid columns="2" style="margin-left: 5%" columnClasses="colee3,colee4" styleClass="noBorders">
+								<h:panelGrid columns="2" styleClass="noBorders">
 									<f:facet name="header">  
 		                                    Estudios en el Exterior
 		                            </f:facet>
@@ -280,10 +293,17 @@
 										<f:selectItems value="#{nivelesEducativos}" var="nivelEducativo" itemLabel="#{nivelEducativo.nombre}" itemValue="#{nivelEducativo}" />
 									</p:selectOneMenu>
 		
-									<h:outputText value="Finalizado: " />
+									<p:outputLabel value="Finalizado: " />
 									<p:selectBooleanCheckbox value="#{p.nivelEducativoExterior.finalizado}" itemLabel="#{p.nivelEducativoExterior.finalizado}" />
 		
-
+									<p:outputLabel value="Carrera" for="tituloObtenidoExterior" />
+									<p:selectManyMenu id="tituloObtenidoExterior" value="#{p.listTituloObtenidoExterior}" var="titSelecExt" showCheckbox="true" required="true" style="height:100px">
+										<f:converter converterId="tituloConverter" />
+										<f:selectItems value="#{titulos}" var="titulo" itemLabel="#{titulo.nombre}" itemValue="#{titulo}" />
+										<p:column>
+											<p:outputLabel value="#{titSelecExt.nombre}" />
+										</p:column>
+									</p:selectManyMenu>
 		
 									<p:outputLabel for="oficioExterior" value="Oficio en Uruguay:" />
 									<p:selectOneMenu id="oficioExterior" value="#{p.oficioExterior}"  var="ofiSelec" required="true">
@@ -298,14 +318,14 @@
 										<f:selectItem itemLabel="Seleccione..." itemValue="#{ocuSelec.nombre}"/>
 										<f:selectItems value="#{ocupaciones}" var="ocupacion" itemLabel="#{ocupacion.nombre}" itemValue="#{ocupacion}" />
 									</p:selectOneMenu>
-								</p:panelGrid>
-							</p:panelGrid>
-						</p:panelGrid>
+								</h:panelGrid>
+							</h:panelGrid>
+						</h:panelGrid>
 					</p:panel>
 					
 					<p:panel header="Arribo al Pais" id="arribo" style="border: none" styleClass="noBorders">
-						<p:panelGrid columns="2" styleClass="noBorders">
-							<p:panelGrid columns="2" style="margin-left: 15%"  styleClass="noBorders">
+						<h:panelGrid columns="2" styleClass="noBorders">
+							<h:panelGrid columns="2" style="margin-right: 2em" columnClasses="colap,colap2" styleClass="noBorders">
 								<p:outputLabel for="situacionHabitacional" value="Situacion habitacional:" />
 								<p:selectOneMenu id="situacionHabitacional" value="#{p.situacionHabitacionalActual}" var="sitSelec" required="true">
 									<f:converter converterId="situacionHabitacionalConverter" />
@@ -320,15 +340,15 @@
 									<f:selectItems value="#{coberturasSalud}" var="coberturaSalud" itemLabel="#{coberturaSalud.nombre}" itemValue="#{coberturaSalud}" />
 								</p:selectOneMenu>
 		
-								<h:outputText for="demandaInicial" value="Demanda inicial" />
+								<p:outputLabel for="demandaInicial" value="Demanda inicial" />
 								<p:selectOneMenu id="demandaInicial" value="#{p.demandaInicial}" var="demSelec" required="true">
 									<f:converter converterId="demandaInicialConverter" />
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{demSelec.nombre}" />
 									<f:selectItems value="#{demandasIniciales}" var="demandaInicial" itemLabel="#{demandaInicial.nombre}" itemValue="#{demandaInicial}" />
 								</p:selectOneMenu>
-							</p:panelGrid>
+							</h:panelGrid>
 		
-							<p:panelGrid columns="2" style="margin-left: 15%" styleClass="noBorders">
+							<h:panelGrid columns="2" style="margin-right: 2em" columnClasses="colap3,colap4" styleClass="noBorders">
 								<p:outputLabel for="situacionLaboral" value="Situacion laboral:" />
 								<p:selectOneMenu id="situacionLaboral" value="#{p.situacionLaboral}" var="sitSelec" required="true">
 									<f:converter converterId="situacionLaboralConverter" />
@@ -342,15 +362,15 @@
 									<f:selectItem itemLabel="Seleccione..." itemValue="#{vehEnsSelec.descripcion}" />
 									<f:selectItems value="#{enseresVehiculos}" var="ensereVehiculo" itemLabel="#{ensereVehiculo.descripcion}" itemValue="#{ensereVehiculo}" />
 								</p:selectOneMenu>
-							</p:panelGrid>
-						</p:panelGrid>
+							</h:panelGrid>
+						</h:panelGrid>
 					</p:panel>
 					<!-- -->
-					<p:panelGrid columns="2" styleClass="noBorders">
+					<h:panelGrid columns="2" styleClass="noBorders">
 
 			  			<p:commandButton id="register" action="#{formularioBean.modificar(p)}" value="Modificar Persona" style="margin-left: 250px;" update="@form" /> 
 			  
-		  			</p:panelGrid>
+		  			</h:panelGrid>
 
 		 		</p:column>
 				

@@ -11,9 +11,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 @Entity
 @XmlRootElement
 @Table(name = "beneficio")
+@JsonIgnoreProperties({"formulario"})
 public class Beneficio implements Serializable {
 
 	/**
@@ -30,13 +33,6 @@ public class Beneficio implements Serializable {
 	@ManyToMany(targetEntity = Formulario.class)
 	private Set<Formulario> formulario;
 
-	public Set<Formulario> getFormulario() {
-		return formulario;
-	}
-
-	public void setFormulario(Set<Formulario> formulario) {
-		this.formulario = formulario;
-	}
 
 	public Beneficio() {
 		super();
@@ -58,6 +54,13 @@ public class Beneficio implements Serializable {
 		this.beneficio = beneficio;
 	}
 
+	public Set<Formulario> getFormulario() {
+		return formulario;
+	}
+
+	public void setFormulario(Set<Formulario> formulario) {
+		this.formulario = formulario;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

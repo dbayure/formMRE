@@ -2,11 +2,9 @@ package uy.com.antel.formmrree.converter;
 
 import java.net.URL;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 import javax.servlet.http.HttpServletRequest;
 

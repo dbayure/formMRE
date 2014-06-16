@@ -83,9 +83,11 @@ public class FormularioBean {
     public void modificar (Persona p) throws Exception {
     	try{
     		registroFormulario.modificar(p);
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Modificacion", "La persona se Modifico con éxito!"));
     	}
     	catch (Exception e){
     		e.printStackTrace();
+    		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Modificacion", "La persona no pudo modificarse!"));
     	}
     }
     

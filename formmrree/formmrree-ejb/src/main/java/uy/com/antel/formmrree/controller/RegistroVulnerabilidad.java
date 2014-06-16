@@ -11,7 +11,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 
-import uy.com.antel.formmrree.model.Nacionalidad;
 import uy.com.antel.formmrree.model.Vulnerabilidad;
 
 @Stateful

@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -35,9 +34,7 @@ public class Pais implements Serializable {
 	
 	@OneToMany( mappedBy = "pais", orphanRemoval = true, fetch = FetchType.EAGER)
 	private Set<Ciudad> ciudades;
-	
-	@ManyToMany(targetEntity = Persona.class, fetch = FetchType.EAGER)
-	private Set<Persona> personas;
+
 
 	public Pais() {
 		super();
@@ -67,13 +64,6 @@ public class Pais implements Serializable {
 		this.ciudades = ciudades;
 	}
 
-	public Set<Persona> getPersonas() {
-		return personas;
-	}
-	
-	public void setPersonas(Set<Persona> personas) {
-		this.personas = personas;
-	}
 
 	@Override
 	public int hashCode() {

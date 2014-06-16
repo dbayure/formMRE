@@ -12,35 +12,34 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import uy.com.antel.formmrree.model.Beneficio;
+import uy.com.antel.formmrree.model.Funcionario;
 
-@FacesConverter(forClass = Beneficio.class, value = "beneficioConverter")
-public class BeneficioConverter implements Converter {
+@FacesConverter(forClass = Funcionario.class, value = "funcionarioConverter")
+public class FuncionarioConverter implements Converter {
 
 	public Object getAsObject(FacesContext context, UIComponent component, String value) {
 		if (value.trim().equals("")) {
 			value = ((HttpServletRequest) context.getExternalContext().getRequest()).getParameter(component.getClientId()+"_input");
-			if (value.trim().equals("")) return null;
+//			return null;
 		}
-		Beneficio beneficio = null;
+		Funcionario func = null;
 		try {
 			ObjectMapper mapper = new ObjectMapper();	
-			beneficio = mapper.readValue(new URL( context.getExternalContext().getRequestScheme() + "://" + context.getExternalContext().getRequestServerName()
-					+ ":"   + context.getExternalContext().getRequestServerPort() + context.getExternalContext().getRequestContextPath() 
-					+ "/rest/beneficios/" + value), Beneficio.class);
+			func = mapper.readValue(new URL( context.getExternalContext().getRequestScheme() + "://" + context.getExternalContext().getRequestServerName()
+					+ ":"  + context.getExternalContext().getRequestServerPort() + context.getExternalContext().getRequestContextPath() 
+					+ "/rest/funcionarios/" + value), Funcionario.class);
 		}
 		catch(Exception e) {
-			e.printStackTrace();
-			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Conversion", "Beneficio no válido"));
+			throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error de Conversion", "Funcionario no válido"));
 		}
-		return beneficio;
+		return func;
 	}
 
 	public String getAsString(FacesContext context, UIComponent component, Object value) {
 		if (value == null || value.equals("")) {
             return "";
         } else {
-        	return String.valueOf( ((Beneficio)value).getId()  );
+        	return String.valueOf( ((Funcionario)value).getId()  );
         }
 	}
 

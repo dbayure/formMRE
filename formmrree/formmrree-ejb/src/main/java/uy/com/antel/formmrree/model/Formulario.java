@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -64,38 +63,21 @@ public class Formulario implements Serializable {
     
     @OneToMany( mappedBy = "formulario", cascade = CascadeType.ALL , orphanRemoval = true, fetch = FetchType.EAGER )
     private List<Persona> personas;
-
-    @ManyToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(name = "situacion_vulnerabilidad", 
-    		joinColumns = {@JoinColumn(name = "formulario_id", referencedColumnName = "id")},
-    		inverseJoinColumns = {@JoinColumn(name = "vulnerabilidad_id", referencedColumnName = "id")})
-    private Set<Vulnerabilidad> vulnerabilidades;
     
-    @ManyToMany (cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany (cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "beneficios", 
     		joinColumns = {@JoinColumn(name = "formulario_id", referencedColumnName = "id")},
     		inverseJoinColumns = {@JoinColumn(name = "beneficio_id", referencedColumnName = "id")})
-    private Set<Beneficio> beneficio;
+    private List<Beneficio> beneficio;
     
-    public Set<Beneficio> getBeneficio() {
-		return beneficio;
-	}
-
-	public void setBeneficio(Set<Beneficio> beneficio) {
-		this.beneficio = beneficio;
-	}
-
-	public Set<Vulnerabilidad> getVulnerabilidades() {
-		return vulnerabilidades;
-	}
-
-	public void setVulnerabilidades(Set<Vulnerabilidad> vulnerabilidades) {
-		this.vulnerabilidades = vulnerabilidades;
-	}
+    @OneToOne (orphanRemoval = false, fetch = FetchType.EAGER)
+    @JoinColumn(name="vulnerabilidad_id", unique = false)
+    private Vulnerabilidad vulnerabilidad;
 
 	public Formulario() {
     	super();
     	personas = new ArrayList<Persona>();
+    	beneficio = new ArrayList<Beneficio>();
     }
 
 	public Long getId() {
@@ -152,6 +134,30 @@ public class Formulario implements Serializable {
 
 	public void setPersonas(List<Persona> personas) {
 		this.personas = personas;
+	}
+	
+    public List<Beneficio> getBeneficio() {
+		return beneficio;
+	}
+
+	public void setBeneficio(List<Beneficio> beneficio) {
+		this.beneficio = beneficio;
+	}
+//	
+//    public List<Beneficio> getListBeneficio() {
+//    	return new ArrayList<Beneficio>(this.beneficio);
+//	}
+//
+//	public void setListBeneficio(List<Beneficio> ben) {
+//		this.beneficio = new HashSet<Beneficio>(ben);
+//	}
+
+    public Vulnerabilidad getVulnerabilidad() {
+		return vulnerabilidad;
+	}
+
+	public void setVulnerabilidad(Vulnerabilidad vulnerabilidad) {
+		this.vulnerabilidad = vulnerabilidad;
 	}
 
 	@Override

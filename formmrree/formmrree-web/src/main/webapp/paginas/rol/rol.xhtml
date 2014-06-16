@@ -18,7 +18,9 @@
 
 			<p:outputLabel for="nombre" value="Nombre:" />
 			<p:inputText id="nombre" value="#{newRol.rol}" label="nombre" required="true" />
-
+			
+			<p:outputLabel for="desc" value="Descripcion:" />
+			<p:inputText id="desc" value="#{newRol.descripcion}" label="descripcion" required="false" />
 
 		</h:panelGrid>
          
@@ -29,7 +31,7 @@
          <em>No hay Rol registrado.</em>
       </h:panelGroup>
       
-       <p:dataTable id="#{rol}" var="_rol" value="#{roles}" editable="true">
+       <p:dataTable id="roles" var="_rol" value="#{roles}" editable="true">
        		<f:facet name="header">  
             	Administrar Rol  
         	</f:facet>
@@ -44,10 +46,17 @@
         	 <p:column headerText="Nombre" style="width:25%">  
                <p:cellEditor>  
                    <f:facet name="output"><h:outputText value="#{_rol.rol}" /></f:facet>  
-                   <f:facet name="input"><p:inputText id="modelInput" value="#{_rol.rol}" style="width:96%" required="true"/></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputRol" value="#{_rol.rol}" style="width:96%" required="true"/></f:facet>  
                </p:cellEditor>  
            	 </p:column>  
            	 
+        	 <p:column headerText="Descripcion" style="width:25%">  
+               <p:cellEditor>  
+                   <f:facet name="output"><h:outputText value="#{_rol.descripcion}" /></f:facet>  
+                   <f:facet name="input"><p:inputText id="modelInputDesc" value="#{_rol.descripcion}" style="width:96%" required="true"/></f:facet>  
+               </p:cellEditor>  
+           	 </p:column>  
+           	            	 
            	 <p:column style="width:3%">           	 
 	            <p:rowEditor />	         	           
 	        </p:column>

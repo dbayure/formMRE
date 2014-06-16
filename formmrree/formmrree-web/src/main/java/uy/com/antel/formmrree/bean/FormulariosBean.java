@@ -44,9 +44,4 @@ public class FormulariosBean {
 	{
 		return "listadoFormularios.jsf?faces-redirect=true";
 	}
-	
-	public String usuarios()
-	{
-		return "rol.jsf?faces-redirect=true";
-	}
 }

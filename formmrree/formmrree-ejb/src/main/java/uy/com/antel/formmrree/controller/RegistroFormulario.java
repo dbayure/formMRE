@@ -1,6 +1,7 @@
 package uy.com.antel.formmrree.controller;
 
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 import uy.com.antel.formmrree.enums.Estado;
+import uy.com.antel.formmrree.model.Beneficio;
 import uy.com.antel.formmrree.model.Formulario;
 import uy.com.antel.formmrree.model.Funcionario;
 import uy.com.antel.formmrree.model.PaisResidencia;
@@ -48,7 +50,6 @@ public class RegistroFormulario {
 		return _persona;
 	}
 
-	
 	public void registro() throws Exception {		
 		log.info("Registro formulario ");// + _formulario);
 		em.persist(_formulario);
@@ -56,6 +57,9 @@ public class RegistroFormulario {
 	}
 	
 	public void ingresarPersona () throws Exception{
+		PaisResidencia pr = _persona.getPaisResidencia();
+		pr.setPersona(_persona);
+		_persona.setPaisResidencia(pr);
 		_persona.setFormulario(_formulario);
 		_formulario.getPersonas().add(_persona);
 		init();
@@ -80,9 +84,8 @@ public class RegistroFormulario {
 	}
 	
 	public void modificar(Persona p){
-		Persona per = em.find(Persona.class, p.getId());
-		em.merge(per);
-		log.info("El id de la persona modificada es: " + p.getId());
+		em.merge(p);
+		log.info("La persona " + p.getNombre() + "fue modificada correctamente");
 	}
 	
 	public void init() {
@@ -93,7 +96,9 @@ public class RegistroFormulario {
 	public void initialize() {
 		_formulario = new Formulario();
 		Funcionario funcionario = em.find(Funcionario.class, 1L);
+		List<Beneficio> beneficio = _formulario.getBeneficio();
 		_formulario.setFuncionario(funcionario);
+		_formulario.setBeneficio(beneficio);
 		_formulario.setFechaEntrevista(new Date());
 		_formulario.setEstado(Estado.ALTA);
 		init();
