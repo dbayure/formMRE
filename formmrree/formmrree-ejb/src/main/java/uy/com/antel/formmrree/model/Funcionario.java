@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.jboss.security.auth.spi.Util;
+
 @Entity
 @XmlRootElement
 @Table(name = "funcionario")
@@ -83,9 +85,8 @@ public class Funcionario implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		this.password = password;
-		md5(password);
-		System.out.println("Contraseña ingresada en formato md5: " + md5(password));
+		String passHash = Util.createPasswordHash("SHA-256", "base64", null, null, password);
+		this.password = passHash;
 	}
 
 	public Integer getTelefono() {
@@ -104,24 +105,6 @@ public class Funcionario implements Serializable {
 		this.correo = correo;
 	}
 
-	 public static String md5(String input)   
-	 {                     
-	  String md5 = null;                    
-	  if(null == input) return null;                    
-	  try {  
-	   //Create MessageDigest object for MD5           
-	   MessageDigest digest = MessageDigest.getInstance("MD5");                     
-	   //Update input string in message digest           
-	   digest.update(input.getBytes(), 0, input.length());            
-	   //Converts message digest value in base 16 (hex)            
-	   md5 = new BigInteger(1, digest.digest()).toString(16);             
-	  } catch (NoSuchAlgorithmException e) {  
-	   e.printStackTrace();   
-	  }           
-	  return md5;       
-	 }   
-	 
-	 
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -22,7 +22,7 @@
 	        <p:menuitem value="Formularios" url="/paginas/formulario/listadoFormularios.jsf" icon="ui-icon-document" />
         </p:submenu>
         
-        <p:submenu label="Usuarios" icon="ui-icon-person">
+        <p:submenu label="Usuarios" icon="ui-icon-person" rendered="#{facesContext.externalContext.isUserInRole('MRREE_FORMADMIN')}" >
 	        <p:menuitem value="Usuarios" url="/paginas/funcionario/funcionario.jsf" icon="ui-icon-document" />
 	        <p:menuitem value="Roles" url="/paginas/rol/rol.jsf" icon="ui-icon-document" />
         </p:submenu>

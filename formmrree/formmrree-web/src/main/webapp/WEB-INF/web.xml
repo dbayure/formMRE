@@ -26,6 +26,8 @@
 		<auth-constraint>
             <description/>
             <role-name>MRREE_FORMADMIN</role-name>
+            <role-name>MRREE_FORMCONSULTA</role-name>
+            <role-name>MRREE_FORMINGRESO</role-name>
         </auth-constraint>  
         <user-data-constraint>
         	<transport-guarantee>NONE</transport-guarantee>
@@ -43,7 +45,12 @@
 	<security-role>
 		<role-name>MRREE_FORMADMIN</role-name>
 	</security-role>
-	
+		<security-role>
+		<role-name>MRREE_FORMCONSULTA</role-name>
+	</security-role>
+		<security-role>
+		<role-name>MRREE_FORMINGRESO</role-name>
+	</security-role>
 	<filter>
 		<filter-name>FiltroCodificacion</filter-name>
 		<filter-class>com.uy.antel.formmrree.filtros.Codificacion</filter-class>
