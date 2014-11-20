@@ -1,5 +1,27 @@
+/*
+
+FORMMRREEANTEL - Formulario Ministerio Relaciones Exteriores
+Copyright (C) 2009  ANTEL - MRREE
+
+This file is part of FORMMRREEANTEL.
+
+FORMMRREEANTEL is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+*/
 package uy.com.antel.formmrree.controller;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -11,6 +33,7 @@ import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import uy.com.antel.formmrree.enums.Estado;
 import uy.com.antel.formmrree.model.Beneficio;
@@ -35,6 +58,11 @@ public class RegistroFormulario {
 
 	private Formulario _formulario;
 	private Persona _persona;
+	private List<Formulario> formularios;
+	private Date fdesde = new Date();
+	private Date fhasta = new Date();
+	private String consulta = "select f.* from formulario f where f.fecha_entrevista between ? and ?";
+
 	@Inject
 	private Event<Persona> personaEventSrc;
 
@@ -48,6 +76,44 @@ public class RegistroFormulario {
 	@Named
 	public Persona getPersona() {
 		return _persona;
+	}
+
+	@Produces
+	@Named
+    public List<Formulario> getFormulariosPorFecha() {
+	   	  
+   	  System.out.println("comebzando la consulta...\n");
+	  Query q = em.createNativeQuery(consulta, Formulario.class);	
+	  Timestamp desde = new Timestamp(fdesde.getTime());
+	  Timestamp hasta = new Timestamp(fhasta.getTime());
+	  q.setParameter( 1, desde );
+	  q.setParameter( 2, hasta );
+	  System.out.println("cantidad de parametros: " + q.getResultList().size());
+	  for (int i =0; i < q.getResultList().size(); i++){
+		  System.out.println("adentro de la consulta");
+		  Formulario f = (Formulario) q.getResultList().get(i);
+		  System.out.println("Nombre persona :" + f.getId());
+		  formularios.add(f);
+	  }
+      return formularios;
+   }
+	@Produces
+	@Named
+	public Date getFdesde() {
+		return fdesde;
+	}
+
+	public void setFdesde(Date fdesde) {
+		this.fdesde = fdesde;
+	}
+	@Produces
+	@Named
+	public Date getFhasta() {
+		return fhasta;
+	}
+
+	public void setFhasta(Date fhasta) {
+		this.fhasta = fhasta;
 	}
 
 	public void registro() throws Exception {		

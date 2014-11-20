@@ -27,11 +27,8 @@ public class ValidaDocumentoCi implements Validator {
 			  }
 		      int digitModDiez = sumaDigitos % 10;
 		      int digito = ((10-digitModDiez)%10);
-		      System.out.println("valor de la suma: " + sumaDigitos);
-		      System.out.println("Valor del digito encontrado: " + digito);
 		      if (digito != (arrayCiInt[0])){    
-		    	  FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error la cedula ingresada no es valida ", "");  
-//		    	  FacesContext.getCurrentInstance().addMessage(null, msg);
+		    	  FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error la cedula ingresada no es valida ", "Error la cedula ingresada no es valida");  
 		    	  throw new ValidatorException(msg);
 		}
 		  

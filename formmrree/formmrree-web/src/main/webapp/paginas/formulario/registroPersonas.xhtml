@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+FORMMRREEANTEL - Formulario Ministerio Relaciones Exteriores
+Copyright (C) 2009  ANTEL - MRREE
+
+This file is part of FORMMRREEANTEL.
+
+FORMMRREEANTEL is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ !-->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
    xmlns:ui="http://java.sun.com/jsf/facelets"
    xmlns:f="http://java.sun.com/jsf/core"
@@ -98,7 +119,7 @@
 						</p:selectOneMenu>
 
 						<p:outputLabel for="nacionalidades" value="Nacionalidades:" />
-						<p:selectManyMenu id="nacionalidades" value="#{formularioBean.registroFormulario.persona.listNacionalidades}" showCheckbox="true" required="true" style="height:100px" >
+						<p:selectManyMenu id="nacionalidades" value="#{formularioBean.registroFormulario.persona.listNacionalidades}" showCheckbox="true" required="true" style="height:100px" scrollHeight="100">
 							<f:converter converterId="nacionalidadConverter" />
 							<f:selectItems value="#{nacionalidades}" var="nacionalidad" itemLabel="#{nacionalidad.nombre}" itemValue="#{nacionalidad}" />
 							<p:column>
@@ -119,12 +140,18 @@
 							<f:facet name="header">  
                                     Estudios en Uruguay
                             </f:facet>
-
+							<p:outputLabel for="nivelEducativoUruguay" value="Nivel educativo:" />
+							<p:selectOneMenu id="nivelEducativoUruguay" value="#{formularioBean.registroFormulario.persona.nivelEducativoUruguay.nivelEducativo}" required="true">
+								<f:converter converterId="nivelEducativoConverter" />
+								<f:selectItem itemLabel="Seleccione..." itemValue="" />
+								<f:selectItems value="#{nivelesEducativos}" var="nivelEducativo" itemLabel="#{nivelEducativo.nombre}" itemValue="#{nivelEducativo}" />
+							</p:selectOneMenu>
+							
 							<p:outputLabel value="Finalizado: " />
 							<p:selectBooleanCheckbox value="#{formularioBean.registroFormulario.persona.nivelEducativoUruguay.finalizado}" />							
 
 							<p:outputLabel value="Carrera" for="tituloObtenidoUruguay" />
-							<p:selectManyMenu id="tituloObtenidoUruguay" value="#{formularioBean.registroFormulario.persona.listTituloObtenidoUruguay}" var="titSelecUru" showCheckbox="true" required="true" style="height:100px">
+							<p:selectManyMenu id="tituloObtenidoUruguay" value="#{formularioBean.registroFormulario.persona.listTituloObtenidoUruguay}" var="titSelecUru" showCheckbox="true" required="true" style="height:100px" scrollHeight="100">
 								<f:converter converterId="tituloConverter" />
 								<f:selectItems value="#{titulos}" var="titulo" itemLabel="#{titulo.nombre}" itemValue="#{titulo}" />
 								<p:column>
@@ -219,7 +246,7 @@
 							<p:selectBooleanCheckbox value="#{formularioBean.registroFormulario.persona.nivelEducativoExterior.finalizado}" />
 
 							<p:outputLabel value="Carrera" for="tituloObtenidoExterior" />
-							<p:selectManyMenu id="tituloObtenidoExterior" value="#{formularioBean.registroFormulario.persona.listTituloObtenidoExterior}" var="titSelecExt" showCheckbox="true" required="true" style="height:100px">
+							<p:selectManyMenu id="tituloObtenidoExterior" value="#{formularioBean.registroFormulario.persona.listTituloObtenidoExterior}" var="titSelecExt" showCheckbox="true" required="true" style="height:100px" scrollHeight="100">
 								<f:converter converterId="tituloConverter" />
 								<f:selectItems value="#{titulos}" var="titulo" itemLabel="#{titulo.nombre}" itemValue="#{titulo}" />
 								<p:column>

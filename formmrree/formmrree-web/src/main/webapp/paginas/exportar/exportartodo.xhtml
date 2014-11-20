@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+FORMMRREEANTEL - Formulario Ministerio Relaciones Exteriores
+Copyright (C) 2009  ANTEL - MRREE
+
+This file is part of FORMMRREEANTEL.
+
+FORMMRREEANTEL is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ !-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+	<ui:define name="content">
+		
+		<h:form prependId="false" id="form">
+			<f:event listener="#{applicationScopeBean.preRenderView}" type="javax.faces.event.PreRenderViewEvent" />
+			<h1 style="text-align: center;">Listado de retornantes al país</h1>
+			
+			
+			<p:dataTable id="personas" var="_persona" value="#{personas}" rowKey="#{_persona.id}" paginator="true" rows="10"
+						resizableColumns="true" liveResize="true"  style="border-width:0px">
+			
+				<p:column headerText="Id Persona" sortBy="_persona.id" filterBy="_persona.id" id="pid" style="width:100px">
+					<h:outputText value="#{_persona.id}" />  
+		        </p:column>
+		        
+		        <p:column headerText="Fecha Entrevista" sortBy="#{_persona.formulario.fechaEntrevista}" 
+		        			filterBy="_persona.formulario.fechaEntrevista" id="fechaEntrevista" filterMatchMode="gt" style="width:130px">	
+		        	<h:outputText value="#{_persona.formulario.fechaEntrevista}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="ID Formulario" id="fId" style="width:120px">  
+					<h:outputText value="#{_persona.formulario.id}" />
+		        </p:column>
+		        
+				<p:column headerText="Estado" id="fEstado" style="width:50px">  
+					<h:outputText value="#{_persona.formulario.estado}" />
+		        </p:column>
+		        
+		        <p:column headerText="Observaciones" id="observaciones" style="width:120px">  
+					<h:outputText value="#{_persona.formulario.observaciones}" />
+		        </p:column>
+		        
+				<p:column headerText="Vulnerabilidad" id="vulnerabilidad" style="width:120px">  
+					<h:outputText value="#{_persona.formulario.vulnerabilidad.vulnerabilidad}" />
+		        </p:column>
+		        		        
+				<p:column headerText="Funcionario" id="funcionario" style="width:100px">  
+					<h:outputText value="#{_persona.formulario.funcionario.nombre}" />
+		        </p:column>		        
+			
+				<p:column headerText="Nombre" id="nombre" style="width:60px">  
+					<h:outputText value="#{_persona.nombre}" />
+		        </p:column>
+		        
+		        <p:column headerText="Apellido" id="apellido" style="width:80px"> 
+		        <h:outputText value="#{_persona.apellido}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Tipo Documento"  id="tipoDocumento" style="width:160px">  
+		        <h:outputText value="#{_persona.documento.tipoDocumento.nombre}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Documento" id="documento" style="width:80px">  
+		        <h:outputText value="#{_persona.documento.documento}" />
+		        </p:column>
+		        
+		        <p:column headerText="Pais" id="pNacimiento" style="width:80px">  
+		        <h:outputText value="#{_persona.documento.paisEmisor.nombre}" />
+		        </p:column>
+		        
+		        <p:column headerText="Ciudad" id="ciudad" style="width:80px">  
+		        <h:outputText value="#{_persona.documento.ciudad.nombre}" />
+		        </p:column>		        		        
+		        
+				<p:column headerText="Direccion" id="Direccion" style="width:160px">  
+					<h:outputText value="#{_persona.direccion}" />
+		        </p:column>
+		        
+		        <p:column headerText="Telefono" id="TelLinea" style="width:80px"> 
+		        <h:outputText value="#{_persona.telefonoFijo}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Movil"  id="TelMovil" style="width:80px">  
+		        <h:outputText value="#{_persona.tellefonoMovil}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Correo" id="Correo" style="width:160px">  
+		        <h:outputText value="#{_persona.correo}" />
+		        </p:column>	        
+		        
+				<p:column headerText="Hijos" id="Hijos" style="width:30px">  
+					<h:outputText value="#{_persona.cantidadHijos}" />
+		        </p:column>
+		        
+		        <p:column headerText="Salud" id="cobSalud" style="width:60px"> 
+		        <h:outputText value="#{_persona.coberturaSalud.nombre}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Demanda"  id="demanda" style="width:60px">  
+		        <h:outputText value="#{_persona.demandaInicial.nombre}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Enseres" id="enseres" style="width:60px">  
+		        <h:outputText value="#{_persona.enseresVehiculos.descripcion}" />
+		        </p:column>		        	
+		        
+		        <p:column headerText="Estado Civil" id="estadoCivil" style="width:80px">  
+					<h:outputText value="#{_persona.estadoCivil.estado}" />
+		        </p:column>
+		        
+		        <p:column headerText="Forma de Retorno" id="fRetorno" style="width:130px"> 
+		        <h:outputText value="#{_persona.formaRetorno.nombre}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Motivo Partida"  id="mPartida" style="width:130px">  
+		        <h:outputText value="#{_persona.motivoPartida.nombre}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Motivo Retorno" id="mRetorno" style="width:130px">  
+		        <h:outputText value="#{_persona.motivoRetorno.nombre}" />
+		        </p:column>
+		        
+				<p:column headerText="Parentezco" id="parentezco" style="width:80px">  
+					<h:outputText value="#{_persona.parentezco.descripcion}" />
+		        </p:column>
+		        
+		        <p:column headerText="Sexo" id="sexo" style="width:60px"> 
+		        <h:outputText value="#{_persona.sexo.sexo}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Situacion Habitacional"  id="shabitacional" style="width:160px">  
+		        <h:outputText value="#{_persona.situacionHabitacionalActual.nombre}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Situaicon Laboral" id="sLaboral" style="width:160px">  
+		        <h:outputText value="#{_persona.situacionLaboral.nombre}" />
+		        </p:column>	        
+		        
+				<p:column headerText="Oficio Uruguay" id="oUruguay" style="width:160px">  
+					<h:outputText value="#{_persona.oficioUruguay.nombre}" />
+		        </p:column>
+		        
+		        <p:column headerText="Oficio Exterior" id="oExterior" style="width:160px"> 
+		        <h:outputText value="#{_persona.oficioExterior.nombre}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Ocupacion Uruguay"  id="ocUruguay" style="width:160px">  
+		        <h:outputText value="#{_persona.ocupacionUruguay.nombre}" /> 
+		        </p:column>
+		        
+		        <p:column headerText="Ocupacion Exterior" id="ocExterior" style="width:160px">  
+		        <h:outputText value="#{_persona.ocupacionExterior.nombre}" />
+		        </p:column>	
+		        
+			</p:dataTable>
+		
+			<p:commandButton value="Export as CSV" ajax="false">
+				<p:dataExporter type="csv" target="personas"
+					fileName="personas" />
+			</p:commandButton>
+		</h:form>
+	</ui:define>
+</ui:composition>

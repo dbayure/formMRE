@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+FORMMRREEANTEL - Formulario Ministerio Relaciones Exteriores
+Copyright (C) 2009  ANTEL - MRREE
+
+This file is part of FORMMRREEANTEL.
+
+FORMMRREEANTEL is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ !-->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   xmlns:p="http://primefaces.org/ui"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h1 style="text-align: center;">Ayuda del Sistema</h1>
+	
+
+      <h:form id="form" prependId="false">
+         
+         <p:panel style="border: none">
+         	<p:panelGrid columns="1" style="border: none">
+         		<p:graphicImage value="/resources/imagenes/Ayuda1.png" style="width: 100%"/>
+         		<p><h3>Acceso al Sistema, el usuario debe ingresar usuario y clave. 
+         		El sistema se encarga de validar las credenciales con la base de datos.
+         		   </h3></p>
+         		<p:graphicImage value="/resources/imagenes/Ayuda2.png" style="width: 100%"/>
+         		<p><h3>El usuario administrador debe ser ingresado directamente en la base, 
+         		su constraseña debe ser creada en sha 256 con 64 bits
+         		 </h3></p>
+         		<p:graphicImage value="/resources/imagenes/Ayuda3.png" style="width: 100%"/>
+         		<p><h3>Página principal del sistema, aqui se puede ver el menú de opciones
+         			y el listado de formularios que hayan sido ingresados
+         		   </h3></p>
+         		<p:graphicImage value="/resources/imagenes/Ayuda4.png" style="width: 100%"/>
+         		<p><h3>En la opción "Formulario" del menú se puede acceder al ingreso una nuevo
+         			formulario con la cantidad de personas que se requiera, además se puede visualizar
+         			los formularios que hayan sido ingresados
+         		 </h3></p>
+         		<p:graphicImage value="/resources/imagenes/Ayuda5.png" style="width: 100%"/>
+         		<p><h3>En la opción "Usuario" del menú se pueden agregar roles y usuarios del sistema,
+         			es necesario configurar el servidor para que los nuevos roles queden activos. Los
+         			usuarios creados deben tener un rol asignado
+         		   </h3></p>
+         		<p:graphicImage value="/resources/imagenes/Ayuda6.png" style="width: 100%"/>
+         		<p><h3>En la opción "Administración Sistema" se pueden igresar los catálogos del sistema, estos 
+         			son necesarios para completar la iformación de ingreso de cada persona, deben estar 
+         			creados previamente al ingreso de cada formulario
+         		 </h3></p> 
+         		<p:graphicImage value="/resources/imagenes/Ayuda7.png" style="width: 100%"/>
+         		<p><h3>En la esquina superior derecha de la pantalla se puede ver cual es el usuario que
+         			ingresó al sistema, también es posible terminar la sesión con el botón logout
+         		   </h3></p>
+         		<p:graphicImage value="/resources/imagenes/Ayuda8.png" style="width: 100%"/>
+         		<p><h3>Una vez ingresados los formularios de las familias que rotornan al país, es posible
+         			visualizar en detalle cada una de ellas, para realizar esa tarea basta con presionar la
+         			lupa que se encuentra a la derecha de cada formulario y debajo se despliega la lista de
+         			las personas que pertenecen al mismo
+         			Si se quiere ver el detalle de una persona o modificar alguno de sus datos, se puede 
+         			presionar el botón con forma de llave que se encuentra a la derecha de la misma, si se quiere
+         			eliminar la persona se oprime el botón conforma de papelera. 
+         		 </h3></p>         		          		          	
+         		<p:graphicImage value="/resources/imagenes/Ayuda9.png" style="width: 100%"/>
+         		<p><h3>Se despliega la información de la persona, los campos que pueden ser modificados quedan
+         			habilitados y al final de la página se muestra un botón par aconfirmar la acción
+         		   </h3></p>
+     	
+         	</p:panelGrid>
+         
+         
+         </p:panel>
+         
+         
+		</h:form>     
+   </ui:define>
+</ui:composition>

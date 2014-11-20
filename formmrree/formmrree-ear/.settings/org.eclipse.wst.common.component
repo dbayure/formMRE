@@ -8,6 +8,15 @@
         <dependent-module archiveName="formmrree-ejb-0.0.1-SNAPSHOT.jar" deploy-path="/" handle="module:/resource/formmrree-ejb/formmrree-ejb">
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="picketbox-4.0.5.Final.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/picketbox/picketbox/4.0.5.Final/picketbox-4.0.5.Final.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="poi-3.8.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/apache/poi/poi/3.8/poi-3.8.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-codec-1.5.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/commons-codec/commons-codec/1.5/commons-codec-1.5.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
         <dependent-module archiveName="jackson-jaxrs-1.8.0.jar" deploy-path="/lib" handle="module:/classpath/var/M2_REPO/org/codehaus/jackson/jackson-jaxrs/1.8.0/jackson-jaxrs-1.8.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>

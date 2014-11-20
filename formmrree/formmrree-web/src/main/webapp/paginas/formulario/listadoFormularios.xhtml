@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+
+FORMMRREEANTEL - Formulario Ministerio Relaciones Exteriores
+Copyright (C) 2009  ANTEL - MRREE
+
+This file is part of FORMMRREEANTEL.
+
+FORMMRREEANTEL is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ 
+ !-->
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
    xmlns:ui="http://java.sun.com/jsf/facelets"
    xmlns:f="http://java.sun.com/jsf/core"
@@ -24,20 +45,20 @@
 				selection="#{formulariosBean.selectedFormulario}" selectionMode="single" filteredValue="#{formulariosBean.formulariosFiltrados}"
 				resizableColumns="true" liveResize="true" emptyMessage="No hay formulario seleccionado" style="border-width:0px">
 			
-				<p:column headerText="Id" sortBy="id" filterBy="id" id="id">  
-		            #{_formulario.id}  
+				<p:column headerText="Id" sortBy="id" filterBy="id" id="id">
+					<h:outputText value="#{_formulario.id}" />  
 		        </p:column>
 		        
-		        <p:column headerText="Fecha Entrevista" sortBy="fechaEntrevista" filterBy="fechaEntrevista" id="fechaEntrevista">  
-		            #{_formulario.fechaEntrevista}  
+		        <p:column headerText="Fecha Entrevista" sortBy="fechaEntrevista" filterBy="fechaEntrevista" id="fechaEntrevista" filterMatchMode="gt">	
+		        	<h:outputText value="#{_formulario.fechaEntrevista}" /> 
 		        </p:column>
 		        
-		        <p:column headerText="Funcionario" sortBy="funcionario" filterBy="funcionario" id="funcionario">  
-		            #{_formulario.funcionario.nombre}  
+		        <p:column headerText="Funcionario" sortBy="funcionario" filterBy="funcionario" id="funcionario">
+		        	<h:outputText value="#{_formulario.funcionario.nombre}" />  
 		        </p:column>
 		        
-		        <p:column headerText="Observaciones" sortBy="observaciones" filterBy="observaciones" id="observaciones">  
-		            #{_formulario.observaciones}  
+		        <p:column headerText="Observaciones" sortBy="observaciones" filterBy="observaciones" id="observaciones">
+		        	<h:outputText value="#{_formulario.observaciones}" />  
 		        </p:column>
 		        
 		        <p:column style="width:4%">  
@@ -47,25 +68,25 @@
 		        </p:column>
 		        
 			</p:dataTable>
-			
+				
 			<p:dataTable id="personas" var="_persona" value="#{formulariosBean.selectedFormulario.personas}" rowKey="#{_persona.id}" widgetVar="tabPersonas"
 				paginator="false" rows="10" selection="#{personasBean.selectedPersonas}" selectionMode="single" filteredValue="#{personasBean.personasFiltradas}" 
 				resizableColumns="true" liveResize="true" emptyMessage="No hay formulario seleccionado" style="border-width:0px">
 			
 				<p:column headerText="Nombre" id="nombre">  
-		            #{_persona.nombre}  
+					<h:outputText value="#{_persona.nombre}" />
 		        </p:column>
 		        
-		        <p:column headerText="Apellido" id="apellido">  
-		            #{_persona.apellido}  
+		        <p:column headerText="Apellido" id="apellido"> 
+		        <h:outputText value="#{_persona.apellido}" /> 
 		        </p:column>
 		        
 		        <p:column headerText="Tipo Documento"  id="tipoDocumento">  
-		            #{_persona.documento.tipoDocumento.nombre}  
+		        <h:outputText value="#{_persona.documento.tipoDocumento.nombre}" /> 
 		        </p:column>
 		        
 		        <p:column headerText="Documento" id="documento">  
-		            #{_persona.documento.documento}  
+		        <h:outputText value="#{_persona.documento.documento}" />
 		        </p:column>
 		        
 		        <p:column style="width:3%">
@@ -86,7 +107,7 @@
 	        	</p:column>
 	        	
 			</p:dataTable>
-	
+
 			<p:dataTable id="unapersona" widgetVar="una" var="p" value="#{personasBean.selectedPersonas}" style="border-width:0px" emptyMessage="No hay persona seleccionada">
 				<p:column style="border-width:0px">
 					<p:panel header="Datos Personales" id="personales" style="border: none" >
@@ -201,14 +222,14 @@
 									<p:outputLabel value="Finalizado: " />
 									<p:selectBooleanCheckbox value="#{p.nivelEducativoUruguay.finalizado}" />	
 									
-<!-- 									<p:outputLabel value="Carrera" for="tituloObtenidoUruguay" /> -->
-<!-- 									<p:selectManyMenu id="tituloObtenidoUruguay" value="#{p.tituloObtenidoUruguay}" var="titSelecUru" showCheckbox="true" required="true" style="height:100px"> -->
-<!-- 										<f:converter converterId="tituloConverter" /> -->
-<!-- 										<f:selectItems value="#{titulos}" var="titulo" itemLabel="#{titulo.nombre}" itemValue="#{titulo}" /> -->
-<!-- 										<p:column> -->
-<!-- 											<p:outputLabel value="#{titSelecUru.nombre}" /> -->
-<!-- 										</p:column> -->
-<!-- 									</p:selectManyMenu>															 -->
+									<p:outputLabel value="Carrera" for="tituloObtenidoUruguay" />
+									<p:selectManyMenu id="tituloObtenidoUruguay" value="#{p.tituloObtenidoUruguay}" var="titSelecUru" showCheckbox="true" required="true" style="height:100px">
+										<f:converter converterId="tituloConverter" />
+										<f:selectItems value="#{titulos}" var="titulo" itemLabel="#{titulo.nombre}" itemValue="#{titulo}" />
+										<p:column>
+											<p:outputLabel value="#{titSelecUru.nombre}" />
+										</p:column>
+									</p:selectManyMenu>															
 		
 									<p:outputLabel for="oficioUruguay" value="Oficio en Uruguay:" />
 									<p:selectOneMenu id="oficioUruguay" value="#{p.oficioUruguay}" var="ofiSelec" required="true">
