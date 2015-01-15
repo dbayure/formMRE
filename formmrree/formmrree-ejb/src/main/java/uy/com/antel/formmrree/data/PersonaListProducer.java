@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 package uy.com.antel.formmrree.data;
 
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.event.Observes;
@@ -34,7 +33,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-
 import uy.com.antel.formmrree.model.Persona;
 
 @RequestScoped
@@ -59,7 +57,7 @@ public class PersonaListProducer {
    @PostConstruct
    public void retrieveAllOrderedByName() {
       CriteriaBuilder cb = em.getCriteriaBuilder();
-      CriteriaQuery<Persona> criteria = cb.createQuery(Persona.class);
+      CriteriaQuery<Persona> criteria = cb.createQuery(Persona.class); 
       Root<Persona> persona = criteria.from(Persona.class);
       criteria.select(persona).orderBy(cb.asc(persona.get("id")));
       personas = em.createQuery(criteria).getResultList();
